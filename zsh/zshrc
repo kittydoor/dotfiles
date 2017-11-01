@@ -1,11 +1,24 @@
-autoload -Uz compinit promptinit
-compinit
-promptinit
+zstyle :compinstall filename '/home/kitty/.zshrc'
 
+autoload -Uz compinit promptinit
+
+# autocompletion
+compinit
+zstyle ':completion:*' menu select
+setopt COMPLETE_ALIASES
+
+# prompt themes
+promptinit
 prompt walters
 
+# zle vi mode
+bindkey -v
+
+# source pkgfile for archlinux for suggestions on
+# where to find missing binaries
 source /usr/share/doc/pkgfile/command-not-found.zsh
 
+# general useful aliases
 alias pubip="wget http://ipinfo.io/ip -qO -" 
 alias gitdir="cd /home/$USER/Documents/Git/"
 alias vpnup="sudo systemctl start openvpn-client@client"
@@ -17,6 +30,7 @@ alias download="curl -O -L -C -"
 
 # alias backdir="cd /run/media/alev/WesternDrive/backup/ArchRsyncApril21/home/alev"
 
+# go through all folders in $gitdir and fetch + status
 function gitdircheck {
   returndir=`pwd`
   gitdir;
@@ -30,3 +44,13 @@ function gitdircheck {
   done
   cd $returndir
 }
+
+# history settings
+HISTFILE=~/.histfile
+HISTSIZE=10000
+SAVEHIST=10000
+
+setopt autocd extendedglob nomatch
+
+# beep is bad, and you should feel bad
+unsetopt beep
