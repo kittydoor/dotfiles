@@ -48,6 +48,19 @@ function gitdircheck {
   cd $returndir
 }
 
+function gitdirpull {
+  returndir=`pwd`
+  gitdir;
+  for dir in */; do
+    cd $dir;
+    printf '%48s\n' | tr ' ' -;
+    echo $dir;
+    git pull;
+    cd ..;
+  done
+  cd $returndir
+}
+
 # history settings
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
