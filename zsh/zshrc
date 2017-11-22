@@ -16,7 +16,10 @@ bindkey -v
 
 # source pkgfile for archlinux for suggestions on
 # where to find missing binaries
-source /usr/share/doc/pkgfile/command-not-found.zsh
+DISTRO=$(cat /etc/*-release | grep  DISTRIB_ID= | cut -d= -f2)
+if [[ $DISTRO == "Arch" ]]; then
+  source /usr/share/doc/pkgfile/command-not-found.zsh
+fi
 
 # general useful aliases
 alias pubip="wget http://ipinfo.io/ip -qO -" 
