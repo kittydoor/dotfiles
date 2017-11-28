@@ -107,3 +107,4 @@ set backspace=indent,eol,start	" Backspace behaviour
 " Disable annoying stuff
 set tw=0
 set colorcolumn=0
+set nospell
