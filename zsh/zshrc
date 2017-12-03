@@ -33,6 +33,7 @@ alias download="curl -O -L -C -"
 alias inforet="gitdir; cd fraudprotection/inforetrieve; jupyter notebook"
 alias badhorse="traceroute bad.horse"
 alias telnetwars="telnet towel.blinkenlights.nl"
+alias cryptorate="curl rate.sx"
 
 # alias backdir="cd /run/media/alev/WesternDrive/backup/ArchRsyncApril21/home/alev"
 
