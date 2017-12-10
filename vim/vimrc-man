@@ -15,7 +15,7 @@ set autoread
 set undolevels=1000
 set history=1000
 
-set spell
+set nospell
 set backspace=eol,start,indent " research if this makes sense
 
 filetype plugin indent on
@@ -27,13 +27,13 @@ set encoding=utf8
 set ffs=unix,dos,mac
 
 set autoindent
-set expandtab
+set noexpandtab
 set smartindent
 set smarttab
 
-set shiftwidth=2
-set tabstop=4
-set softtabstop=2 " what is this compared to the previous?
+set shiftwidth=8
+set tabstop=8
+set softtabstop=8 " what is this compared to the previous?
 
 set noerrorbells
 set novisualbell " what is this?
