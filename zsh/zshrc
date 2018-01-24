@@ -14,11 +14,15 @@ prompt walters
 # zle vi mode
 bindkey -v
 
-# source pkgfile for archlinux for suggestions on
-# where to find missing binaries
+# get distro identifier
 DISTRO=$(cat /etc/*-release | grep  DISTRIB_ID= | cut -d= -f2)
 if [[ $DISTRO == "Arch" ]]; then
+  # source pkgfile for archlinux for suggestions on
+  # where to find missing binaries
   source /usr/share/doc/pkgfile/command-not-found.zsh
+  # fix view linking to ex
+  # TODO: add check for vim being installed
+  alias view="vim -R"
 fi
 
 # general useful aliases
