@@ -72,3 +72,7 @@ let g:airline#extensions#tabline#enabled = 1
 "endfunc
 "autocmd BufWrite *.py :call DeleteTrailingWS()
 "autocmd BufWrite *.coffee :call DeleteTrailingWS()
+
+set ts=2
+set sw=2
+set expandtab
