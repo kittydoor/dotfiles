@@ -94,3 +94,6 @@ setopt autocd extendedglob nomatch
 
 # beep is bad, and you should feel bad
 unsetopt beep
+
+# added by travis gem
+[ -f /home/kitty/.travis/travis.sh ] && source /home/kitty/.travis/travis.sh
