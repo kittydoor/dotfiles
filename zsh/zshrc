@@ -39,6 +39,8 @@ alias badhorse="traceroute bad.horse"
 alias telnetwars="telnet towel.blinkenlights.nl"
 alias cryptorate="curl rate.sx"
 
+alias kitty.sh-reverse="ssh -R 2222:localhost:22 -N kitty@kitty.sh"
+
 # alias backdir="cd /run/media/alev/WesternDrive/backup/ArchRsyncApril21/home/alev"
 
 # Should I be using git aliases for this?
