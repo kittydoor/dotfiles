@@ -1,3 +1,19 @@
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+
+" Plugin 'ervandew/supertab'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'davidhalter/jedi-vim'
+
+call vundle#end()
+filetype plugin indent on
+" Vundle End, everything before this is Vundle setup"
+
 " nmap <silent> <A-k> :wincmd k<CR>
 " nmap <silent> <A-j> :wincmd j<CR>
 " nmap <silent> <A-h> :wincmd h<CR>
