@@ -13,9 +13,8 @@ prompt walters
 
 # zle vi mode
 bindkey -v
-
 # get distro identifier
-DISTRO=$(cat /etc/*-release | grep  DISTRIB_ID= | cut -d= -f2)
+DISTRO=$(cat /etc/*-release | grep "^NAME" | cut -d= -f2)
 if [[ $DISTRO == "Arch" ]]; then
   # source pkgfile for archlinux for suggestions on
   # where to find missing binaries
