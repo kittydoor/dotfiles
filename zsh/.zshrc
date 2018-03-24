@@ -15,10 +15,12 @@ prompt walters
 bindkey -v
 # get distro identifier
 DISTRO=$(cat /etc/*-release | grep "^NAME" | cut -d= -f2)
-if [[ $DISTRO == "Arch" ]]; then
+if [[ $DISTRO == '"Arch Linux"' ]]; then
   # source pkgfile for archlinux for suggestions on
   # where to find missing binaries
-  source /usr/share/doc/pkgfile/command-not-found.zsh
+  if [[ -d /usr/share/doc/pkgfile ]] then
+    source /usr/share/doc/pkgfile/command-not-found.zsh;
+  fi
   # fix view linking to ex
   # TODO: add check for vim being installed
   alias view="vim -R"
