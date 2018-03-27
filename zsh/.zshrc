@@ -94,6 +94,12 @@ function gitdirclean {
   cd $returndir
 }
 
+function git-ssh {
+  eval $(ssh-agent)
+  ssh-add ~/.ssh/id_rsa_github
+}
+
+
 # history settings
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
