@@ -19,6 +19,7 @@ Plugin 'VundleVim/Vundle.vim'
 " Plugin 'ervandew/supertab'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'davidhalter/jedi-vim'
+Plugin 'mattn/emmet-vim'
 
 call vundle#end()
 
