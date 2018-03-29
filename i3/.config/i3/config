@@ -172,3 +172,6 @@ bindsym $mod+Ctrl+l move workspace to output right
 
 bindsym $mod+Ctrl+Left move workspace to output right
 bindsym $mod+Ctrl+h move workspace to output right
+
+# exec libinput setup
+exec --no-startup-id ~/.config/i3/libinput.sh
