@@ -180,5 +180,4 @@ exec --no-startup-id xrdb ~/.Xresources
 exec --no-startup-id xsetroot -solid "#000000"
 
 # exec libinput setup
-# exec --no-startup-id ~/.config/i3/libinput.sh
-
+exec --no-startup-id ~/.config/i3/libinput.sh
