@@ -172,3 +172,12 @@ bindsym $mod+Ctrl+l move workspace to output right
 
 bindsym $mod+Ctrl+Left move workspace to output right
 bindsym $mod+Ctrl+h move workspace to output right
+
+# read xrdb
+exec --no-startup-id xrdb ~/.Xresources
+
+# set wallpaper to black
+exec --no-startup-id xsetroot -solid "#000000"
+
+# exec libinput setup
+exec --no-startup-id ~/.config/i3/libinput.sh
