@@ -26,6 +26,20 @@ if [[ $DISTRO == '"Arch Linux"' ]]; then
   alias view="vim -R"
 fi
 
+# start ssh-agent
+if ! (pgrep -u "$USER" ssh-agent > /dev/null); then
+  ssh-agent > ~/.ssh-agent.env
+  if [[ -f ~/.ssh/id_rsa_github  ]] then
+    eval "$(<~/.ssh-agent.env)"
+    ssh-add ~/.ssh/id_rsa_github
+  fi
+fi
+
+# on new shells
+if [[ "$SSH_AGENT_PID" == "" ]]; then
+  eval "$(<~/.ssh-agent.env)"
+fi
+
 # general useful aliases
 alias pubip="wget http://ipinfo.io/ip -qO -" 
 alias gitdir="cd /home/$USER/Documents/Git/"
