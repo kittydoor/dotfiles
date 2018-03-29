@@ -20,8 +20,8 @@ order += "tztime local"
 
 ethernet _first_ {
         # if you use %speed, i3status requires root privileges
-        format_up = "E: %ip (%speed)"
-        format_down = "E: down"
+        format_up = "L:%ip (%speed)"
+        format_down = "L:down"
 }
 
 tztime local {
