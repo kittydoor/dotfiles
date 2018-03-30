@@ -77,6 +77,8 @@ set incsearch
 set hlsearch
 set ignorecase
 
+set mouse=a
+
 "airline start
 set ttimeoutlen=10
 let g:airline_powerline_fonts = 1
