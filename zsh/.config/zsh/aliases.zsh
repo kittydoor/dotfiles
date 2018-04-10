@@ -1,0 +1,13 @@
+alias session="tmux new -As "
+alias pubip="wget http://ipinfo.io/ip -qO -" 
+alias vpnup="sudo systemctl start openvpn-client@client"
+alias vpndown="sudo systemctl stop openvpn-client@client"
+alias cclip="xclip -selection clipboard"
+alias clipp="xclip -selection clipboard -o"
+alias weather="curl wttr.in"
+alias download="curl -O -L -C -"
+alias badhorse="traceroute bad.horse"
+alias telnetwars="telnet towel.blinkenlights.nl"
+alias cryptorate="curl rate.sx"
+
+# alias backdir="cd /run/media/alev/WesternDrive/backup/ArchRsyncApril21/home/alev"
