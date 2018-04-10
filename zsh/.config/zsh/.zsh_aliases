@@ -11,6 +11,7 @@ alias inforet="gitdir; cd fraudprotection/inforetrieve; jupyter notebook"
 alias badhorse="traceroute bad.horse"
 alias telnetwars="telnet towel.blinkenlights.nl"
 alias cryptorate="curl rate.sx"
+alias orphans="sudo pacman -Rns $(pacman -Qtdq)"
 
 # hosts
 # kitty.sh -> nyaa-proxy
