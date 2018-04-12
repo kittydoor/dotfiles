@@ -1,15 +1,16 @@
-zstyle :compinstall filename '/home/kitty/.zshrc'
-
 autoload -Uz compinit promptinit
-
-# autocompletion
 compinit
-zstyle ':completion:*' menu select
-setopt COMPLETE_ALIASES
-
-# prompt themes
 promptinit
 prompt walters
+
+# zstyle :compinstall filename '/home/kitty/.zshrc'
+# 
+# 
+# # autocompletion
+# zstyle ':completion:*' menu select
+# setopt COMPLETE_ALIASES
+
+# prompt themes
 
 # zle vi mode
 bindkey -v
@@ -32,10 +33,10 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 
-setopt autocd extendedglob nomatch
+# setopt autocd extendedglob nomatch
 
 # beep is bad, and you should feel bad
-unsetopt beep
+# unsetopt beep
 
 # added by travis gem
-[ -f /home/kitty/.travis/travis.sh ] && source /home/kitty/.travis/travis.sh
+# [ -f /home/kitty/.travis/travis.sh ] && source /home/kitty/.travis/travis.sh
