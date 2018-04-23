@@ -185,3 +185,6 @@ exec --no-startup-id ~/.config/i3/libinput.sh
 
 # lock screen
 bindsym $mod+b exec i3lock -c 000000
+
+# default workspace layout
+# workspace_layout tabbed
