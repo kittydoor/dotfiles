@@ -1,3 +1,4 @@
 *~
 *.swp
 .zcompdump
+vim/.vim/bundle
