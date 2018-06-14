@@ -1,0 +1,28 @@
+Installation structure and notes
+
+dmcrypt with luks2 on root
+currently systemd-boot
+
+could change with encrypted (luks1) boot with grub
+or even encrypted (luks1) boot with grub with secure boot for efi to load grub
+
+pacstrap /mnt base
+fstab
+arch-chroot
+
+ln zoneinfo
+locale.conf -> locale-gen -> LANG=en
+pacman -S zsh sudo git vim tmux stow dialog wpa_supplicant openssh intel-ucode
+useradd -m -G wheel -s /bin/zsh kitty
+visudo
+passwd root and kitty
+
+setup encryption hooks for mkinitcpio
+
+install bootloader and setup enc
+setup intel microcode
+
+first boot
+pacman -S i3 xorg-server xorg-xinput xorg-xinit xclip ttf-dejavu firefox(-developer-edition) mpv dmenu acpi bc playerctl alsa-utils sysstat
+stow stuff
+startx
