@@ -186,5 +186,9 @@ exec --no-startup-id ~/.config/i3/libinput.sh
 # lock screen
 bindsym $mod+b exec i3lock -c 000000
 
+# function keys
+bindsym XF86MonBrightnessUp exec --no-startup-id ~/.config/i3/brightness.sh inc 10 >> ~/.i3execlog
+bindsym XF86MonBrightnessDown exec --no-startup-id ~/.config/i3/brightness.sh dec 10 >> ~/.i3execlog
+
 # default workspace layout
 # workspace_layout tabbed

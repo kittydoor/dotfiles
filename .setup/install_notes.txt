@@ -12,7 +12,10 @@ arch-chroot
 
 ln zoneinfo
 locale.conf -> locale-gen -> LANG=en
-pacman -S zsh sudo git vim tmux stow dialog wpa_supplicant openssh intel-ucode
+pacman -S zsh sudo git vim tmux stow dialog wpa_supplicant openssh intel-ucode imagemagick
+-S pkgfile
+-S xsetroot #for i3
+pkgfile --update
 useradd -m -G wheel -s /bin/zsh kitty
 visudo
 passwd root and kitty
