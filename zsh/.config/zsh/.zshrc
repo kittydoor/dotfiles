@@ -28,10 +28,13 @@ if [[ $DISTRO == 'Arch Linux' ]]; then
   source $ZDOTDIR/arch.zsh
 fi
 
-# history settings
+### history settings
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+# HISTSIZE > SAVEHIST because of HIST_EXPIRE_DUPS_FIRST
+HISTSIZE=12000 # internal hist size
+SAVEHIST=10000 # file hist size
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_FIND_NO_DUPS
 
 # setopt autocd extendedglob nomatch
 
