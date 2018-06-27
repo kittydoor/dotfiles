@@ -18,6 +18,20 @@ function gitdircheck {
   cd $returndir
 }
 
+function vmaascheck {
+  returndir=`pwd`
+  vmaas;
+  for dir in */; do
+    cd $dir;
+    printf '%48s\n' | tr ' ' -;
+    echo $dir;
+    git fetch;
+    git status;
+    cd ..;
+  done
+  cd $returndir
+}
+
 function gitdirpull {
   returndir=`pwd`
   gitdir;
