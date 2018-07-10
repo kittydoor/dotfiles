@@ -1,6 +1,10 @@
 ### Generic Aliases
 # ZSH expands ls in following aliases
-alias ls="ls --color=auto"
+if (which exa 1>/dev/null 2>&1); then
+  alias ls="exa --color=auto"
+else
+  alias ls="ls --color=auto"
+fi
 alias ll="ls -al"
 alias l.="ls -d .*"
 
