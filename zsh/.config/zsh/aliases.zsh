@@ -1,11 +1,22 @@
+### Generic Aliases
+# ZSH expands ls in following aliases
+alias ls="ls --color=auto"
+alias ll="ls -al"
+alias l.="ls -d .*"
+
+### Ease of Use Commands
 alias session="tmux new -As "
 alias pubip="wget http://ipinfo.io/ip -qO -" 
-alias vpnup="sudo systemctl start openvpn-client@client"
-alias vpndown="sudo systemctl stop openvpn-client@client"
+alias download="curl -O -L -C -"
 alias cclip="xclip -selection clipboard"
 alias clipp="xclip -selection clipboard -o"
+
+### VPN
+alias vpnup="sudo systemctl start openvpn-client@client"
+alias vpndown="sudo systemctl stop openvpn-client@client"
+
+### Cool websites
 alias weather="curl wttr.in"
-alias download="curl -O -L -C -"
 alias badhorse="traceroute bad.horse"
 alias telnetwars="telnet towel.blinkenlights.nl"
 alias cryptorate="curl rate.sx"
