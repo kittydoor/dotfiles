@@ -145,3 +145,22 @@ function SetCOptions()
   setlocal sw=8
   set equalprg=astyle\ --style=linux\ -s8
 endfunction
+
+if has('unnamedplus')
+  if executable("xclip")
+    set clipboard=unnamedplus
+
+    function! PreserveClipboard()
+      call system("xclip -selection clipboard", getreg('+'))
+    endfunction
+
+    function! PreserveClipboardAndSuspend()
+      call PreserveClipboard()
+      suspend
+    endfunction
+
+    autocmd VimLeave * call PreserveClipboard()
+    nnoremap <silent> <c-z> :call PreserveClipboardAndSuspend()<cr>
+  
+  endif
+endif
