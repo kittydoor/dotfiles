@@ -24,6 +24,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'vim-scripts/a.vim'
 " Plugin 'w0rp/ale'
+Plugin 'altercation/vim-colors-solarized'
 
 call vundle#end()
 
@@ -79,8 +80,8 @@ set backspace=eol,start,indent " research if this makes sense
 
 filetype plugin indent on
 syntax enable
-colorscheme desert
 set background=dark
+colorscheme solarized
 
 set encoding=utf8
 set ffs=unix,dos,mac
