@@ -1,3 +1,10 @@
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+PROMPT=\$vcs_info_msg_0_\ $PROMPT
+zstyle ':vcs_info:git:*' formats '%b'
+
 alias gitdir="cd /home/$USER/Documents/Git/"
 alias vmaas="cd /home/$USER/Documents/Git/VMaaS/"
 
