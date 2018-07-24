@@ -8,3 +8,5 @@ URxvt*scrollWithBuffer: true
 URxvt*scrollTtyKeypress: true
 
 URxvt*font: xft:DejaVu Sans Mono:size=12
+
+URxvt*scrollBar: false
