@@ -5,15 +5,18 @@ setopt prompt_subst
 PROMPT=\$vcs_info_msg_0_\ $PROMPT
 zstyle ':vcs_info:git:*' formats '%b'
 
-alias gitdir="cd /home/$USER/Documents/Git/"
-alias vmaas="cd /home/$USER/Documents/Git/VMaaS/"
+
+### Static Named Directories
+
+hash -d git=~/Documents/Git
+hash -d vmaas=~git/VMaaS
 
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
 
 # go through all folders in $gitdir and fetch + status
 function gitdircheck {
   returndir=`pwd`
-  gitdir;
+  cd ~git;
   for dir in */; do
     cd $dir;
     printf '%48s\n' | tr ' ' -;
@@ -41,7 +44,7 @@ function vmaascheck {
 
 function gitdirpull {
   returndir=`pwd`
-  gitdir;
+  cd ~git;
   for dir in */; do
     cd $dir;
     printf '%48s\n' | tr ' ' -;
@@ -54,7 +57,7 @@ function gitdirpull {
 
 function gitdirclean {
   returndir=`pwd`
-  gitdir;
+  cd ~git;
   for dir in */; do
     cd $dir;
     printf '%48s\n' | tr ' ' -;
