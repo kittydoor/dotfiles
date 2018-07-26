@@ -140,11 +140,17 @@ set sw=2
 set expandtab
 
 "autocmd FileType c nnoremap <F4> :%!astyle --style=linux -s8<CR>
-autocmd FileType c  call SetCOptions()
+autocmd FileType c call SetCOptions()
 function SetCOptions()
   setlocal ts=8
   setlocal sw=8
   set equalprg=astyle\ --style=linux\ -s8
+endfunction
+
+autocmd FileType make call SetMakeOptions()
+function SetMakeOptions()
+  setlocal ts=8
+  setlocal sw=8
 endfunction
 
 if has('unnamedplus')
