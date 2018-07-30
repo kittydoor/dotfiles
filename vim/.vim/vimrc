@@ -144,6 +144,7 @@ autocmd FileType c call SetCOptions()
 function SetCOptions()
   setlocal ts=8
   setlocal sw=8
+  setlocal expandtab
   set equalprg=astyle\ --style=linux\ -s8
 endfunction
 
@@ -151,6 +152,16 @@ autocmd FileType make call SetMakeOptions()
 function SetMakeOptions()
   setlocal ts=8
   setlocal sw=8
+  setlocal expandtab
+endfunction
+
+autocmd FileType python call SetPythonOptions()
+function SetPythonOptions()
+  setlocal ts=4
+  setlocal sw=4
+  setlocal expandtab
+  highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+  match OverLength /\%81v.\+/
 endfunction
 
 if has('unnamedplus')
