@@ -193,5 +193,5 @@ bindsym XF86MonBrightnessDown exec --no-startup-id ~/.config/i3/brightness.sh de
 # default workspace layout
 # workspace_layout tabbed
 
-gaps inner 30
-gaps outer 10
+gaps inner 15
+gaps outer 5
