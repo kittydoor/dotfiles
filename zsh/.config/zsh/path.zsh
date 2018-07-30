@@ -1,8 +1,11 @@
 # -U only keeps first of duplicates in arrays
 typeset -U path
 
+# zsh scripts
+path+=("$HOME/.config/zsh/bin")
+
 # personal binaries
-path+=("~/bin")
+path+=("$HOME/bin")
 
 # local user package binaries
 path+=("$HOME/.local/bin")
