@@ -2,6 +2,7 @@
 # ZSH expands ls in following aliases
 if (which exa 1>/dev/null 2>&1); then
   alias ls="exa --color=auto"
+  alias tree="ls --tree"
 else
   alias ls="ls --color=auto"
 fi
