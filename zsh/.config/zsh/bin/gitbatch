@@ -1,0 +1,45 @@
+#!/bin/zsh
+# go through all folders in $gitdir and fetch + status
+# USAGE
+if [[ $# -lt 2 ]]; then
+  echo "usage: gitbatch <check/pull/clean> <static dirname without trailing ~>";
+  exit 2
+fi
+
+# Store current and set -e
+if [[ -o e ]]; then
+  ERR_EXIT = true;
+else
+  #set -e;
+fi;
+
+# Go to static named dir
+pushd "~$2";
+for dir in */; do
+  pushd $dir;
+  printf '%48s\n' | tr ' ' -;
+  echo $dir;
+  case "$1" in
+    check)
+      git fetch;
+      git status;
+      ;;
+    pull)
+      git pull;
+      ;;
+    clean)
+      git clean -xi;
+      ;;
+    *)
+      echo "Subcommand isn't implemented. Quitting...";
+      exit 3;
+      ;;
+  esac;
+  popd;
+done;
+popd;
+
+# Unset -e if it wasn't set before
+if ! ERR_EXIT; then
+  set +e;
+fi;
