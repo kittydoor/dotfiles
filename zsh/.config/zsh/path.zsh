@@ -16,5 +16,8 @@ export npm_config_prefix=~/.local/share/node_modules
 
 # gem ruby binaries
 if (which ruby 1>/dev/null 2>&1); then 
-  path+=("$(ruby -e 'print Gem.user_dir')/bin")
+  GEM_USER_DIR="$(ruby -e 'print Gem.user_dir')/bin"
+  if [[ -z "$GEM_USER_DIR" ]]; then
+    path+=("$GEM_USER_DIR")
+  fi
 fi
