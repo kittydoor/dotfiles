@@ -27,3 +27,11 @@ alias telnetwars="telnet towel.blinkenlights.nl"
 alias cryptorate="curl rate.sx"
 
 # alias backdir="cd /run/media/alev/WesternDrive/backup/ArchRsyncApril21/home/alev"
+
+function ansible-update () {
+  if [ -z $1 ]; then
+    echo A tag must be specified
+  else
+    ansible-playbook -vv -b --ask-become-pass --user pod-adm-kpa --key-file=~/.ssh/id_ed25519_podictive -i test site.yml -t $1
+  fi
+}
