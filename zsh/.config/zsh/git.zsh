@@ -5,6 +5,12 @@ setopt prompt_subst
 PROMPT=\$vcs_info_msg_0_\ $PROMPT
 zstyle ':vcs_info:git:*' formats '%b'
 
+### Aliases
+
+alias gs="git status"
+alias gc="git checkout"
+alias gco="git commit"
+alias gd="git diff"
 
 ### Static Named Directories
 
