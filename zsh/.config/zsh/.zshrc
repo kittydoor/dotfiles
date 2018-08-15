@@ -15,6 +15,9 @@ prompt walters
 # zle vi mode
 bindkey -v
 
+bindkey '^[[A' up-line-or-search
+bindkey '^[[B' down-line-or-search
+
 # source various files
 source $ZDOTDIR/path.zsh
 source $ZDOTDIR/aliases.zsh
