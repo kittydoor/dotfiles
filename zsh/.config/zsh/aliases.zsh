@@ -15,6 +15,9 @@ alias download="curl -O -L -C -"
 alias cclip="xclip -selection clipboard"
 alias clipp="xclip -selection clipboard -o"
 
+### Shortcut names
+alias doco="docker-compose"
+
 ### VPN
 alias vpnup="sudo systemctl start openvpn-client@client"
 alias vpndown="sudo systemctl stop openvpn-client@client"
