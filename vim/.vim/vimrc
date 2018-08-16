@@ -162,7 +162,7 @@ function SetPythonOptions()
   setlocal sw=4
   setlocal expandtab
   highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-  match OverLength /\%81v.\+/
+  match OverLength /\%80v.\+/
 endfunction
 
 if has('unnamedplus')
