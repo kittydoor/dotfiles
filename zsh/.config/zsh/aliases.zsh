@@ -10,7 +10,6 @@ alias ll="ls -al"
 alias l.="ls -d .*"
 
 ### Ease of Use Commands
-alias session="tmux new -As "
 alias pubip="wget http://ipinfo.io/ip -qO -" 
 alias download="curl -O -L -C -"
 alias cclip="xclip -selection clipboard"
@@ -27,6 +26,14 @@ alias telnetwars="telnet towel.blinkenlights.nl"
 alias cryptorate="curl rate.sx"
 
 # alias backdir="cd /run/media/alev/WesternDrive/backup/ArchRsyncApril21/home/alev"
+
+function session () {
+  if [ -z $1 ]; then
+    tmux list-sessions
+  else
+    tmux new -As $1
+  fi
+}
 
 function ansible-update () {
   if [ -z $1 ]; then
