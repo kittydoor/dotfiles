@@ -38,6 +38,11 @@ if [ -f /usr/bin/compton ]; then
   compton -CGb
 fi;
 
+# gnome-keyring (or kwallet) required by owncloud
+
+eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+export SSH_AUTH_SOCK
+
 # mute sound on boot
 amixer sset Master mute
 
