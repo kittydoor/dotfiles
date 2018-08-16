@@ -36,4 +36,5 @@ if [ -f /usr/bin/compton ]; then
   compton -CGb
 fi;
 
+amixer sset Master mute
 exec i3 --shmlog-size=2614400
