@@ -139,10 +139,10 @@ uci set wireless.nyaa_wifi.encryption=$WI_ENC
 uci set wireless.kitties5.encryption=$WI_ENC
 uci set wireless.kitties.encryption=$WI_ENC
 
-uci set wireless.nyaa_wifi5.key=$nyaa_wifi_key
-uci set wireless.nyaa_wifi.key=$nyaa_wifi_key
-uci set wireless.kitties5.key=$kitties_key
-uci set wireless.kitties.key=$kitties_key
+uci set wireless.nyaa_wifi5.key=$NYAAKEY
+uci set wireless.nyaa_wifi.key=$NYAAKEY
+uci set wireless.kitties5.key=$KITTIESKEY
+uci set wireless.kitties.key=$KITTIESKEY
 
 # === 2) Setup the radios =====================
 echo 'Setting up and enabling the radios'
