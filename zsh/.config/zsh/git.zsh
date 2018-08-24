@@ -15,7 +15,8 @@ alias gd="git diff"
 ### Static Named Directories
 
 hash -d git=~/Documents/Git
-hash -d vmaas=~git/VMaaS
-hash -d pod=~/Documents/Podictive
+hash -d pod=~git/podictive
+hash -d vmaas=~git/podictive/vmaas
+hash -d poddoc=~/Documents/Podictive
 
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
