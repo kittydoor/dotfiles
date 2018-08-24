@@ -23,7 +23,7 @@ alias vpnup="sudo systemctl start openvpn-client@client"
 alias vpndown="sudo systemctl stop openvpn-client@client"
 
 ### Cool websites
-alias weather="curl wttr.in"
+alias weather="curl wttr.in/amsterdam"
 alias badhorse="traceroute bad.horse"
 alias telnetwars="telnet towel.blinkenlights.nl"
 alias cryptorate="curl rate.sx"
