@@ -26,6 +26,7 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'vim-scripts/a.vim'
 " Plugin 'w0rp/ale'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'pangloss/vim-javascript'
 
 call vundle#end()
 
