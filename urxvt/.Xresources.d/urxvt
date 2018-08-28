@@ -7,9 +7,21 @@ URxvt*scrollWithBuffer: true
 ! scroll back to the bottom on keypress
 URxvt*scrollTtyKeypress: true
 
+! default font settings
 URxvt*font: xft:DejaVu Sans Mono:size=12
 
+! for tighter spacing
+! URxvt*letterSpace: -1
+
+! disables ugly scrollbar
 URxvt*scrollBar: false
 
-URxvt.perl-ext-common: default,resize-font
 ! urxvt.perl-ext-common: default,tabbed,matcher,resize-font,-tabbed
+URxvt.perl-ext-common: default,matcher,resize-font
+
+! matcher settings
+URxvt.url-launcher: /usr/bin/xdg-open
+URxvt.matcher.button: 1
+
+! Disable printing the terminal contents when pressing PrintScreen.
+URxvt.print-pipe: "cat > /dev/null"
