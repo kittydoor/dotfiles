@@ -11,6 +11,7 @@ alias l.="ls -d .*"
 
 ### Ease of Use Commands
 alias pubip="wget http://ipinfo.io/ip -qO -" 
+#alias pubip="wget ident.me -qO - && echo" # ident.me doesn't return newline
 alias download="curl -O -L -C -"
 alias cclip="xclip -selection clipboard"
 alias clipp="xclip -selection clipboard -o"
