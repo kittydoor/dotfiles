@@ -10,3 +10,6 @@ URxvt*scrollTtyKeypress: true
 URxvt*font: xft:DejaVu Sans Mono:size=12
 
 URxvt*scrollBar: false
+
+URxvt.perl-ext-common: default,resize-font
+! urxvt.perl-ext-common: default,tabbed,matcher,resize-font,-tabbed
