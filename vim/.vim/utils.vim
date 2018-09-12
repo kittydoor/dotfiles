@@ -6,7 +6,7 @@
 " Delete trailing white space on save, useful for Python and CoffeeScript
 function DeleteTrailingWhitespace()
   exe "normal mz"
-  %s/\s\+$//ge
+  %s/\s\+$//e
   exe "normal `z"
 endfunc
 
