@@ -206,6 +206,27 @@ uci set dhcp.gate.leasetime="12h"
 
 uci commit dhcp
 
+# === Firewall
+
+uci set firewall.ssh_link=rule
+uci set firewall.ssh_link.name="ssh-link"
+uci set firewall.ssh_link.target="ACCEPT"
+uci set firewall.ssh_link.proto="tcp"
+uci set firewall.ssh_link.src="wan"
+uci set firewall.ssh_link.dest_port="22"
+
+uci set firewall.ssh_core=redirect
+uci set firewall.ssh_core.name="ssh-core"
+uci set firewall.ssh_core.target="DNAT"
+uci set firewall.ssh_core.proto="tcp"
+uci set firewall.ssh_core.src="wan"
+uci set firewall.ssh_core.src_dport="2222"
+uci set firewall.ssh_core.dest="lan"
+uci set firewall.ssh_core.dest_ip="192.168.1.2"
+uci set firewall.ssh_core.dest_port="22"
+
+uci commit firewall
+
 # --- end of script ---
 
 reboot
