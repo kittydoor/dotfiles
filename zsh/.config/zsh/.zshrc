@@ -15,8 +15,14 @@ prompt walters
 # zle vi mode
 bindkey -v
 
-bindkey '^[[A' up-line-or-search
-bindkey '^[[B' down-line-or-search
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+# Alternative: up-line-or-search, which uses only the first word,
+# and doesn't require autoload and zle
 
 # source various files
 source $ZDOTDIR/path.zsh
