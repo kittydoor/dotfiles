@@ -1,13 +1,11 @@
 " === GENERIC ===
 
-set nocompatible
-
 set number
 set ruler
 set laststatus=2 " why two?
 
-set ts=2
-set sw=2
+set tabstop=2
+set shiftwidth=2
 set expandtab
 
 set textwidth=0
@@ -27,7 +25,7 @@ set ffs=unix,dos,mac
 set autoindent
 set noexpandtab
 set smartindent
-set smarttab
+" set smarttab " deprecated
 
 set shiftwidth=8
 set tabstop=8
@@ -47,6 +45,7 @@ set mouse=a
 set ttimeoutlen=10
 
 filetype plugin indent on
-syntax enable
+" syntax enable " Keeps current highlight colors
+syntax on " Overwrites current highlight colors
 set background=dark
 colorscheme solarized
