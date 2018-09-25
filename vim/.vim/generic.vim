@@ -1,7 +1,4 @@
 " === GENERIC ===
-set nocompatible
-filetype plugin indent on
-
 set number
 set ruler
 set laststatus=2 " why two?
@@ -46,7 +43,6 @@ set mouse=a
 
 set ttimeoutlen=10
 
-filetype plugin indent on
 " syntax enable " Keeps current highlight colors
 syntax on " Overwrites current highlight colors
 set background=dark
