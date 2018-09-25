@@ -46,3 +46,16 @@ function ansible-update () {
     ansible-playbook -vv -b --ask-become-pass --user pod-adm-kpa -i test site.yml -t $1
   fi
 }
+
+# this function will take local, remote, or other commands,
+# in order to use different flags
+# example local doesn't have compression
+# while remote does
+#function backup () {
+#  if [ -z $1 ]; then
+#    1="--help" 
+#  else if [ 
+#  fi
+#}
+alias backup="rsync --archive --verbose --partial --progress"
+#alias backup="rsync -avP"
