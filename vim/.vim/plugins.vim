@@ -1,51 +1,44 @@
 " === PLUGINS === 
-set nocompatible " required
-filetype off     " required
-
-let iCanHazVundle=1
-let vundle_readme=expand('~/.vim/bundle/Vundle.vim/README.md')
-if !filereadable(vundle_readme)
-  echo "Installing Vundle..."
-  echo ""
-  silent !mkdir -p ~/.vim/bundle
-  silent !git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-  let iCanHazVundle=0
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/bundle')
 
-Plugin 'VundleVim/Vundle.vim'
+Plug 'junegunn/vim-plug'
 
 " Color Scheme
-Plugin 'altercation/vim-colors-solarized'
+Plug 'altercation/vim-colors-solarized'
 
 " === AutoCompletion ===
 " General Autocomplete
-Plugin 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe', {
+    \ 'do': './install.py',
+    \ }
+
 " HTML generation
-Plugin 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim'
+
+" Language Server Protocol
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 
 " === Python ===
-Plugin 'Vimjas/vim-python-pep8-indent' " Fixed python indentation
+Plug 'Vimjas/vim-python-pep8-indent' " Fixed python indentation
 
 " === File Navigation ===
-Plugin 'scrooloose/nerdtree'
-" Plugin 'vim-scripts/a.vim' " Currently not used
+Plug 'scrooloose/nerdtree'
 
 " === Unused ===
-" Plugin 'ervandew/supertab' " Replaced by YCM
-" Plugin 'vim-syntastic/syntastic' " Using make lint instead
-" Plugin 'davidhalter/jedi-vim' " Replaced by YCM
-" Plugin 'ctrlpvim/ctrlp.vim' " Fuzzy file searcher, NERDTree for now
-" Plugin 'w0rp/ale' " Async linting and LSP ?
+" Plug 'vim-scripts/a.vim' " Currently not used
+" Plug 'ervandew/supertab' " Replaced by YCM
+" Plug 'vim-syntastic/syntastic' " Using make lint instead
+" Plug 'davidhalter/jedi-vim' " Replaced by YCM
+" Plug 'ctrlpvim/ctrlp.vim' " Fuzzy file searcher, NERDTree for now
+" Plug 'w0rp/ale' " Async linting and LSP ?
 " TODO: Perhaps implement python-language-server + LSP?
-
-call vundle#end()
-
-if iCanHazVundle == 0
-  echo "Installing Bundles"
-  :PluginInstall
-endif
-
-filetype plugin indent on
+call plug#end()
