@@ -26,16 +26,19 @@ function! BuildYCM(info)
     !./install.py
   endif
 endfunction
-Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+" Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 
 " HTML generation
 Plug 'mattn/emmet-vim'
 
-" Language Server Protocol
+" === Language Server Protocol ===
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
+
+" === Auto-Completion ===
+Plug 'ervandew/supertab'
 
 " === Python ===
 Plug 'Vimjas/vim-python-pep8-indent' " Fixed python indentation
