@@ -15,6 +15,7 @@ locale.conf -> locale-gen -> LANG=en
 pacman -S zsh sudo git vim tmux stow dialog wpa_supplicant openssh intel-ucode imagemagick
 -S pkgfile
 -S xsetroot #for i3
+-S compton gimp neovim
 pkgfile --update
 useradd -m -G wheel -s /bin/zsh kitty
 visudo
