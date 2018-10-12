@@ -16,6 +16,7 @@ pacman -S zsh sudo git vim tmux stow dialog wpa_supplicant openssh intel-ucode i
 -S pkgfile
 -S xsetroot #for i3
 -S compton gimp neovim
+-S astyle
 pkgfile --update
 useradd -m -G wheel -s /bin/zsh kitty
 visudo
