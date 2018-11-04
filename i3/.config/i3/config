@@ -189,6 +189,9 @@ bindsym $mod+b exec i3lock -c 000000
 # function keys
 bindsym XF86MonBrightnessUp exec --no-startup-id ~/.config/i3/brightness.sh inc 10 >> ~/.i3execlog
 bindsym XF86MonBrightnessDown exec --no-startup-id ~/.config/i3/brightness.sh dec 10 >> ~/.i3execlog
+bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.config/i3/volume.sh inc 5 >> ~/.i3execlog
+bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/i3/volume.sh dec 5 >> ~/.i3execlog
+bindsym XF86AudioMute exec --no-startup-id ~/.config/i3/volume.sh toggle >> ~/.i3execlog
 bindsym --release Print exec --no-startup-id ~/.config/i3/printscreen.sh
 
 # default workspace layout
