@@ -9,7 +9,7 @@ windows:
   - ls
 - window_name: core
   shell_command_before:
-  - cd ~vmaas/vmaasui
+  - cd ~vmaas/vmaas-core
   - export ENV=dev
   panes:
   - shell_command:
@@ -18,7 +18,7 @@ windows:
   - ranger
 - window_name: api
   shell_command_before:
-  - cd ~vmaas/controller-rest-generic
+  - cd ~vmaas/scanner-controllers
   - export ENV=dev
   panes:
   - shell_command:
