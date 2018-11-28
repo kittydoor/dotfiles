@@ -41,7 +41,7 @@ function session () {
 
 function ansible-update () {
   if [ -z $1 ]; then
-    echo A tag must be specified
+    ansible-playbook -vv -b --ask-become-pass --user pod-adm-kpa -i test site.yml
   else
     ansible-playbook -vv -b --ask-become-pass --user pod-adm-kpa -i test site.yml -t $1
   fi
