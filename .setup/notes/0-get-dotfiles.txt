@@ -1,3 +1,9 @@
-if on wifi, wifi-menu
+ls /sys/firmware/efi/efivars # check if in uefi mode
+
+ping archlinux.org
+else, wifi-menu, and ping again
+
+timedatectl set-ntp true
+
 pacman -Sy git (also tmux for convenience?)
 git clone https://gitlab.com/kittydoor/dotfiles
