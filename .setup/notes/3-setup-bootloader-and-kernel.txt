@@ -1,0 +1,9 @@
+# KERNEL
+# Add hooks to /etc/mkinitcpio.conf
+# example (additions in capitals, all must be lowercase):
+# base udev autodetect KEYBOARD modconf block ENCRYPT LVM2 filesystems ~keyboard~ fsck
+# keyboard for keys, keymap (optional) for non-us, encrypt for encryption, lvm2 for lvm
+
+mkinitcpio -p linux
+
+# GRUB
