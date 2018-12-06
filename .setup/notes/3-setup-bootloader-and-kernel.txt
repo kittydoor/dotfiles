@@ -6,4 +6,13 @@
 
 mkinitcpio -p linux
 
-# GRUB
+# GRUB - Install
+pacman -S grub efibootmgr
+
+grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
+
+# GRUB - Configuration
+
+
+# last step
+grub-mkconfig -o /boot/grub/grub.cfg
