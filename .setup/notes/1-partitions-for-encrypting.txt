@@ -1,0 +1,32 @@
+gdisk /dev/sda, partitions:
+- esp /dev/sda1 ef00 256M /efi
+- boot /dev/sda2 8300 256M /boot
+- lvm /dev/sda3 8e00 384G / and /home
+
+# esp
+mkfs.fat -F 32 -n esp /dev/sda1
+
+# boot
+cryptsetup luksFormat /dev/sda2
+cryptsetup open /dev/sda2 cryptboot
+mkfs.ext4 -L boot /dev/mapper/cryptboot
+
+# lvm
+cryptsetup luksFormat --type luks2 /dev/sda3
+cryptsetup open /dev/sda3 cryptlvm
+pvcreate /dev/mapper/cryptlvm
+vgcreate cryptlvm /dev/mapper/cryptlvm # could also be named differently
+lvcreate -L 128G cryptlvm -n root
+lvcreate -l 100%FREE cryptlvm -n home
+
+# mounting
+mount /dev/cryptlvm/root /mnt
+
+mkdir /mnt/home
+mount /dev/cryptlvm/home /mnt/home
+
+mkdir /mnt/efi
+mount /dev/sda1 /mnt/efi
+
+mkdir /mnt/boot
+mount /dev/mapper/cryptboot /mnt/boot
