@@ -1,0 +1,8 @@
+pacman -S\
+  vim-...\
+  firefox-developer-edition\
+  ...
+
+stow stuff
+
+setup.d stuff
