@@ -1,3 +1,14 @@
+#!/bin/bash
+
+yns () {
+  read -p "Y/S/N" choice
+  case "$choice" in
+    y|Y ) echo "Continuing...";;
+    s|S ) /bin/bash;;
+    * ) echo "Exitting"; exit 1;;
+  esac
+}
+
 # gdisk /dev/sda, partitions:
 # - esp /dev/sda1 ef00 1G /efi
 # - boot /dev/sda2 8300 1G /boot
@@ -7,6 +18,8 @@ sgdisk -n 1:0:+1G -t 1:ef00 /dev/sda
 sgdisk -n 2:0:+1G -t 2:8300 /dev/sda
 sgdisk -n 3:0:+384G -t 3:8e00 /dev/sda
 
+yns
+
 # esp
 mkfs.fat -F 32 -n ESP /dev/sda1
 
@@ -15,15 +28,28 @@ cryptsetup luksFormat /dev/sda2
 cryptsetup open /dev/sda2 cryptboot
 mkfs.ext4 -L boot /dev/mapper/cryptboot
 
+yns
+
 # lvm
 cryptsetup luksFormat --type luks2 /dev/sda3
 cryptsetup open /dev/sda3 cryptlvm
 pvcreate /dev/mapper/cryptlvm
+
+yns
+
 vgcreate cryptlvm /dev/mapper/cryptlvm # could also be named differently
+
+yns
+
 lvcreate -L 128G cryptlvm -n root
 lvcreate -l 100%FREE cryptlvm -n home
+
+yns
+
 mkfs.ext4 -L root /dev/cryptlvm/root
 mkfs.ext4 -L home /dev/cryptlvm/home
+
+yns
 
 # mounting
 mount /dev/cryptlvm/root /mnt
