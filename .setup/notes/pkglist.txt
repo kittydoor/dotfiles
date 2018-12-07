@@ -1,0 +1,60 @@
+# pkglist.txt
+#############
+# use with: sed -e "/^#/d" -e "s/#.*//" pkglist.txt | pacman -S --needed -
+
+# General
+zsh
+vim
+sudo
+git
+tmux
+stow
+dialog
+wpa_supplicant
+openssh
+intel-ucode
+imagemagick
+pkgfile
+xsetroot  # for i3
+compton
+gimp
+neovim
+astyle
+htop
+
+# Xorg
+i3
+xorg-server
+xorg-xinput
+xorg-xinit
+xclip
+ttf-dejavu
+rxvt-unicode
+firefox-developer-edition
+mpv
+dmenu
+chromium
+feh
+youtube-dl
+zathura
+
+# Is this needed?
+# acpi
+# bc
+# playerctl
+# alsa-utils
+# sysstat
+# atool
+# autoconf
+# automake
+# baobab
+# bind-tools
+# binutils
+# bpython
+# coreutils
+# bash
+# cryptsetup
+# deluge
+
+# AUR
+# yay

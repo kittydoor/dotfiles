@@ -1,8 +1,15 @@
-pacman -S\
-  vim-...\
-  firefox-developer-edition\
-  ...
+# Install packages
+sed -e "/^#/d" -e "s/#.*//" pkglist.txt | pacman -S --needed -
 
-stow stuff
+pkgfile --update
 
-setup.d stuff
+passwd root and kitty
+useradd -m -G wheel -s /bin/zsh kitty
+visudo
+
+# setup.d stuff
+
+# setup intel microcode
+
+# stow stuff
+startx
