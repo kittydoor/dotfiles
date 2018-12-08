@@ -74,6 +74,11 @@ mkfs.ext4 -L root /dev/cryptlvm/root
 mkfs.ext4 -L home /dev/cryptlvm/home
 }
 
+open_crypts () {
+  cryptsetup open /dev/sda2 cryptboot
+  cryptsetup open /dev/sda3 cryptlvm
+}
+
 mount_all () {
   mount /dev/cryptlvm/root /mnt
 
@@ -86,5 +91,9 @@ mount_all () {
   mount /dev/mapper/cryptboot /mnt/boot
 }
 
-setup_partitioning
-setup_partition_all
+if [ -z $1 ]; then
+  setup_partitioning
+  setup_partition_all
+else
+  $1
+fi
