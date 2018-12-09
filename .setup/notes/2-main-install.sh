@@ -45,7 +45,7 @@ root:$6$acKP91SbTv0uqzmP$BB4gBLdfWYjWGWX8GWHETJyxMcOo7eX433ePJaXsvXja8.T0IkYYUns
 kitty:$6$QZBx6bYoJJUgUkN6$KwUTLc8M4LkTBhEiajdWgJ.qv3zk9pgvZwgpAAlIFGWYItlilosL/zydx8w335TF1RNiYDDC0qkVrtOuma6pA1
 EOF2
 
-su -u kitty git clone https://gitlab.com/kittydoor/dotfiles /home/kitty/dotfiles
+su kitty -c "git clone https://gitlab.com/kittydoor/dotfiles /home/kitty/dotfiles"
 EOF
 }
 
