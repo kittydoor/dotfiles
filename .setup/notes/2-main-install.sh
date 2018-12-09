@@ -5,7 +5,7 @@ set -o xtrace
 set -o pipefail
 
 strap_packages () {
-  pacstrap /mnt --needed base zsh # can also append here
+  pacstrap /mnt --needed base zsh dialog git # can also append here
 }
 
 configure_fstab () {
@@ -40,9 +40,12 @@ echo nyaa-aigent > /etc/hostname
 
 # users
 id -u kitty || useradd -m -G users,wheel -s /bin/zsh kitty # lazy eval for useradd
-cat <<"EOF" | chpasswd -e
+cat <<"EOF2" | chpasswd -e
 root:$6$acKP91SbTv0uqzmP$BB4gBLdfWYjWGWX8GWHETJyxMcOo7eX433ePJaXsvXja8.T0IkYYUns0DTzTn5bMhVg.43R76Icbf3TiHRgXe/
 kitty:$6$QZBx6bYoJJUgUkN6$KwUTLc8M4LkTBhEiajdWgJ.qv3zk9pgvZwgpAAlIFGWYItlilosL/zydx8w335TF1RNiYDDC0qkVrtOuma6pA1
+EOF2
+
+su -u kitty git clone https://gitlab.com/kittydoor/dotfiles /home/kitty/dotfiles
 EOF
 }
 
