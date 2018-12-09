@@ -91,9 +91,10 @@ mount_all () {
   mount /dev/mapper/cryptboot /mnt/boot
 }
 
-if [ -z $1 ]; then
+if [ -z ${1-} ]; then
   setup_partitioning
   setup_partition_all
+  mount_all
 else
   $1
 fi
