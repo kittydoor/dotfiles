@@ -1,6 +1,6 @@
 # pkglist.txt
 #############
-# use with: sed -e "/^#/d" -e "s/#.*//" pkglist.txt | pacman -S --needed -
+# use with: sed -e "/^#/d" -e "s/#.*//" pkglist.txt | pacman -Syu --needed -
 
 # General
 zsh
@@ -15,18 +15,20 @@ openssh
 intel-ucode
 imagemagick
 pkgfile
-xsetroot  # for i3
 compton
 gimp
 neovim
 astyle
 htop
+ranger
 
 # Xorg
 i3
 xorg-server
 xorg-xinput
 xorg-xinit
+# xsetroot for i3
+xorg-xsetroot
 xclip
 ttf-dejavu
 rxvt-unicode
