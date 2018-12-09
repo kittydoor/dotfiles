@@ -1,10 +1,11 @@
+#!/bin/bash
+
 # Install packages
 sed -e "/^#/d" -e "s/#.*//" pkglist.txt | pacman -S --needed -
+# TODO: This doesn't seem to work with lines that have inline comments
 
 pkgfile --update
 
-passwd root and kitty
-useradd -m -G wheel -s /bin/zsh kitty
 visudo
 
 # setup.d stuff
@@ -12,4 +13,4 @@ visudo
 # setup intel microcode
 
 # stow stuff
-startx
+# startx
