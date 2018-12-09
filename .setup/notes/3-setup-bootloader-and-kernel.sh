@@ -13,18 +13,20 @@ set -o pipefail
 
 pacman -S --needed grub efibootmgr
 
-# TODO
-# KERNEL
-# Add hooks to /etc/mkinitcpio.conf
-# example (additions in capitals, all must be lowercase):
-# base udev autodetect KEYBOARD modconf block ENCRYPT LVM2 filesystems ~keyboard~ fsck
-# keyboard for keys, keymap (optional) for non-us, encrypt for encryption, lvm2 for lvm
-
+# check file is one of expected states
+grep "^HOOKS=(base udev autodetect keyboard modconf block encrypt lvm2 filesystems fsck)$" /etc/mkinitcpio.conf ||
+  grep "^HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)$" /etc/mkinicpio.conf &&
+  sed -i "s/^HOOKS=([a-z ]*)$/HOOKS=(base udev autodetect keyboard modconf block encrypt lvm2 filesystems fsck)/" /etc/mkinitcpio.conf
+# TODO: Make the code actually add the options to any state, rather than only this one
 
 mkinitcpio -p linux
+grep "^GRUB_ENABLE_CRYPTODISK=y$" /etc/default/grub ||
+  grep "^#GRUB_ENABLE_CRYPTODISK=[yn]$" /etc/default/grub &&
+  sed -i 's/^#GRUB_ENABLE_CRYPTODISK=[yn]/GRUB_ENABLE_CRYPTODISK=y/' /etc/default/grub
 
-sed -i 's/^#GRUB_ENABLE_CRYPTODISK=[yn]/GRUB_ENABLE_CRYPTODISK=y/' /etc/default/grub
-sed -i "s/^GRUB_CMDLINE_LINUX=\"\"/GRUB_CMDLINE_LINUX=\"cryptdevice=UUID=$(blkid -s UUID -o value /dev/sda3):cryptlvm\"/" /etc/default/grub
+grep "^GRUB_CMDLINE_LINUX=\"cryptdevice=UUID=$(blkid -s UUID -o value /dev/sda3):cryptlvm\"" /etc/default/grub ||
+  grep "^GRUB_CMDLINE_LINUX=\"\"$"  /etc/default/grub &&
+  sed -i "s/^GRUB_CMDLINE_LINUX=\"\"/GRUB_CMDLINE_LINUX=\"cryptdevice=UUID=$(blkid -s UUID -o value /dev/sda3):cryptlvm\"/" /etc/default/grub
 # TODO: Make the code above add the option no matter previous configured state, rather than only if empty
 # TODO: Does this evaluate blkid in the heredoc or in the chroot?
 
