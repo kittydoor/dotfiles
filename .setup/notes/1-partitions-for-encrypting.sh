@@ -57,7 +57,7 @@ setup_partition_lvm_crypt () {
 }
 
 setup_partition_lvm_pv () {
-  pvcreate /dev/mapper/cryptlvm
+  pvcreate -ff /dev/mapper/cryptlvm
 }
 
 setup_partition_lvm_vg () {
@@ -89,6 +89,15 @@ mount_all () {
   mount /dev/cryptlvm/home /mnt/home
   mount /dev/sda1 /mnt/efi
   mount /dev/mapper/cryptboot /mnt/boot
+}
+
+close_all () {
+  umount -R /mnt || true
+
+  vgchange -an /dev/mapper/cryptlvm || true
+
+  cryptsetup close /dev/mapper/cryptboot || true
+  cryptsetup close /dev/mapper/cryptlvm || true
 }
 
 if [ -z ${1-} ]; then
