@@ -5,7 +5,7 @@ set -o xtrace
 set -o pipefail
 
 strap_packages () {
-  pacstrap /mnt --needed base zsh dialog git # can also append here
+  pacstrap /mnt --needed base zsh dialog wpa_supplicant git # can also append here
 }
 
 configure_fstab () {
