@@ -197,5 +197,5 @@ bindsym --release Print exec --no-startup-id ~/.config/i3/printscreen.sh
 # default workspace layout
 # workspace_layout tabbed
 
-gaps inner 15
-gaps outer 5
+# gaps inner 15
+# gaps outer 5
