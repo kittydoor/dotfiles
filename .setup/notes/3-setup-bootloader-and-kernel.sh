@@ -36,8 +36,8 @@ grep "^GRUB_CMDLINE_LINUX=\"cryptdevice=UUID=$(blkid -s UUID -o value /dev/sda3)
 # TODO: Make the code above add the option no matter previous configured state, rather than only if empty
 # TODO: Does this evaluate blkid in the heredoc or in the chroot?
 
-grep -P "^cryptboot\t/dev/sda3\tnone\tluks$" /etc/crypttab ||
-  echo -e "cryptboot\t/dev/sda3\tnone\tluks" >> /etc/crypttab
+grep -P "^cryptboot\t/dev/sda2\tnone\tluks$" /etc/crypttab ||
+  echo -e "cryptboot\t/dev/sda2\tnone\tluks" >> /etc/crypttab
 
 grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
