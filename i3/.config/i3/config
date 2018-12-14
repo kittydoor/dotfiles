@@ -154,10 +154,10 @@ bar {
 set $mode_display DUAL(d), SINGLE(s)
 mode "$mode_display" {
   # activate secondary display
-  bindsym d exec --no-startup-id xrandr --output HDMI-2 --auto --right-of HDMI-1, mode "default"
+  bindsym d exec --no-startup-id ~/.config/i3/multihead.sh double
 
   # deactivate secondary display
-  bindsym s exec --no-startup-id xrandr --output HDMI-2 --auto --off, mode "default"
+  bindsym s exec --no-startup-id ~/.config/i3/multihead.sh single
   #
   # back to normal: Enter or Escape or $mod+r
   bindsym Return mode "default"
