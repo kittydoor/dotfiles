@@ -56,3 +56,8 @@ setopt HIST_FIND_NO_DUPS
 # [ -f /home/kitty/.travis/travis.sh ] && source /home/kitty/.travis/travis.sh
 
 # sudo du --exclude /run/media/kitty --exclude /proc -h -d 2 /var | sort -h | less
+
+# Source completion.d
+for file in completion.d/*; do
+  source $file
+done
