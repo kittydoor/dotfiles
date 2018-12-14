@@ -58,6 +58,6 @@ setopt HIST_FIND_NO_DUPS
 # sudo du --exclude /run/media/kitty --exclude /proc -h -d 2 /var | sort -h | less
 
 # Source completion.d
-for file in completion.d/*; do
-  source $file
+for file in $ZDOTDIR/completion.d/*; do
+  source $file || echo "$file failed, ignoring..."
 done
