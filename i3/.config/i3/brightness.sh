@@ -1,4 +1,9 @@
 #!/bin/bash
+set -o errexit
+set -o nounset
+set -o pipefail
+set -o xtrace
+
 if ! [ -d /sys/class/backlight/intel_backlight ]; then
   exit 1
 fi;
