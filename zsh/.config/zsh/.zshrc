@@ -3,6 +3,8 @@ compinit
 promptinit
 prompt walters
 
+unsetopt BEEP
+
 # zstyle :compinstall filename '/home/kitty/.zshrc'
 # 
 # 
