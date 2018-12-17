@@ -21,6 +21,7 @@ neovim
 astyle
 htop
 ranger
+rsync
 
 # Xorg
 i3-wm
