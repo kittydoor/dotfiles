@@ -1,8 +1,8 @@
 #!/bin/bash
 set -o errexit
 set -o nounset
-set -o xtrace
 set -o pipefail
+set -o xtrace
 
 setup_grub () {
   cat <<"EOF" | arch-chroot /mnt bash

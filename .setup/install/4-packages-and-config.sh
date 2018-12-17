@@ -1,4 +1,8 @@
 #!/bin/bash
+set -o errexit
+set -o nounset
+set -o pipefail
+set -o xtrace
 
 # Install packages
 sed -e "/^#/d" -e "s/#.*//" pkglist.txt | pacman -S --needed -
