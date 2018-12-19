@@ -154,7 +154,7 @@ bar {
 set $mode_display DUAL(d), SINGLE(s)
 mode "$mode_display" {
   # activate secondary display
-  bindsym d exec --no-startup-id ~/.config/i3/multihead.sh double
+  bindsym d exec --no-startup-id ~/.config/i3/multihead.sh dual
 
   # deactivate secondary display
   bindsym s exec --no-startup-id ~/.config/i3/multihead.sh single
