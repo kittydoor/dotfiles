@@ -20,6 +20,8 @@ neovim
 astyle
 htop
 ranger
+# for ranger image previews
+w3m
 rsync
 
 # Xorg
@@ -42,7 +44,8 @@ firefox-developer-edition
 mpv
 dmenu
 chromium
-feh
+# feh # replaces with sxiv
+sxiv
 youtube-dl
 zathura
 
