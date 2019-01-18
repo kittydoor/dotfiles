@@ -5,8 +5,8 @@ set -o pipefail
 set -o xtrace
 
 # Install packages
-sed -e "/^#/d" -e "s/#.*//" pkglist.txt | pacman -S --needed -
-# TODO: This doesn't seem to work with lines that have inline comments
+grep -o '^[^#]*' pkglist.txt | pacman -S --needed -
+# Can "tr '\n' ' '" to replace newlines with spaces, but pacman stdin recognizes multiple lines
 
 pkgfile --update
 
