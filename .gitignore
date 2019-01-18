@@ -1,5 +1,7 @@
 *~
 *.swp
 .zcompdump
+ssh/.ssh/id_*
+ssh/.ssh/known_hosts
 vim/.vim/bundle
 vim/.vim/autoload
