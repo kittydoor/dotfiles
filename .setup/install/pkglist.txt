@@ -3,11 +3,14 @@
 # use with: sed -e "/^#/d" -e "s/#.*//" pkglist.txt | pacman -Syu --needed -
 
 # General
+base
+base-devel
 zsh
 # vim # gvim instead
 sudo
 git
 tmux
+python-pip
 stow
 dialog
 wpa_supplicant
@@ -23,6 +26,20 @@ ranger
 # for ranger image previews
 w3m
 rsync
+# jq? commanline json processor
+
+# === Development ===
+# = Shell =
+bash-language-server
+# shellcheck
+# Do I want this? ^
+# = Python =
+python-language-server
+# flake8
+# Do I want this? ^
+# = JSON =
+prettier
+
 
 # Xorg
 i3-wm
@@ -48,6 +65,7 @@ chromium
 sxiv
 youtube-dl
 zathura
+zathura-pdf-mupdf
 
 # Is this needed?
 # acpi
