@@ -208,7 +208,7 @@ set $mode_apps_virt "apps/virt:  virt-[m]anager  [s]ynergy  [g]aming"
 mode $mode_apps_virt {
   bindsym m exec virt-manager, mode "default"
   bindsym s exec synergy, mode "default"
-  # bindsym g exec stuff, mode "default"
+  bindsym g exec ~/.config/i3/gaming.sh, mode "default"
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
