@@ -17,4 +17,5 @@ killall synergys || true
 synergys -c ~/.config/i3/synergy.conf
 
 # Connect to it
+# TODO: Sound issues
 virt-viewer -c qemu:///system win-gaming
