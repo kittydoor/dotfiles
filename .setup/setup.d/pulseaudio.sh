@@ -1,4 +1,7 @@
 #!/bin/bash
+set -o xtrace
+set -euo pipefail
+
 # Setup Script for PulseAudio
 pacman -S \
 	pavucontrol \

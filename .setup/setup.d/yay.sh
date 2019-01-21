@@ -1,8 +1,6 @@
-#/bin/bash
-set -o errexit
-set -o nounset
-set -o pipefail
+#!/bin/bash
 set -o xtrace
+set -euo pipefail
 
 cd /tmp
 

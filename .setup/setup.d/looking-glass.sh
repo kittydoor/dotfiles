@@ -1,5 +1,6 @@
 #!/bin/bash
-set -e
+set -o xtrace
+set -euo pipefail
 
 looking_glass_init="/usr/local/bin/looking-glass-init.sh"
 
