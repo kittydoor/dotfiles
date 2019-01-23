@@ -60,5 +60,5 @@ function ansible-update () {
 alias backup="rsync --archive --verbose --partial --progress"
 #alias backup="rsync -avP"
 
-# VU
-alias coco="sshpass -p password ssh -A coco@192.168.122.62"
+alias browser="firefox-developer-edition"
+alias editor="vim"
