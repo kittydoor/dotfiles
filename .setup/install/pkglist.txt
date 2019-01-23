@@ -4,36 +4,42 @@
 
 # General
 base
-base-devel
-zsh
-# vim # gvim instead
 sudo
-git
-tmux
-python-pip
-stow
+zsh
 dialog
+stow
 wpa_supplicant
 openssh
 intel-ucode
-imagemagick
+
+# Arch Linux Utils
 pkgfile
-gimp
-neovim
-astyle
-htop
-ranger
-# for ranger image previews
-w3m
-rsync
-# jq? commanline json processor
+
+# Useful tools
+tmux  # terminal multiplexer, sessions and splits
+htop  # process and resorces
+ncdu  # disk usage browser
+rsync  # file sync locally or through ssh
+ranger  # 3-column file browser
+w3m  # for ranger image previews, also web browser
+# vim  # gvim instead
+imagemagick  # lots of image tools, such as screenshotting
+zathura  # document viewer
+zathura-pdf-mupdf  # pdf and epub plugin for zathura
+dmenu  # simple menu to launch applications or choose option in a list
 
 # === Development ===
+# = General =
+base-devel  # compilers, etc
+git
+astyle  # style formatter for C, and various other languages
+# jq? commanline json processor
 # = Shell =
 bash-language-server
 # shellcheck
 # Do I want this? ^
 # = Python =
+python-pip
 python-language-server
 # flake8
 # Do I want this? ^
@@ -48,10 +54,11 @@ i3lock
 xorg-server
 xorg-xinput
 gvim
+neovim
+gimp
 xorg-xinit
 # xsetroot for i3
-# xorg-xsetroot
-# ^ doesn't work with compton, but this does
+# xorg-xsetroot  # doesn't work with compton, but hsetroot does
 hsetroot
 compton
 xclip
@@ -59,13 +66,10 @@ ttf-dejavu
 rxvt-unicode
 firefox-developer-edition
 mpv
-dmenu
 chromium
-# feh # replaces with sxiv
+# feh  # replaced with sxiv
 sxiv
 youtube-dl
-zathura
-zathura-pdf-mupdf
 
 # Is this needed?
 # acpi
@@ -76,13 +80,10 @@ zathura-pdf-mupdf
 # atool
 # autoconf
 # automake
-# baobab
+# baobab  # using ncdu, is baobab still useful?
 # bind-tools
 # binutils
 # bpython
-# coreutils
-# bash
-# cryptsetup
 # deluge
 
 # AUR
