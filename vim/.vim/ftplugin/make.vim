@@ -1,6 +1,8 @@
 " === MAKE ===
 
-setlocal ts=8
-setlocal sw=8
+setlocal tabstop=8
+setlocal shiftwidth=8
 
 setlocal noexpandtab
+
+autocmd BufWrite Makefile :call DeleteTrailingWhitespace()

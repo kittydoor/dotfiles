@@ -1,8 +1,10 @@
 " === vimrc ===
 
-runtime core.vim " must come before all else
-runtime plugins.vim " must come before generic
-runtime generic.vim " general setup
-runtime utils.vim " some util scripts
-runtime! plugins/*.vim " all plugin configurations
-" Implicit: after/ftplugins " ft specific configurations
+runtime core.vim  " must come before all else
+runtime plugins.vim  " plugin installation
+runtime colors.vim  " colorscheme (requires plugin)
+runtime utils.vim  " some util scripts
+runtime! plugins/*.vim  " all plugin configurations
+
+" Implicit: after/ftplugins  " ft specific configurations
+" after is in order to preserve default ftplugin behavior
