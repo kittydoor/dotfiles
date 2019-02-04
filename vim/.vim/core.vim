@@ -84,6 +84,10 @@ vnoremap <Up> <nop>
 vnoremap <Right> <nop>
 vnoremap <Down> <nop>
 
+" From defaults.vim, disable Q to ex mode, instead format
+map Q gq
+" TODO: Maybe also get last known cursor position and :DiffOrig
+
 " https://stackoverflow.com/questions/33380451/is-there-a-difference-between-syntax-on-and-syntax-enable-in-vimscript
 if !exists("g:syntax_on")
     syntax enable
