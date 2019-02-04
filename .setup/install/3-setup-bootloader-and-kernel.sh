@@ -39,6 +39,14 @@ grep "^GRUB_CMDLINE_LINUX=\"cryptdevice=UUID=$(blkid -s UUID -o value /dev/sda3)
 grep -P "^cryptboot\t/dev/sda2\tnone\tluks$" /etc/crypttab ||
   echo -e "cryptboot\t/dev/sda2\tnone\tluks" >> /etc/crypttab
 
+# TODO: These don't work atm
+# keyfile notes
+# dd bs=512 count=4 if=/dev/random of=/etc/keyfile
+# chmod 600 /etc/keyfile
+# cryptsetup luksAddKey /dev/sda2 /etc/keyfile
+# echo cryptboot\tUUID={dmcrypt uuid}\t/etc/keyfile >> /etc/crypttab
+# change fstab to use name instead
+
 grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 EOF
