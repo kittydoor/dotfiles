@@ -1,5 +1,9 @@
-autoload -Uz compinit promptinit
+autoload -Uz compinit
 compinit
+# Rehash always, so changes to files in PATH are reflected
+zstyle ':completion:*' rehash true
+
+autoload -Uz promptinit
 promptinit
 prompt walters
 
@@ -16,6 +20,12 @@ unsetopt BEEP
 
 # zle vi mode
 bindkey -v
+
+# esc v for edit command in vim
+autoload -U edit-command-line
+zle -N edit-command-line
+# maybe bindkey -M
+bindkey -M vicmd v edit-command-line
 
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
