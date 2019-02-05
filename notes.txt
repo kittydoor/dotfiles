@@ -6,11 +6,16 @@
   * Solve sound delay and glitching issue
   * Only ask for authentication for virsh once
 
+* Audio
+  * Script to switch sinks
+
 * Script for updating core ip in dns
 
 * Setup
   * Mpv MPRIS script
   * Disable arrow keys in zsh to match vim setup
+  * OpenWRT vlan for guests
 
 * On TTYs, make ssh-agent remember ssh keys
 
+# vim:ts=2:sw=2:et
