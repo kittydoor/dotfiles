@@ -191,10 +191,11 @@ mode $mode_display {
 bindsym $mod+x mode $mode_display
 
 # application menu
-set $mode_apps "apps:  [w]eb  [v]irt"
+set $mode_apps "apps:  [w]eb  [v]irt  [s]ystem"
 mode $mode_apps {
-  bindsym w mode $mode_apps_web	
+  bindsym w mode $mode_apps_web
   bindsym v mode $mode_apps_virt
+  bindsym s mode $mode_apps_system
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
@@ -217,6 +218,15 @@ mode $mode_apps_virt {
   bindsym m exec virt-manager, mode "default"
   bindsym s exec synergy, mode "default"
   bindsym g exec ~/.config/i3/gaming.sh, mode "default"
+
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym $mod+space mode "default"
+}
+
+set $mode_apps_system "apps/system:  pulse-[a]udio"
+mode $mode_apps_system {
+  bindsym a exec pavucontrol, mode "default"
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
