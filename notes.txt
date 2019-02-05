@@ -1,0 +1,1 @@
+Disable arrow keys in zsh to match vim setup
