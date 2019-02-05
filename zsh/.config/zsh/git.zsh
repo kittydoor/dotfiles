@@ -7,10 +7,11 @@ zstyle ':vcs_info:git:*' formats '%b'
 
 ### Aliases
 
-alias gs="git status"
-alias gc="git checkout"
-alias gco="git commit"
-alias gd="git diff"
+alias gs="git status "
+alias gc="git checkout "
+alias ga="git add "
+alias gco="git commit "
+alias gd="git diff "
 
 ### Static Named Directories
 
