@@ -66,6 +66,7 @@ ttf-dejavu
 rxvt-unicode
 firefox-developer-edition
 mpv
+playerctl  # fn media control for mpv, also requires mpv-mpris
 chromium
 # feh  # replaced with sxiv
 sxiv
@@ -74,7 +75,6 @@ youtube-dl
 # Is this needed?
 # acpi
 # bc
-# playerctl
 # alsa-utils
 # sysstat
 # atool
@@ -88,3 +88,4 @@ youtube-dl
 
 # AUR
 # yay
+# mpv-mpris  # playerctl support for mpv
