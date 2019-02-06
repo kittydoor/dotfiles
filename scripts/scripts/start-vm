@@ -1,0 +1,33 @@
+#!/bin/bash
+set -o xtrace
+set -euo pipefail
+
+if [[ -z "${1:-}" ]] || [[ "${1:-}" = "-h" ]]; then
+  echo "Usage: vm-start <drive-image> [<cd-image>]"
+fi
+
+TYPE="${1##*.}"
+
+if [[ -z "${2:-}" ]]; then
+  CDROM=""
+else
+  CDROM="-cdrom ${2:-}"
+  
+qemu-system-x86_64 \
+  -enable-kvm \
+  -cpu host \
+  -m 4G \
+  -net nic \
+  -boot menu=on \
+  -drive if=pflash,\
+         format=raw,\
+         readonly,\
+         file=/usr/share/ovmf/x64/OVMF_CODE.fd \
+  -drive if=pflash,\
+         format=raw,\
+         file=my_uefi_vars.bin \
+  "${CDROM}"\
+  -drive file="${1:-}",format="${TYPE}"
+
+# networking doesn't work, need to set that up
+# qemu-img create -f qcow2 img 16G
