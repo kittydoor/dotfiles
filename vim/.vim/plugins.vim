@@ -10,6 +10,8 @@ Plug 'junegunn/vim-plug'  " self register
 
 Plug 'altercation/vim-colors-solarized'  " Color Scheme
 
+Plug 'tpope/vim-surround'  " surrounding parenthesis, brackets, etc
+
 Plug 'mattn/emmet-vim'  " HTML generation
 
 " Language Server Protocol
@@ -20,7 +22,6 @@ Plug 'scrooloose/nerdtree'  " File Navigation
 " === Unused ===
 " Plug 'Vimjas/vim-python-pep8-indent'  " TODO: is this important?
 " Plug 'tpope/vim-sensible'  " core.vim instead
-" Plug 'tpope/vim-surround'  " surrounding parenthesis, brackets, etc
 " Plug 'vim-scripts/a.vim'  " Currently not used
 " Plug 'neoclide/coc.nvim'  " Seems like a promising completion LSP solution
 " Plug 'ervandew/supertab'  " Replaced by YCM
