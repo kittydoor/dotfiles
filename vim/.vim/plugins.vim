@@ -10,9 +10,8 @@ Plug 'junegunn/vim-plug'  " self register
 
 Plug 'altercation/vim-colors-solarized'  " Color Scheme
 
-Plug 'tpope/vim-surround'  " surrounding parenthesis, brackets, etc
-
 Plug 'mattn/emmet-vim'  " HTML generation
+Plug 'tpope/vim-surround'  " Surrounding elements (, {, <, '...
 
 " Language Server Protocol
 Plug 'w0rp/ale'  " Async linting and LSP
