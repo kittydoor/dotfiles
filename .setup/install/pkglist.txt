@@ -45,6 +45,8 @@ python-language-server
 # Do I want this? ^
 # = JSON =
 prettier
+# = Ansible =
+ansible-lint  # ALE
 
 
 # Xorg

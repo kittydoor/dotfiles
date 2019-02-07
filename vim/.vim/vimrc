@@ -4,6 +4,7 @@ runtime core.vim  " must come before all else
 runtime plugins.vim  " plugin installation
 runtime colors.vim  " colorscheme (requires plugin)
 runtime utils.vim  " some util scripts
+runtime autocmd.vim  " autocmd for filetypes
 runtime! plugins/*.vim  " all plugin configurations
 
 " Implicit: after/ftplugins  " ft specific configurations
