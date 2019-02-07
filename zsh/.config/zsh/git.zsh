@@ -8,16 +8,16 @@ zstyle ':vcs_info:git:*' formats '%b'
 ### Aliases
 
 alias gs="git status "
-alias gc="git checkout "
+alias gco="git checkout "
+alias gcm="git commit "
 alias ga="git add "
-alias gco="git commit "
 alias gd="git diff "
+alias gdc="git diff --cached "
+alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' "
+alias gp="git pull "
+alias gpr="git pull --rebase "
 
 ### Static Named Directories
 
 hash -d git=~/Documents/Git
 hash -d pod=~git/podictive
-hash -d vmaas=~git/podictive/vmaas
-hash -d poddoc=~/Documents/Podictive
-
-alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
