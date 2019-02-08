@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Vim - visual editor
+Exec=i3-sensible-terminal -e vim %u

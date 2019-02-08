@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Ranger - File Manager
+Exec=i3-sensible-terminal -e ranger %F
