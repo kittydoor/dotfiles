@@ -23,6 +23,7 @@
   * Profile TERMINAL doesn't work correctly when multiple are found
   * Set st window name to tmux session automatically
   * Figure out the right way (a shell script, alias, etc) to launch st with correct title and tmux
+  * READ: https://superuser.com/questions/187639/zsh-not-hitting-profile
 
 * On TTYs, make ssh-agent remember ssh keys
 
