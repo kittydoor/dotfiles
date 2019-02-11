@@ -19,6 +19,9 @@
 * Vim
   * command to resize window exactly to file length
 
+* Shell
+  * Profile TERMINAL doesn't work correctly when multiple are found
+
 * On TTYs, make ssh-agent remember ssh keys
 
 # vim:ts=2:sw=2:et
