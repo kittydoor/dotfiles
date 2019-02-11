@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export TERMINAL="$(basename "$(type -p st-kitty st urxvt)")"
+export TERMINAL="st"
 export EDITOR="vim"
 export BROWSER="firefox-developer-edition"
 export FILE="ranger"
