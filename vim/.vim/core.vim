@@ -106,5 +106,7 @@ set ignorecase  " ignore case in searches
 
 set mouse=a  " enable mouse
 
+set path=**  " search all dirs in current dir
+
 " set lazyredraw  " makes large macros work much faster
 set background=dark
