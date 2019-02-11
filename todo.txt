@@ -27,4 +27,8 @@
 
 * On TTYs, make ssh-agent remember ssh keys
 
+* OpenWRT
+  * Setup guest vlan and private vlan
+  * Upgrade to 18.06.2
+
 # vim:ts=2:sw=2:et
