@@ -10,7 +10,7 @@ alias ll="ls -al"
 alias l.="ls -d .*"
 
 ### Ease of Use Commands
-alias pubip="wget http://ipinfo.io/ip -qO -" 
+alias pubip="wget http://ipinfo.io/ip -qO -"
 #alias pubip="wget ident.me -qO - && echo" # ident.me doesn't return newline
 alias download="curl -O -L -C -"
 alias cclip="xclip -selection clipboard"
@@ -53,8 +53,8 @@ function ansible-update () {
 # while remote does
 #function backup () {
 #  if [ -z $1 ]; then
-#    1="--help" 
-#  else if [ 
+#    1="--help"
+#  else if [
 #  fi
 #}
 alias backup="rsync --archive --verbose --partial --progress"
