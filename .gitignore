@@ -5,3 +5,6 @@
 .ssh/known_hosts
 .vim/bundle
 .vim/autoload
+
+# self
+.dotfiles
