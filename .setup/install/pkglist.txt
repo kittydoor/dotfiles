@@ -73,6 +73,7 @@ chromium
 # feh  # replaced with sxiv
 sxiv
 youtube-dl
+noto-fonts-cjk  # japanese/chinese/korean fonts
 
 # Is this needed?
 # acpi
