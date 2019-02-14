@@ -1,3 +1,6 @@
+* dotfiles
+  * fix file autocomplete on tab `dotfiles add <TAB>`
+
 * Wireless
   * From the wireless info for uni, configure wireless profile
   * Figure out why systemd-resolved causes issues with uni wifi
