@@ -1,6 +1,9 @@
 * dotfiles
   * fix file autocomplete on tab `dotfiles add <TAB>`
 
+* st - terminal
+  * Check if terminfo in right dir (investigate the folder I found in ~/.terminfo)
+
 * Wireless
   * From the wireless info for uni, configure wireless profile
   * Figure out why systemd-resolved causes issues with uni wifi
