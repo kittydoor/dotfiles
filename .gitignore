@@ -1,10 +1,54 @@
+# Self
+/.dotfiles
+
+# Swap and Dump
 *~
 *.swp
 .zcompdump
-.ssh/id_*
-.ssh/known_hosts
-.vim/bundle
-.vim/autoload
 
-# self
-.dotfiles
+# SSH
+/.ssh/id_*
+/.ssh/known_hosts
+/.ssh-agent.env
+
+# Vim
+/.vim/bundle
+/.vim/autoload
+/.viminfo
+
+# Work-Computer Specific Info
+/.work
+
+# Local and cache files
+/.cache
+/.local/lib
+/.local/share
+/.local/bin
+
+# Mozilla configuration
+/.mozilla
+
+# Home folders
+/Documents
+/Downloads
+/bin
+/images
+/tmp
+
+# Misc 
+/.mc
+/.NERDTreeBookmarks
+/.Xauthority
+
+# Pulseaudio?
+/.esd_auth
+
+# History and Related Logs
+/.lesshst
+/.zsh_history
+/.wget-hsts
+/.i3execlog
+/.python_history
+
+# Gome Keyring?
+/.pki
