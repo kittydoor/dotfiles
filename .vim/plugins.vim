@@ -18,6 +18,10 @@ Plug 'w0rp/ale'  " Async linting and LSP
 
 Plug 'scrooloose/nerdtree'  " File Navigation
 
+" === Language Specific ===
+" Ansible
+Plug 'pearofducks/ansible-vim'  " Ansible yaml, hosts, and .j2 files
+
 " === Unused ===
 " Plug 'Vimjas/vim-python-pep8-indent'  " TODO: is this important?
 " Plug 'tpope/vim-sensible'  " core.vim instead
