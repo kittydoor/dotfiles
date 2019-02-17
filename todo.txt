@@ -31,6 +31,15 @@
   * Figure out the right way (a shell script, alias, etc) to launch st with correct title and tmux
   * READ: https://superuser.com/questions/187639/zsh-not-hitting-profile
 
+* Statusbar
+  * Show current wifi name
+  * Show vpn status, on/off by press, altclick to change profile
+  * Fix battery being so slow
+  * Show memory and cpu in a useful manner
+  * Show disk space properly
+  * Show number of packages to be updated
+  * Shift all sound to different output on click
+
 * On TTYs, make ssh-agent remember ssh keys
 
 * OpenWRT
