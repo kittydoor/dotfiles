@@ -12,9 +12,6 @@
   * Solve sound delay and glitching issue
   * Only ask for authentication for virsh once
 
-* Audio
-  * Script to switch sinks
-
 * Script for updating core ip in dns
 
 * Setup

@@ -224,8 +224,9 @@ mode $mode_apps_virt {
   bindsym $mod+space mode "default"
 }
 
-set $mode_apps_system "apps/system:  pulse-[a]udio"
+set $mode_apps_system "apps/system: toggle-[s]peaker  pulse-[a]udio"
 mode $mode_apps_system {
+  bindsym s exec ~/.config/i3/speaker.sh, mode "default"
   bindsym a exec pavucontrol, mode "default"
 
   bindsym Return mode "default"
