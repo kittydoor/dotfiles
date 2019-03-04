@@ -1,15 +1,14 @@
-# if no gnome-keyring
-if [[ -z "$(ps -e | grep gnome-keyring)" ]]; then
-  # start ssh-agent
-  if ! (pidof ssh-agent > /dev/null); then
-    ssh-agent > ~/.ssh-agent.env
-    if [[ -f ~/.ssh/id_rsa_github  ]] then
-      eval "$(<~/.ssh-agent.env)" > /dev/null
-    fi
-  fi
+# TODO: Implement gnome-keyring and ssh-agent together
+# if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]] || ! pgrep -u "$USER" gnome-keyring; then
+# ssh-agent stuff
+# else, in local session with gnome-keyring running
 
-  # on new shells
-  if [[ "$SSH_AGENT_PID" == "" ]]; then
-    eval "$(<~/.ssh-agent.env)" > /dev/null
-  fi
-fi;
+# start ssh-agent if not running
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+  ssh-agent > ~/.ssh/agent
+fi
+
+# eval env on new shells
+if [[ -z "$SSH_AUTH_SOCK" ]]; then
+  eval "$(<~/.ssh/agent)" > /dev/null
+fi
