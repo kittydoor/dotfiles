@@ -64,3 +64,5 @@ alias browser="firefox-developer-edition"
 alias editor="vim"
 
 alias dotfiles="git --git-dir=\"$HOME/.dotfiles\" --work-tree=\"$HOME\""
+
+alias sourcerc="source $ZDOTDIR/.zshrc"

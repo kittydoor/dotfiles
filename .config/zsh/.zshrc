@@ -39,6 +39,7 @@ bindkey '^[[B' down-line-or-beginning-search
 # source various files
 source $ZDOTDIR/path.zsh
 source $ZDOTDIR/aliases.zsh
+source $ZDOTDIR/functions.zsh
 source $ZDOTDIR/git.zsh
 source $ZDOTDIR/ssh_hosts.zsh
 source $ZDOTDIR/ssh.zsh
