@@ -1,14 +1,9 @@
-# TODO: Implement gnome-keyring and ssh-agent together
-# if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]] || ! pgrep -u "$USER" gnome-keyring; then
-# ssh-agent stuff
-# else, in local session with gnome-keyring running
+# For other agents: if [[ "$SSH_AUTH_SOCK" == "" ]]; then
 
-# start ssh-agent if not running
-if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-  ssh-agent > ~/.ssh/agent
+# start ssh-agent
+if ! pidof ssh-agent > /dev/null; then
+  ssh-agent > ~/.ssh/agent_env
 fi
 
-# eval env on new shells
-if [[ -z "$SSH_AUTH_SOCK" ]]; then
-  eval "$(<~/.ssh/agent)" > /dev/null
-fi
+# on new shells
+eval "$(<~/.ssh/agent_env)" > /dev/null
