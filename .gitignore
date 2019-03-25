@@ -45,10 +45,11 @@
 
 # History and Related Logs
 /.lesshst
+/.bash_history
 /.zsh_history
 /.wget-hsts
 /.i3execlog
 /.python_history
 
-# Gome Keyring?
+# Gnome Keyring?
 /.pki
