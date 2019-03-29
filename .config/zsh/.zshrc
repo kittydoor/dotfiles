@@ -43,20 +43,13 @@ source $ZDOTDIR/functions.zsh
 source $ZDOTDIR/git.zsh
 source $ZDOTDIR/ssh_hosts.zsh
 source $ZDOTDIR/ssh.zsh
+source $ZDOTDIR/history.zsh
 
 # distro specific files
 DISTRO=$(cat /etc/*-release | grep "^NAME" | cut -d= -f2 | tr -d '"')
 if [[ $DISTRO == 'Arch Linux' ]]; then
   source $ZDOTDIR/arch.zsh
 fi
-
-### history settings
-HISTFILE=~/.zsh_history
-# HISTSIZE > SAVEHIST because of HIST_EXPIRE_DUPS_FIRST
-HISTSIZE=12000 # internal hist size
-SAVEHIST=10000 # file hist size
-setopt HIST_EXPIRE_DUPS_FIRST
-setopt HIST_FIND_NO_DUPS
 
 # setopt autocd extendedglob nomatch
 
@@ -72,3 +65,5 @@ setopt HIST_FIND_NO_DUPS
 for file in $ZDOTDIR/completion.d/*; do
   source $file || echo "$file failed, ignoring..."
 done
+
+export KUBECONFIG=/home/kitty/.kube/config_dev:/home/kitty/.kube/config_prod
