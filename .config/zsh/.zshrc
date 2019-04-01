@@ -2,21 +2,20 @@ autoload -Uz compinit
 compinit
 # Rehash always, so changes to files in PATH are reflected
 zstyle ':completion:*' rehash true
+# Define where to find .zshrc
+zstyle :compinstall filename "$ZDOTDIR/.zshrc"
+# Define completion menu style
+zstyle ':completion:*' menu select
+# Treat alises as distinct commands rather than internally substituting them before completion is attempted. Seems to fix dotfiles alias.
+setopt COMPLETE_ALIASES
 
+# prompt themes
 autoload -Uz promptinit
 promptinit
 prompt walters
 
+# say no to beep
 unsetopt BEEP
-
-# zstyle :compinstall filename '/home/kitty/.zshrc'
-# 
-# 
-# # autocompletion
-# zstyle ':completion:*' menu select
-# setopt COMPLETE_ALIASES
-
-# prompt themes
 
 # zle vi mode
 bindkey -v
