@@ -7,6 +7,9 @@ zstyle :compinstall filename "$ZDOTDIR/.zshrc"
 # Define completion menu style
 zstyle ':completion:*' menu select
 # Treat alises as distinct commands rather than internally substituting them before completion is attempted. Seems to fix dotfiles alias.
+# NO_C_A fixes git commands
+# C_A fixes file completion
+# TODO: Create issue
 setopt COMPLETE_ALIASES
 
 # prompt themes
