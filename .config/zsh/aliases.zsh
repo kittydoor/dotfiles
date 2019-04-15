@@ -67,3 +67,6 @@ alias dotfiles="git --git-dir=\"$HOME/.dotfiles\" --work-tree=\"$HOME\""
 
 alias sourcerc="source $ZDOTDIR/.zshrc"
 alias fix-i3sock="export I3SOCK=\$(DISPLAY=:0 i3 --get-socketpath)"
+
+alias nodes-dev="kubectl --context=dev get nodes -ojsonpath='{range .items[*]}{.metadata.name}{\" \"}{.status.addresses[0].address}{\"\n\"}{end}'"
+alias nodes-prod="kubectl --context=prod get nodes -ojsonpath='{range .items[*]}{.metadata.name}{\" \"}{.status.addresses[0].address}{\"\n\"}{end}'"
