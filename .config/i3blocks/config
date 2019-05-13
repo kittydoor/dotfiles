@@ -83,7 +83,10 @@ separator=false
 #instance=eth0
 interval=5
 
-[openvpn]
+# [openvpn]
+# interval=20
+[vpn_manager]
+command=~/.config/i3blocks/blocks/vpn_manager
 interval=20
 
 # CPU usage

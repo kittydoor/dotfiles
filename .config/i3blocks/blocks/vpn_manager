@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Take in service name as vpn_service
+
+vpn_service=openvpn-client@client
+
+case $BLOCK_BUTTON in
+  1)
+    # Left-click
+    # Turn on
+    if [[ $(systemctl is-active ${vpn_service}) != "active" ]]; then
+      systemctl start $vpn_service
+    fi
+    ;;
+  2)
+    # Middle-click
+    # Do nothing
+    ;;
+  3)
+    # Right-click
+    # Turn off
+    if [[ $(systemctl is-active ${vpn_service}) = "active" ]]; then
+      systemctl stop $vpn_service
+    fi
+    ;;
+  *)
+    ;;
+esac
+
+if [[ $(systemctl is-active ${vpn_service}) = "active" ]]; then
+  echo "VPN: up"
+else
+  echo "VPN: down"
+fi
