@@ -10,7 +10,9 @@ alias ll="ls -al"
 alias l.="ls -d .*"
 
 ### Ease of Use Commands
-alias pubip="wget http://ipinfo.io/ip -qO -"
+alias pubip="wget https://duckduckgo.com/ip -qO - | grep -oE '[0-9]{1,3}(\.[0-9]{1,3}){3}'"
+#alias pubip="wget https://duckduckgo.com/ip -qO - | grep -oE '[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*'"
+#alias pubip="wget http://ipinfo.io/ip -qO -"
 #alias pubip="wget ident.me -qO - && echo" # ident.me doesn't return newline
 alias download="curl -O -L -C -"
 alias cclip="xclip -selection clipboard"
