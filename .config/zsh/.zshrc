@@ -78,5 +78,3 @@ fi
 for file in $ZDOTDIR/completion.d/*; do
   source $file || echo "$file failed, ignoring..."
 done
-
-export KUBECONFIG=/home/kitty/.kube/config_dev:/home/kitty/.kube/config_prod
