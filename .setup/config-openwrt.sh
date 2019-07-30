@@ -62,7 +62,7 @@ TIMEZONE='CET-1CEST,M3.5.0,M10.5.0/3'
 ZONENAME='Europe/Amsterdam'
 echo 'Setting timezone to' $TIMEZONE
 uci set system.@system[0].timezone="$TIMEZONE"
-echo 'Setting zone name to' $ZONENAME 
+echo 'Setting zone name to' $ZONENAME
 uci set system.@system[0].zonename="$ZONENAME"
 uci commit system
 
@@ -170,14 +170,14 @@ echo $authorized_key_note >> /etc/dropbear/authorized_keys
 echo $authorized_key_gate >> /etc/dropbear/authorized_keys
 
 # disable insecure access now that keys are set
-uci set dropbear.PasswordAuth="off"
-uci set dropbear.RootPasswordAuth="off"
+uci set dropbear.@dropbear[0].PasswordAuth="off"
+uci set dropbear.@dropbear[0].RootPasswordAuth="off"
 
 uci commit dropbear
 
 # === Static leases / Static Hosts ====
 
-# creating and renaming hosts 
+# creating and renaming hosts
 echo 'Creating static lease hosts'
 uci set dhcp.core=host
 uci set dhcp.note=host
