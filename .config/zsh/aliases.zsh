@@ -76,3 +76,5 @@ alias nodes-prod="kubectl --context=prod get nodes -ojsonpath='{range .items[*]}
 alias gdb="gdb -q"
 
 alias please='sudo $(fc -ln -1)'
+
+alias socks="ssh -D 8080 nyaa-link.lan"
