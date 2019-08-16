@@ -2,4 +2,4 @@
 set -o xtrace
 set -euo pipefail
 
-echo Not yet implemented
+timedatectl set-ntp true
