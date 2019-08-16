@@ -74,3 +74,5 @@ alias nodes-dev="kubectl --context=dev get nodes -ojsonpath='{range .items[*]}{.
 alias nodes-prod="kubectl --context=prod get nodes -ojsonpath='{range .items[*]}{.metadata.name}{\" \"}{.status.addresses[0].address}{\"\n\"}{end}'"
 
 alias gdb="gdb -q"
+
+alias please='sudo $(fc -ln -1)'
