@@ -5,7 +5,7 @@ set -o pipefail
 set -o xtrace
 
 # Install packages
-grep -o '^[^#]*' pkglist.txt | pacman -S --needed -
+grep -o '^[^# ]*' pkglist.txt | pacman -S --needed -
 # Can "tr '\n' ' '" to replace newlines with spaces, but pacman stdin recognizes multiple lines
 
 pkgfile --update
