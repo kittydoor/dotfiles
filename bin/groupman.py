@@ -29,7 +29,7 @@ def get_resource(query):
     else:
         full_uri = url + '/' + query + '?' + token
 
-    logging.info(f"Full URI { full_uri }")
+    logging.info(f"Full URI { full_uri.replace(token_key, '<TOKEN>') }")
 
     response = requests.get(full_uri)
 
@@ -89,18 +89,74 @@ def get_projects(group_id):
     return projects
 
 
-def tree_print_projects(projects):
-    tree = []
+class FSTree:
+    def __init__(self, name='root', fstype='dir', children=None):
+        self.name = name
+        self.fstype = fstype
+        self.children = []
+        if children is not None:
+            for child in children:
+                self.add_child(child)
+
+    def __repr__(self):
+        return f"FSTree(name='{self.name}', fstype='{self.fstype}, children='{self.children}')"
+
+    def __str__(self, level=0):
+        ret = '  ' * level + self.name + ('/' if self.fstype == 'dir' else '')
+        for child in self.children:
+            ret += '\n' + child.__str__(level + 1)
+        return ret
+
+    def __eq__(self, other):
+        if isinstance(other, FSTree):
+            return self.name == other.name
+        return False
+
+    def __contains__(self, item):
+        return len(list(filter(lambda child: child == item))) > 0
+
+    def sort(self):
+        for child in self.children:
+            child.sort()
+        self.children.sort(key=lambda n: n.name)
+
+    def add_child(self, node):
+        assert isinstance(node, FSTree)
+
+        if node in self.children:
+            return list(filter(lambda child: child == node, self.children))[0]
+        else:
+            self.children.append(node)
+            return self.children[-1]
+
+
+def construct_project_tree(projects):
+    tree = FSTree()
     for project in projects:
         pathname = project.split(sep=":")[1]
         if pathname.endswith('.git'):
             pathname = pathname[:-4]
-        path = '/'.split(pathname)
+        path_hierarchy = pathname.split('/')
+
+        dir_path, project_name = path_hierarchy[:-1], path_hierarchy[-1]
+        logging.info(f"Handling project {project_name}")
+
+        cur_root = tree
+        for dir_name in dir_path:
+            node = FSTree(dir_name)
+            cur_root = cur_root.add_child(node)
+
+        cur_root.add_child(FSTree(project_name, fstype='file'))
+
+    tree.sort()
+    return tree
 
 
 def main(args):
     if args.debug:
         logging.basicConfig(level=logging.DEBUG)
+    elif args.info:
+        logging.basicConfig(level=logging.INFO)
     else:
         logging.basicConfig(level=logging.WARNING)
 
@@ -126,7 +182,8 @@ def main(args):
     projects = get_projects(root_group)
 
     print(*projects, sep="\n")
-    tree_print_projects(projects)
+    tree = construct_project_tree(projects)
+    print(str(tree))
 
 
 if __name__ == "__main__":
@@ -136,10 +193,15 @@ if __name__ == "__main__":
         'group',
         nargs='?',
         help='full group path (e.g. literal "gitlab-org/ci-cd"')
-    PARSER.add_argument(
+    log_level = PARSER.add_mutually_exclusive_group()
+    log_level.add_argument(
         '--debug',
         action='store_true',
         help='enable all logs')
+    log_level.add_argument(
+        '--info',
+        action='store_true',
+        help='enable info and above logs')
     ARGS = PARSER.parse_args()
 
     main(ARGS)
