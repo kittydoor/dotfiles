@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 import os
 import logging
+import argparse
 # from pprint import pprint
 
 import requests
-
-logging.basicConfig(level=logging.WARNING)
 
 base_url = "https://gitlab.com"
 api_suffix = "/api/v4"
@@ -16,11 +15,7 @@ if True:
 else:
     link_type = "http_url_to_repo"
 
-groups = {
-    "test": "11111"
-}
-
-token_prefix = "?private_token="
+token_prefix = "private_token="
 with open(os.path.expanduser("~/.gitlab")) as token_file:
     token_key = token_file.read().strip()
 token = token_prefix + token_key
@@ -28,7 +23,16 @@ token = token_prefix + token_key
 
 def get_resource(query):
     logging.info("Getting a resource")
-    response = requests.get(url + '/' + query + token)
+
+    if '?' in query:
+        full_uri = url + '/' + query + '&' + token
+    else:
+        full_uri = url + '/' + query + '?' + token
+
+    logging.info(f"Full URI { full_uri }")
+
+    response = requests.get(full_uri)
+
     if response.status_code != 200:
         print(response.text)
         exit(1)
@@ -44,7 +48,9 @@ def get_group(group_id):
 
 def get_subgroups_ids(group_id):
     logging.info("Get subgroups ids")
-    subgroups = get_resource("groups/" + str(group_id) + "/subgroups")
+    subgroups = []
+    subgroups.extend(get_resource("groups/" + str(group_id) + "/subgroups"))
+    subgroups.extend(get_resource("groups/" + str(group_id) + "/subgroups?all_available=true"))
     return [subgroup["id"] for subgroup in subgroups]
 
 
@@ -83,8 +89,57 @@ def get_projects(group_id):
     return projects
 
 
-root_group = list(groups.values())[0]
-logging.info(f"Checking group with id {root_group}")
-projects = get_projects(root_group)
+def tree_print_projects(projects):
+    tree = []
+    for project in projects:
+        pathname = project.split(sep=":")[1]
+        if pathname.endswith('.git'):
+            pathname = pathname[:-4]
+        path = '/'.split(pathname)
 
-print(*projects, sep="\n")
+
+def main(args):
+    if args.debug:
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.WARNING)
+
+    group_basename = args.group.split('/')[-1]
+
+    all_groups = []
+    all_groups.extend(get_resource('groups?all_available=true&search=' + group_basename))
+    if '/' in args.group:
+        all_groups.extend(get_resource('groups?search=' + group_basename))
+
+    retrieved_groups = list(filter(lambda e: e['full_path'] == args.group, all_groups))
+    if not retrieved_groups:
+        logging.error("No groups found")
+        exit(1)
+
+    if len(retrieved_groups) > 1:
+        logging.error("Multiple groups found matching name")
+        logging.error(retrieved_groups)
+        exit(1)
+
+    root_group = retrieved_groups[0]['id']
+    logging.info(f"Checking group with id {root_group}")
+    projects = get_projects(root_group)
+
+    print(*projects, sep="\n")
+    tree_print_projects(projects)
+
+
+if __name__ == "__main__":
+    PARSER = argparse.ArgumentParser(
+        description='Manage Multiple Repositories under Gitlab Groups')
+    PARSER.add_argument(
+        'group',
+        nargs='?',
+        help='full group path (e.g. literal "gitlab-org/ci-cd"')
+    PARSER.add_argument(
+        '--debug',
+        action='store_true',
+        help='enable all logs')
+    ARGS = PARSER.parse_args()
+
+    main(ARGS)
