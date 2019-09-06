@@ -1,23 +1,29 @@
 # -U only keeps first of duplicates in arrays
 typeset -U path
 
+function addpath {
+  if [[ -d $1 ]]; then
+    path+=($1)
+  fi
+}
+
 # zsh scripts
-path+=("$HOME/.config/zsh/bin")
+addpath "$HOME/.config/zsh/bin"
 
 # personal binaries
-path+=("$HOME/bin")
+addpath "$HOME/bin"
 
 # local user package binaries
-path+=("$HOME/.local/bin")
+addpath "$HOME/.local/bin"
 
 # node_modules binaries
-path+=("$HOME/.local/share/node_modules/bin")
+addpath "$HOME/.local/share/node_modules/bin"
 export npm_config_prefix=~/.local/share/node_modules
 
 # gem ruby binaries
-if (which ruby 1>/dev/null 2>&1); then 
+if (which ruby 1>/dev/null 2>&1); then
   GEM_USER_DIR="$(ruby -e 'print Gem.user_dir')/bin"
   if [[ -z "$GEM_USER_DIR" ]]; then
-    path+=("$GEM_USER_DIR")
+    addpath "$GEM_USER_DIR"
   fi
 fi
