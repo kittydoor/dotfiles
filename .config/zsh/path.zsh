@@ -20,6 +20,9 @@ addpath "$HOME/.local/bin"
 addpath "$HOME/.local/share/node_modules/bin"
 export npm_config_prefix=~/.local/share/node_modules
 
+# krew
+addpath "$HOME/.krew/bin"
+
 # gem ruby binaries
 if (which ruby 1>/dev/null 2>&1); then
   GEM_USER_DIR="$(ruby -e 'print Gem.user_dir')/bin"
