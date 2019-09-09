@@ -1,1 +1,1 @@
-autocmd BufRead,BufNewFile baremetal-ansible/**/*.yml set filetype=ansible.yaml
+" autocmd BufRead,BufNewFile foo/**/*.bar set filetype=baz
