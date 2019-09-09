@@ -1,34 +1,12 @@
-* dotfiles
+Common
+* dotfiles - https://gitlab.com/kittydoor/dotfiles/tree/master/.config/zsh
   * fix file autocomplete on tab `dotfiles add <TAB>`
-
-* st - terminal
+* st - terminal - https://gitlab.com/kittydoor/st
   * Check if terminfo in right dir (investigate the folder I found in ~/.terminfo)
-
-* Wireless
-  * From the wireless info for uni, configure wireless profile
-  * Figure out why systemd-resolved causes issues with uni wifi
-
-* Work on gaming.sh
-  * Solve sound delay and glitching issue
-  * Only ask for authentication for virsh once
-
-* Script for updating core ip in dns
-
-* Setup
-  * Mpv MPRIS script
-  * Disable arrow keys in zsh to match vim setup
-  * OpenWRT vlan for guests
-
+* Mpv MPRIS script - https://gitlab.com/kittydoor/dotfiles/tree/master/.setup/setup.d
 * Vim
-  * command to resize window exactly to file length
-
-* Shell
-  * Profile TERMINAL doesn't work correctly when multiple are found
-  * Set st window name to tmux session automatically
-  * Figure out the right way (a shell script, alias, etc) to launch st with correct title and tmux
-  * READ: https://superuser.com/questions/187639/zsh-not-hitting-profile
-
-* Statusbar
+  * command to resize window exactly to file length (for tmux and for vim splits)
+* i3 status bar - https://gitlab.com/kittydoor/dotfiles/tree/master/.config/i3
   * Show current wifi name
   * Show vpn status, on/off by press, altclick to change profile
   * Fix battery being so slow
@@ -36,11 +14,61 @@
   * Show disk space properly
   * Show number of packages to be updated
   * Shift all sound to different output on click
-
+* Shell - https://gitlab.com/kittydoor/dotfiles/tree/master/.config/zsh
+  * Profile TERMINAL doesn't work correctly when multiple are found
+  * Set st window name to tmux session automatically
+  * Figure out the right way (a shell script, alias, etc) to launch st with correct title and tmux
+  * Disable arrow keys in zsh to match vim setup
+  * READ: https://superuser.com/questions/187639/zsh-not-hitting-profile
 * On TTYs, make ssh-agent remember ssh keys
 
-* OpenWRT
-  * Setup guest vlan and private vlan
-  * Upgrade to 18.06.2
+Programming Projects
+* Do something with Golang
+* Do something with Rust
+* Do something with Lisp
+* Do something with Haskell
+* groupman.py - https://gitlab.com/kittydoor/dotfiles/tree/master/bin/groupman.py
+  * add cloning subcommand
+  * add sync missing repositories and archive deleted subcommand
+  * add status on all subcommand
+  * add fetch -ap, co master, pull master subcommand
+* Service for dynamic ip in do dns
+
+Infra Projects
+* Vagrant libvirt infra dev environment for easy testing
+* Ansible base provisioner for secure and sane machines, and some extra roles for features
+* Mesh networking with wireguard
+
+Kubernetes
+* Figure out good baremetal kubernetes solution, and ways to add basic functionality
+* Try out kubernetes deployments
+  * OpenStack
+  * OpenShift
+  * RKE
+  * rancher 2.0
+  * Kubespray
+  * Custom scripting with kubeadm
+  * k3s
+  * Fedora CoreOS
+  * ...
+* Try out kubernetes PV providers
+  * Longhorn
+  * Rook
+  * Ceph
+  * NFS
+  * ...
+
+Nyaa-Core
+* Work on gaming.sh
+  * Solve sound delay and glitching issue
+  * Only ask for authentication for virsh once
+
+Nyaa-Gate
+* Wireless
+  * From the wireless info for uni, configure wireless profile
+  * Figure out why systemd-resolved causes issues with uni wifi
+
+Nyaa-Link
+* Setup guest and private vlan
 
 # vim:ts=2:sw=2:et
