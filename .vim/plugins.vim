@@ -21,6 +21,8 @@ Plug 'scrooloose/nerdtree'  " File Navigation
 " === Language Specific ===
 " Ansible
 Plug 'pearofducks/ansible-vim'  " Ansible yaml, hosts, and .j2 files
+" Javascript
+Plug 'pangloss/vim-javascript'  " React and Javascript
 
 " === Unused ===
 " Plug 'Vimjas/vim-python-pep8-indent'  " TODO: is this important?
