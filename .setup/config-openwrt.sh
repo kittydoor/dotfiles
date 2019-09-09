@@ -182,20 +182,22 @@ echo 'Creating static lease hosts'
 uci set dhcp.core=host
 uci set dhcp.note=host
 uci set dhcp.gate=host
+uci set dhcp.aigent=host
 
 # setting up the hosts
 # nyaa-core
 echo 'Setting up the static lease hosts'
 uci set dhcp.core.name="nyaa-core"
 uci set dhcp.core.dns="1"
-uci set dhcp.core.mac="4C:CC:6A:01:F4:B5"
+uci set dhcp.core.mac="BA:A1:E7:A4:6A:82"
+# uci set dhcp.core.mac="4C:CC:6A:01:F4:B5"
 uci set dhcp.core.ip="192.168.1.2"
 uci set dhcp.core.leasetime="12h"
 
-# nyaa-note
-uci set dhcp.note.name="nyaa-note"
+# nyaa-poco
+uci set dhcp.note.name="nyaa-poco"
 uci set dhcp.note.dns="1"
-uci set dhcp.note.mac="4C:66:41:E5:88:21"
+uci set dhcp.note.mac="A4:50:46:6A:8E:31"
 uci set dhcp.note.ip="192.168.1.3"
 uci set dhcp.note.leasetime="12h"
 
@@ -205,6 +207,20 @@ uci set dhcp.gate.dns="1"
 uci set dhcp.gate.mac="9C:B6:D0:F1:18:2B"
 uci set dhcp.gate.ip="192.168.1.4"
 uci set dhcp.gate.leasetime="12h"
+
+# nyaa-aigent
+uci set dhcp.gate.name="nyaa-aigent"
+uci set dhcp.gate.dns="1"
+uci set dhcp.gate.mac="1C:1B:B5:C9:C0:89"
+uci set dhcp.gate.ip="192.168.1.5"
+uci set dhcp.gate.leasetime="12h"
+
+# nyaa-note
+uci set dhcp.note.name="nyaa-note"
+uci set dhcp.note.dns="1"
+uci set dhcp.note.mac="4C:66:41:E5:88:21"
+uci set dhcp.note.ip="192.168.1.201"
+uci set dhcp.note.leasetime="12h"
 
 uci commit dhcp
 
