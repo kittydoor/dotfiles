@@ -81,3 +81,5 @@ alias gdb="gdb -q"
 alias please='sudo $(fc -ln -1)'
 
 alias socks="ssh -D 8080 nyaa-link.lan"
+
+alias please='sudo $(fc -ln -1)'
