@@ -1,0 +1,11 @@
+Firefox Login to Gmail
+Firefox Sync (verification email on gmail)
+Firefox Dark theme (maybe sync does this?)
+Firefox ddg.gg
+Firefox autoscroll
+Shadowfox
+Enable Shadowfox fixes in Firefox about:config
+Login to Bitwarden
+
+NEW
+autologin
