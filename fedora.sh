@@ -12,7 +12,7 @@ dconf write /org/gnome/desktop/peripherals/touchpad/tap-to-click true
 
 sudo dnf install -y zsh util-linux-user
 
-sudo chsh -s /bin/zsh ${USER}
+sudo chsh -s /bin/zsh "${USER}"
 
 git clone --bare https://gitlab.com/kittydoor/dotfiles.git .dotfiles
 
@@ -39,7 +39,13 @@ sudo dnf install -y\
   ShellCheck\
   neovim\
   ncdu\
-  ansible
+  ansible\
+  kubernetes-client\
+  chromium\
+  xclip\
+  parallel
+
+echo 'will cite' | parallel --citation
 
 if (( FEDORA_VERSION < 31 )); then
   sudo ln -sf /usr/bin/python3 /usr/bin/python
@@ -48,10 +54,23 @@ fi
 sudo dnf copr enable -y jdoss/wireguard
 sudo dnf install -y wireguard-dkms wireguard-tools
 
-sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
-sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf install -y "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm"
+# sudo dnf install -y  "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
 
 sudo dnf install -y mpv
 
 sudo dnf distro-sync -y
+
+sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak install --noninteractive flathub com.spotify.Client
+flatpak install --noninteractive flathub org.signal.Signal
+flatpak install --noninteractive flathub com.visualstudio.code.oss
+
+sudo flatpak remote-add --if-not-exists firefox https://firefox-flatpak.mojefedora.cz/org.mozilla.FirefoxRepo.flatpakrepo
+flatpak install --noninteractive firefox org.mozilla.FirefoxDevEdition
+
+TERRAFORM_VERSION=0.12.8
+tmpterraform=$(mktemp /tmp/terraform.XXXXXX)
+curl -L https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o "${tmpterraform}"
+sudo unzip -o "${tmpterraform}" -d /usr/local/bin/
+sudo chmod 755 /usr/local/bin/terraform
