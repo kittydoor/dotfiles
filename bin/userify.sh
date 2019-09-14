@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
+# userify.sh <dir> <prefix> <author name> <email>
+
 if [[ -z "${1:-}" ]]; then
   echo 'No dir given'
   exit 1
@@ -13,6 +15,16 @@ fi
 
 if [[ -z ${2:-} ]]; then
   echo 'No prefix given'
+  exit 1
+fi
+
+if [[ -z ${3:-} ]]; then
+  echo 'No author name'
+  exit 1
+fi
+
+if [[ -z ${4:-} ]]; then
+  echo 'No authoer email'
   exit 1
 fi
 
@@ -31,5 +43,7 @@ find "${1}" -name '.git' -type d -print0 |
         echo "WARN (URL NOT DEFAULT): $(git remote -v | head -n 1)"
       fi
     fi
+    git config --local user.name "${3}"
+    git config --local user.email "${4}"
     popd > /dev/null
   done
