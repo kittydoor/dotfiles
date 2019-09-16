@@ -45,7 +45,7 @@ sudo dnf install -y\
   xclip\
   parallel
 
-echo 'will cite' | parallel --citation
+echo 'will cite' | parallel --citation > /dev/null 2>&1
 
 if (( FEDORA_VERSION < 31 )); then
   sudo ln -sf /usr/bin/python3 /usr/bin/python
@@ -74,3 +74,9 @@ tmpterraform=$(mktemp /tmp/terraform.XXXXXX)
 curl -L https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o "${tmpterraform}"
 sudo unzip -o "${tmpterraform}" -d /usr/local/bin/
 sudo chmod 755 /usr/local/bin/terraform
+
+mkdir -p ~/Documents/Git/kitty
+mkdir -p ~/Documents/Git/vu
+
+git config --global user.name "kittydoor"
+git config --global user.email "me@kitty.sh"
