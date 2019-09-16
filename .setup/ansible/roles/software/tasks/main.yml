@@ -1,0 +1,23 @@
+---
+# roles/software/tasks/main.yml
+
+- include: cli_tools.yml
+  tags: cli_tools
+
+- include: cloud.yml
+  tags: cloud
+
+- include: containers.yml
+  tags: containers
+
+- include: flatpak.yml
+  tags: flatpak
+
+- include: media.yml
+  tags: media
+
+- include: networking.yml
+  tags: networking
+
+- include: virtualization.yml
+  tags: virtualization

@@ -1,0 +1,21 @@
+---
+# roles/desktop/tasks/gnome.yml
+
+- name: install gnome utilities
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - gnome-tweaks
+  become: yes
+
+- name: gsettings rules
+  command: gsettings set {{ item }}
+  changed_when: false
+  loop:
+    - org.gnome.shell.app-switcher current-workspace-only true
+    - org.gnome.desktop.interface clock-show-seconds true
+    - org.gnome.desktop.interface clock-show-weekday true
+    - org.gnome.desktop.interface gtk-theme "'Adwaita-dark'"
+    - org.gnome.desktop.interface show-battery-percentage true
+    - org.gnome.desktop.peripherals.touchpad tap-to-click true

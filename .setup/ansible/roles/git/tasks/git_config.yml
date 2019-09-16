@@ -1,0 +1,15 @@
+---
+# roles/git/tasks/git_config.yml
+
+- name: git config author name
+  git_config:
+    name: user.name
+    scope: global
+    value: kittydoor
+
+- name: git config author email
+  git_config:
+    name: user.email
+    scope: global
+    value: me@kitty.sh
+

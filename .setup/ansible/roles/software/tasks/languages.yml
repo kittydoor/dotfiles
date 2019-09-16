@@ -1,0 +1,36 @@
+---
+# roles/software/tasks/languages.yml
+
+- name: install language runtimes
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - "@c-development"
+    - "golang"
+    - "@python-classroom"
+    - "@python-science"
+    - "rust"
+    - "cargo"  # rust package manager
+    - "@haskell"
+    - "@java-development"
+  become: yes
+
+- name: install language servers and linters
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - "astyle"
+    - "ShellCheck"
+    - "rls"  # rust language server
+    - "ccls"  # C/C++ language server
+  become: yes
+
+# pip install python-language-server[all] (which requires jedi)
+# npm i javascript-typescript-langserver
+# npm i -g bash-language-server
+# look into https://github.com/latex-lsp/texlab
+# look into https://github.com/eclipse/eclipse.jdt.ls
+# look into https://github.com/haskell/haskell-ide-engine
+# look into https://github.com/rcjsuen/dockerfile-language-server-nodejs

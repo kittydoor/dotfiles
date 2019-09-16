@@ -1,0 +1,12 @@
+---
+# roles/git/tasks/main.yml
+
+- name: ensure git installed
+  dnf:
+    name: git
+    state: present
+  become: yes
+
+- include: git_config.yml
+
+- include: git_dir.yml

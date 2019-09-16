@@ -1,0 +1,11 @@
+---
+# roles/software/tasks/containers.yml
+
+- name: install container packages
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - "@virtualization"
+    - "@vagrant"
+  become: yes

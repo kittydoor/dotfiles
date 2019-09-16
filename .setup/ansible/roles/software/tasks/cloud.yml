@@ -1,0 +1,30 @@
+---
+# roles/software/tasks/cloud.yml
+
+- name: install cloud software
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - "ansible"
+    - "python3-ansible-lint"
+    - "kubernetes-client"
+  become: yes
+
+- name: find latest version of terraform
+  shell: |
+    set -o pipefail
+    http get https://releases.hashicorp.com/terraform/ | awk -F/ '/terraform/ { print $3 }' | head -n 1
+  register: latest_terraform_version
+  changed_when: false
+
+- name: Terraform version verification
+  debug:
+    msg: "Terraform version found: {{ latest_terraform_version.stdout }}"
+
+- name: install terraform
+  unarchive:
+    src: https://releases.hashicorp.com/terraform/{{ latest_terraform_version.stdout }}/terraform_{{ latest_terraform_version.stdout }}_linux_amd64.zip
+    dest: /usr/local/bin
+    remote_src: yes
+  become: yes

@@ -1,0 +1,12 @@
+---
+# roles/i3/tasks/main.yml
+
+- name: install i3 + sway + relevant utils
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - i3
+    - sway
+    - py3status
+  become: yes

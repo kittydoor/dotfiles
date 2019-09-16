@@ -1,0 +1,17 @@
+---
+- name: desktop configuration
+  hosts: localhost
+  become: no
+
+  roles:
+    - role: software
+      tags: software
+
+    - role: python_means_python3
+      tags: python_means_python3
+
+    - role: desktop
+      tags: desktop
+
+    - role: git
+      tags: git

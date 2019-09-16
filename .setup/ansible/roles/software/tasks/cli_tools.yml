@@ -1,0 +1,24 @@
+---
+# roles/software/tasks/cli_tools.yml
+
+- name: install terminal packages
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - vim-enhanced
+    - neovim
+    - htop
+    - ranger
+    - tldr
+    - lshw
+    - ncdu
+    - parallel
+    - httpie
+    - curl
+    - wget
+  become: yes
+
+- name: cite parallel
+  command: echo 'will cite' | parallel --citation
+  changed_when: false

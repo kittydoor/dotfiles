@@ -1,0 +1,27 @@
+---
+# roles/software/tasks/flatpak.yml
+
+- name: add flathub flatpak remote
+  flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+  become: yes
+
+- name: add firefox flatpak remote
+  flatpak_remote:
+    name: firefox
+    state: present
+    flatpakrepo_url: https://firefox-flatpak.mojefedora.cz/org.mozilla.FirefoxRepo.flatpakrepo
+  become: yes
+
+- name: install apps
+  flatpak:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - com.spotify.Client
+    - org.signal.Signal
+    - com.visualstudio.code.oss
+    - org.mozilla.FirefoxDevEdition
+  become: yes

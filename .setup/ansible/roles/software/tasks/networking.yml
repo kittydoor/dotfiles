@@ -1,0 +1,17 @@
+---
+# roles/software/tasks/networking.yml
+
+- name: enable copr for wireguard
+  command: dnf copr enable -y jdoss/wireguard
+  args:
+    creates: /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:jdoss:wireguard.repo
+  become: yes
+
+- name: install wireguard
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - wireguard-dkms
+    - wireguard-tools
+  become: yes

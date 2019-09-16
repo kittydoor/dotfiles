@@ -1,0 +1,10 @@
+---
+# roles/software/tasks/containers.yml
+
+- name: install container packages
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - "@container-management"
+  become: yes

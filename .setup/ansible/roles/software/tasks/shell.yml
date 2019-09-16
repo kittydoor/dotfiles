@@ -1,0 +1,13 @@
+---
+# roles/software/tasks/shell.yml
+
+- name: install zsh
+  dnf:
+    name: zsh
+    state: present
+  become: yes
+
+- name: ensure user has shell as zsh
+  user:
+    name: kitty
+    shell: /bin/zsh

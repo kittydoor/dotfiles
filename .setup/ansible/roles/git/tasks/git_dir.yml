@@ -1,0 +1,10 @@
+---
+# roles/git/tasks/git_dir.yml
+
+- name: git directory
+  file:
+    path: "/home/{{ ansible_user_id }}/Documents/Git"
+    state: directory
+    recurse: yes
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
