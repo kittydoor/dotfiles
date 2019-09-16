@@ -65,7 +65,8 @@ alias backup="rsync --archive --verbose --partial --progress"
 alias browser="firefox-developer-edition"
 alias editor="vim"
 
-alias dotfiles="git --git-dir=\"$HOME/.dotfiles\" --work-tree=\"$HOME\""
+# Disabled, as switched back to stow
+# alias dotfiles="git --git-dir=\"$HOME/.dotfiles\" --work-tree=\"$HOME\""
 
 alias sourcerc="source $ZDOTDIR/.zshrc"
 alias fix-i3sock="export I3SOCK=\$(DISPLAY=:0 i3 --get-socketpath)"

@@ -17,6 +17,7 @@
     - httpie
     - curl
     - wget
+    - stow
   become: yes
 
 - name: cite parallel
