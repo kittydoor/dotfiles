@@ -5,6 +5,7 @@
   file:
     path: "/home/{{ ansible_user_id }}/Documents/Git"
     state: directory
-    recurse: yes
+    mode: '0700'
     owner: "{{ ansible_user_id }}"
     group: "{{ ansible_user_id }}"
+    # recurse: yes
