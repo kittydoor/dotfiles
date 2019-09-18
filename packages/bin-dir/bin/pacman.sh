@@ -4,4 +4,4 @@ if [[ -z "${1:-}" ]]; then
   exit 1
 fi
 
-stow --dir="packages/" --target="/home/${USER}" --dotfiles -S "$@"
+stow --dir="packages/" --target="/home/${USER}" -S "$@"
