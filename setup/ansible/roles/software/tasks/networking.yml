@@ -15,3 +15,12 @@
     - wireguard-dkms
     - wireguard-tools
   become: yes
+
+# TODO: Test if this is not the default already
+- name: qol permissions for wireguard
+  file:
+    path: /etc/wireguard
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
