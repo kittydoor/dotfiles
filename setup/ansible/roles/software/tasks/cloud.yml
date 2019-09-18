@@ -28,3 +28,16 @@
     dest: /usr/local/bin
     remote_src: yes
   become: yes
+
+- name: install helm (check for updates manually)
+  unarchive:
+    src: https://get.helm.sh/helm-v2.14.3-linux-amd64.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+    exclude:
+      - linux-amd64/LICENSE
+      - linux-amd64/README.md
+      - linux-amd64/tiller
+    extra_opts:
+      - --strip-components=1
+  become: yes
