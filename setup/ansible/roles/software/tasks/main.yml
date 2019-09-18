@@ -1,9 +1,6 @@
 ---
 # roles/software/tasks/main.yml
 
-- include: cli_tools.yml
-  tags: cli_tools
-
 - include: cloud.yml
   tags: cloud
 
@@ -18,6 +15,9 @@
 
 - include: networking.yml
   tags: networking
+
+- include: terminal.yml
+  tags: terminal
 
 - include: virtualization.yml
   tags: virtualization
