@@ -53,3 +53,7 @@
 
 # Gnome Keyring?
 /.pki
+
+# Stow packages
+packages/vim/.vim/autoload/plug.vim
+packages/vim/.vim/bundle/
