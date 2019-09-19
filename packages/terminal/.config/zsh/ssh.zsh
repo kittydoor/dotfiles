@@ -1,7 +1,7 @@
 # For other agents: if [[ "$SSH_AUTH_SOCK" == "" ]]; then
 
 # Start ssh agent
-if [[ "${DESKTOP_SESSION}" = gnome-DISABLED ]]; then
+if [[ "${DESKTOP_SESSION}" = gnome ]]; then
   #if ! pidof gnome-keyring-daemon > /dev/null; then
     gnome-keyring-daemon --start > ~/.ssh/agent_env
   #fi
