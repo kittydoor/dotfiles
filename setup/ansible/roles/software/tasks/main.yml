@@ -27,3 +27,6 @@
 
 - include: virtualization.yml
   tags: virtualization
+
+- include: automatic_updates.yml
+  tags: automatic_updates

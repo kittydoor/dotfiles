@@ -1,0 +1,13 @@
+---
+- name: install automatic updates
+  dnf:
+    name: dnf-automatic
+    state: present
+  become: yes
+
+- name: enable automatic updates
+  systemd:
+    name: dnf-automatic-install.timer
+    state: started
+    enabled: yes
+  become: yes
