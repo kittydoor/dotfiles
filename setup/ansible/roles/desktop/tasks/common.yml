@@ -1,0 +1,10 @@
+---
+# roles/desktop/tasks/common.yml
+
+- name: common desktop utilities
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - "xclip"
+  become: yes

@@ -1,13 +1,8 @@
 ---
 # roles/desktop/tasks/main.yml
 
-- name: common desktop utilities
-  dnf:
-    name: "{{ item }}"
-    state: present
-  loop:
-    - "xclip"
-  become: yes
+- include: common.yml
+  tags: desktop_common
 
 - include: gnome.yml
   tags: gnome
