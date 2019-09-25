@@ -8,3 +8,9 @@
   loop:
     - "xclip"
   become: yes
+
+- include: gnome.yml
+  tags: gnome
+
+- include: i3.yml
+  tags: i3
