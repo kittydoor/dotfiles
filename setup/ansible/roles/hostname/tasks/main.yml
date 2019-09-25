@@ -1,0 +1,8 @@
+---
+# roles/hostname/tasks/main.yml
+
+- name: set hostname
+  hostname:
+    name: "{{ hostname }}"
+  become: yes
+  when: hostname|length > 0

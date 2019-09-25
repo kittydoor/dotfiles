@@ -3,7 +3,17 @@
   hosts: localhost
   become: no
 
+  vars_prompt:
+    - name: hostname
+      prompt: "Hostname (leave empty for no change)"
+      private: no
+
   roles:
+    - role: hostname
+      tags:
+        - hostname
+        - interactive
+
     - role: software
       tags: software
 
