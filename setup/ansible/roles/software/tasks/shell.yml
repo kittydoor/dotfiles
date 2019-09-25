@@ -9,5 +9,6 @@
 
 - name: ensure user has shell as zsh
   user:
-    name: kitty
+    name: "{{ ansible_user_id }}"
     shell: /bin/zsh
+  become: yes

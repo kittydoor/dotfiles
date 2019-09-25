@@ -10,6 +10,12 @@
     - "python3-ansible-lint"
     - "kubernetes-client"
   become: yes
+ 
+- name: ensure http exists
+  dnf:
+    name: httpie
+    state: present
+  become: yes
 
 - name: find latest version of terraform
   shell: |

@@ -10,11 +10,17 @@
 - include: flatpak.yml
   tags: flatpak
 
+- include: languages.yml
+  tags: languages
+
 - include: media.yml
   tags: media
 
 - include: networking.yml
   tags: networking
+
+- include: shell.yml
+  tags: shell
 
 - include: terminal.yml
   tags: terminal

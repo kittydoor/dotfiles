@@ -8,6 +8,17 @@
     flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
   become: yes
 
+- name: install flathub remote apps
+  flatpak:
+    name: "{{ item }}"
+    state: present
+    remote: flathub
+  loop:
+    - com.spotify.Client
+    - org.signal.Signal
+    - com.visualstudio.code.oss
+  become: yes
+
 - name: add firefox flatpak remote
   flatpak_remote:
     name: firefox
@@ -15,13 +26,11 @@
     flatpakrepo_url: https://firefox-flatpak.mojefedora.cz/org.mozilla.FirefoxRepo.flatpakrepo
   become: yes
 
-- name: install apps
+- name: install firefox remote apps
   flatpak:
     name: "{{ item }}"
     state: present
+    remote: firefox
   loop:
-    - com.spotify.Client
-    - org.signal.Signal
-    - com.visualstudio.code.oss
     - org.mozilla.FirefoxDevEdition
   become: yes
