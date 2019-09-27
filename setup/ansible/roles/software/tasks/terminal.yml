@@ -18,6 +18,7 @@
     - curl
     - wget
     - stow
+    - info
   become: yes
 
 - name: cite parallel

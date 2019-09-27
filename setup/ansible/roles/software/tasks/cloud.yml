@@ -10,7 +10,7 @@
     - "python3-ansible-lint"
     - "kubernetes-client"
   become: yes
- 
+
 - name: ensure http exists
   dnf:
     name: httpie
@@ -47,3 +47,8 @@
     extra_opts:
       - --strip-components=1
   become: yes
+  register: install_helm
+
+- name: init helm if new install
+  command: helm init --client-only
+  when: install_helm.changed

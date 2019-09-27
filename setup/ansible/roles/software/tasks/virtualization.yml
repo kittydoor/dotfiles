@@ -8,4 +8,5 @@
   loop:
     - "@virtualization"
     - "@vagrant"
+    - vagrant-hostmanager
   become: yes
