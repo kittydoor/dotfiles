@@ -1,6 +1,7 @@
 Common
-* dotfiles - https://gitlab.com/kittydoor/dotfiles/tree/master/.config/zsh
-  * fix file autocomplete on tab `dotfiles add <TAB>`
+* Ansible
+  * add /etc/gdm/custom.conf auto login
+  * look into /etc/wireguard
 * st - terminal - https://gitlab.com/kittydoor/st
   * Check if terminfo in right dir (investigate the folder I found in ~/.terminfo)
 * Mpv MPRIS script - https://gitlab.com/kittydoor/dotfiles/tree/master/.setup/setup.d
@@ -21,6 +22,9 @@ Common
   * Disable arrow keys in zsh to match vim setup
   * READ: https://superuser.com/questions/187639/zsh-not-hitting-profile
 * On TTYs, make ssh-agent remember ssh keys
+* Network - automate setting manual dns on networks
+  * ipv4.dns:                               8.8.8.8,1.1.1.1
+  * ipv4.ignore-auto-dns:                   yes
 
 Programming Projects
 * Do something with Golang
@@ -35,9 +39,9 @@ Programming Projects
 * Service for dynamic ip in do dns
 
 Infra Projects
-* Vagrant libvirt infra dev environment for easy testing
 * Ansible base provisioner for secure and sane machines, and some extra roles for features
 * Mesh networking with wireguard
+* Investigate tinc
 
 Kubernetes
 * Figure out good baremetal kubernetes solution, and ways to add basic functionality
@@ -65,7 +69,7 @@ Nyaa-Core
 
 Nyaa-Gate
 * Wireless
-  * From the wireless info for uni, configure wireless profile
+  * From the wireless info for uni, configure wireless profile, keep in vcs
   * Figure out why systemd-resolved causes issues with uni wifi
 
 Nyaa-Link
