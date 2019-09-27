@@ -8,3 +8,10 @@
   loop:
     - "@container-management"
   become: yes
+
+- name: install podman-compose
+  pip:
+    executable: pip3
+    name: podman-compose
+    state: latest
+    extra_args: --user
