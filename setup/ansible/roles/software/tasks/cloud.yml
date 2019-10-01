@@ -9,7 +9,6 @@
     - "ansible"
     - "python3-ansible-lint"
     - "kubernetes-client"
-    - "minikube"
   become: yes
 
 - name: ensure http exists (for terraform version fetch)
@@ -55,6 +54,14 @@
   command: helm init --client-only
   when: install_helm.changed
 
+- name: install minikube
+  get_url:
+    url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    dest: /usr/local/bin/minikube
+    owner: root
+    mode: '0755'
+  become: yes
+
 - name: install minishift
   unarchive:
     src: https://github.com/minishift/minishift/releases/download/v1.34.1/minishift-1.34.1-linux-amd64.tgz
@@ -83,4 +90,11 @@
     dest: /usr/local/bin/docker-machine-driver-kvm
     owner: root
     mode: '0755'
+  become: yes
+
+# TODO: Remove this at some point
+- name: legacy - delete minikube package
+  dnf:
+    name: minikube
+    state: absent
   become: yes
