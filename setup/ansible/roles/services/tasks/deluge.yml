@@ -1,0 +1,41 @@
+---
+# roles/services/tasks/deluge.yml
+
+- name: install deluge
+  dnf:
+    name: deluge
+    state: present
+  become: yes
+
+- name: enable deluge-daemon
+  systemd:
+    name: deluge-daemon
+    state: started
+    enabled: yes
+  become: yes
+
+- name: create deluge-web override dir to patch service
+  file:
+    path: /etc/systemd/system/deluge-web.service.d
+    state: directory
+    owner: root
+    mode: '0755'
+  become: yes
+
+- name: patch deluge-web - https://bugzilla.redhat.com/show_bug.cgi?id=1756658
+  copy:
+    content: |
+      [Service]
+      ExecStart=
+      ExecStart=/usr/bin/deluge-web -d
+    dest: /etc/systemd/system/deluge-web.service.d/override.conf
+    owner: root
+    mode: '0644'
+  become: yes
+
+# - name: enable deluge-web
+#   systemd:
+#     name: deluge-web
+#     state: started
+#     enabled: yes
+#   become: yes

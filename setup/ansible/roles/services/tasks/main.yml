@@ -1,0 +1,10 @@
+---
+# roles/services/tasks/main.yml
+
+- include: ssh.yml
+  tags:
+    - ssh
+    - sshd
+
+- include: deluge.yml
+  tags: deluge
