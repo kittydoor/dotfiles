@@ -1,0 +1,16 @@
+---
+# roles/services/tasks/kdeconnect.yml
+
+- name: install gsconnect if gnome installed
+  dnf:
+    name: gnome-shell-extension-gsconnect
+    state: present
+  become: yes
+
+- name: allow kdeconnect through firewall
+  firewalld:
+    service: kdeconnect
+    permanent: yes
+    immediate: yes
+    state: enabled
+  become: yes

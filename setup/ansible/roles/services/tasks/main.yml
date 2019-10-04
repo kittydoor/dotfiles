@@ -9,5 +9,9 @@
 - include: deluge.yml
   tags: deluge
 
+- include: kdeconnect.yml
+  tags: kdeconnect
+  when: ansible_hostname == "nyaa-core"
+
 - include: firewall.yml
   tags: firewall
