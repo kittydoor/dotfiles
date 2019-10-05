@@ -11,7 +11,7 @@ echoerr() {
 
 # read file path, get the directory name, go up a few steps, and then resolve the relative path
 SCRIPT_DIR="$(readlink -m "$(dirname "$(readlink -f "$0")")/../../..")"
-STOW_ARGS=("--dir=${SCRIPT_DIR}/packages/" "--target=/home/${USER}")
+STOW_ARGS=("--dir=${SCRIPT_DIR}/packages/" "--target=${HOME}")
 
 help_message() {
   echoerr "No package names given."
