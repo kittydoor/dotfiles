@@ -5,7 +5,7 @@
   tags: desktop_common
 
 - include: gnome.yml
-  tags: gnome
+  tags: desktop_gnome
 
 - include: i3.yml
-  tags: i3
+  tags: desktop_i3

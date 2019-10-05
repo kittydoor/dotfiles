@@ -2,31 +2,31 @@
 # roles/software/tasks/main.yml
 
 - include: cloud.yml
-  tags: cloud
+  tags: software_cloud
 
 - include: containers.yml
-  tags: containers
+  tags: software_containers
 
 - include: flatpak.yml
-  tags: flatpak
+  tags: software_flatpak
 
 - include: languages.yml
-  tags: languages
+  tags: software_languages
 
 - include: media.yml
-  tags: media
+  tags: software_media
 
 - include: networking.yml
-  tags: networking
+  tags: software_networking
 
 - include: shell.yml
-  tags: shell
+  tags: software_shell
 
 - include: terminal.yml
-  tags: terminal
+  tags: software_terminal
 
 - include: virtualization.yml
-  tags: virtualization
+  tags: software_virtualization
 
 - include: automatic_updates.yml
-  tags: automatic_updates
+  tags: software_automatic_updates

@@ -1,17 +1,17 @@
 ---
 # roles/services/tasks/main.yml
 
+- include: firewall.yml
+  tags: services_firewall
+
 - include: ssh.yml
   tags:
     - ssh
     - sshd
 
 - include: deluge.yml
-  tags: deluge
+  tags: services_deluge
 
 - include: kdeconnect.yml
-  tags: kdeconnect
+  tags: services_kdeconnect
   when: ansible_hostname == "nyaa-core"
-
-- include: firewall.yml
-  tags: firewall
