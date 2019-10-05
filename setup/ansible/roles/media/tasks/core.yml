@@ -1,0 +1,26 @@
+---
+# roles/media/tasks/core.yml
+
+- name: mount nyaa-store
+  mount:
+    path: /media/nyaa-store
+    src: PARTLABEL=nyaa-store
+    fstype: ext4
+    state: mounted
+  become: yes
+
+- name: mount media-store
+  mount:
+    path: /media/media-store
+    src: PARTLABEL=media-store
+    fstype: ext4
+    state: mounted
+  become: yes
+
+- name: mount windows-games
+  mount:
+    path: /media/windows-games
+    src: PARTLABEL=windows-games
+    fstype: ext4
+    state: mounted
+  become: yes
