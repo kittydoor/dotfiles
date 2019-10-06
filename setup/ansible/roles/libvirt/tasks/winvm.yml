@@ -1,0 +1,17 @@
+---
+# roles/libvirt/tasks/winvm.yml
+
+- name: set qemu user to self
+  lineinfile:
+    path: /etc/libvirt/qemu.conf
+    line: "user = \"{{ ansible_user_id }}\""
+    regexp: "^#?user = \""
+  become: yes
+  register: qemu_user
+
+- name: restart libvirtd
+  systemd:
+    name: libvirtd
+    state: restarted
+  become: yes
+  when: qemu_user.changed

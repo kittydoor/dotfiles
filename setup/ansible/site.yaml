@@ -31,3 +31,6 @@
 
     - role: services
       tags: services
+
+    - role: libvirt
+      tags: libvirt

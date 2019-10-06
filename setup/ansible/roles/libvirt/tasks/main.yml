@@ -1,0 +1,5 @@
+---
+# roles/libvirt/tasks/main.yml
+
+- include: winvm.yml
+  tags: libvirt_winvm
