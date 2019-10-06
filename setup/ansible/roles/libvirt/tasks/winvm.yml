@@ -15,3 +15,18 @@
     state: restarted
   become: yes
   when: qemu_user.changed
+
+- name: enable virtio repo
+  get_url:
+    url: https://fedorapeople.org/groups/virt/virtio-win/virtio-win.repo
+    dest: /etc/yum.repos.d/virtio-win.repo
+    owner: root
+    mode: '0644'
+  become: yes
+
+- name: install virtio-win-latest
+  dnf:
+    name: virtio-win
+    enablerepo: virtio-win-latest
+    state: present
+  become: yes

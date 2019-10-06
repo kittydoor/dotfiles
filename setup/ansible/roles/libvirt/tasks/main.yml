@@ -3,3 +3,4 @@
 
 - include: winvm.yml
   tags: libvirt_winvm
+  when: ansible_hostname == "nyaa-core"
