@@ -21,6 +21,7 @@
     - org.gnome.desktop.peripherals.touchpad tap-to-click true
     - org.gnome.Weather locations "[<(uint32 2, <('Amsterdam', 'EHAM', true, [(0.91280719879303418, 0.083194033496160544)], [(0.91367986341903151, 0.085812027374152042)])>)>]"
     - org.gnome.GWeather temperature-unit "'centigrade'"
+    - org.gnome.desktop.input-sources xkb-options "['compose:ralt']"
 
 - name: get default gnome terminal profile
   shell: gsettings get org.gnome.Terminal.ProfilesList default | tr -d "'"
