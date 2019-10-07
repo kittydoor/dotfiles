@@ -22,5 +22,5 @@
   become: yes
 
 - name: cite parallel
-  command: echo 'will cite' | parallel --citation
+  shell: echo 'will cite' | parallel --citation
   changed_when: false
