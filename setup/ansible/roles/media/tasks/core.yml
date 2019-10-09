@@ -17,10 +17,20 @@
     state: mounted
   become: yes
 
-- name: mount windows-games
+- name: mount winvm (noauto)
   mount:
-    path: /media/windows-games
-    src: PARTLABEL=windows-games
-    fstype: ext4
-    state: mounted
+    path: /media/winvm
+    src: PARTLABEL=winvm
+    fstype: ntfs
+    opts: noauto
+    state: present
+  become: yes
+
+- name: mount winvm-games (noauto)
+  mount:
+    path: /media/winvm-games
+    src: PARTLABEL=winvm-games
+    fstype: ntfs
+    opts: noauto
+    state: present
   become: yes
