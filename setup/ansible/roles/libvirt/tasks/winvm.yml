@@ -30,3 +30,10 @@
     enablerepo: virtio-win-latest
     state: present
   become: yes
+
+- name: iommu in grub
+  lineinfile:
+    path: /etc/default/grub
+    line: 'GRUB_CMDLINE_LINUX_DEFAULT="intel_iommu=on"'
+    regexp: 'GRUB_CMDLINE_LINUX_DEFAULT="'
+  become: yes
