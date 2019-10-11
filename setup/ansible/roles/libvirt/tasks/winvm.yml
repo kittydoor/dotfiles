@@ -33,8 +33,8 @@
 
 - name: check for iommu in grub (must manually add these to GRUB_CMDLINE_LINUX)
   command: grep 'intel_iommu=on iommu=pt rd.driver.pre=vfio-pci' /etc/default/grub
-  register: grub_iommu_grep
-  failed_when: grub_iommu_grep.rc != 0
+  register: grub_iommu
+  failed_when: grub_iommu.rc != 0
   changed_when: true
   become: yes
 
