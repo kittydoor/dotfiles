@@ -5,8 +5,8 @@ if [[ ${DEBUG:-} = 1 ]]; then
 fi
 
 echoerr() {
-  echo -n -e "\e[34m!Error:\e[39m " > /dev/stderr
-  echo "$@" > /dev/stderr
+  >&2 echo -n -e "\e[34m!Error:\e[39m "
+  >&2 echo "$@"
 }
 
 # read file path, get the directory name, go up a few steps, and then resolve the relative path
@@ -33,16 +33,20 @@ fi
 if [[ "${1}" == "all" ]]; then
   for dir in "${SCRIPT_DIR}"/packages/*; do
     if [[ -d $dir ]]; then
-      stow "${STOW_ARGS[@]}" "$(basename "$dir")"
+      echo "Package: $(basename ${dir})"
+      stow "${STOW_ARGS[@]}" "$(basename "$dir")" || true
     else
-      echo "This should not happen. There is a non-directory file in the packages directory."
+      echoerr "This should not happen. There is a non-directory file in the packages directory."
       exit 2
     fi
   done
 else
   for item in "$@"; do
     if [[ -d "${SCRIPT_DIR}/packages/${item}" ]]; then
+      echo "Package: ${1}"
       stow "${STOW_ARGS[@]}" "$item"
+    else
+      echoerr "Package not found: ${1}"
     fi
   done
 fi
