@@ -31,9 +31,44 @@
     state: present
   become: yes
 
-- name: iommu in grub
-  lineinfile:
-    path: /etc/default/grub
-    line: 'GRUB_CMDLINE_LINUX_DEFAULT="intel_iommu=on"'
-    regexp: 'GRUB_CMDLINE_LINUX_DEFAULT="'
+- name: check for iommu in grub (must manually add these to GRUB_CMDLINE_LINUX)
+  command: grep 'intel_iommu=on iommu=pt rd.driver.pre=vfio-pci' /etc/default/grub
+  register: grub_iommu_grep
+  failed_when: grub_iommu_grep.rc != 0
+  changed_when: true
   become: yes
+
+- name: regenerate grub
+  command: grub2-mkconfig -o /etc/grub2-efi.cfg
+  become: yes
+  when: grub_iommu.changed
+
+- name: dracut vfio
+  copy:
+    content: "add_drivers+=\"vfio vfio_iommu_type1 vfio_pci vfio_virqfd\"\n"
+    dest: /etc/dracut.conf.d/vfio.conf
+  become: yes
+  register: dracut_vfio
+
+- name: rebuild kernels
+  command: dracut -f --regenerate-all
+  become: yes
+  when: dracut_vfio.changed
+
+- name: modprobe vfio
+  copy:
+    content: "options vfio-pci ids=1002:679a,1002:aaa0\n"
+    dest: /etc/modprobe.d/vfio.conf
+  become: yes
+
+- name: enable barrier (synergy)
+  firewalld:
+    zone: libvirt
+    service: synergy
+    permanent: yes
+    immediate: yes
+    state: enabled
+  become: yes
+
+# add gpu manually for now
+# "sudo setenforce 0" required until I figure out a fix for selinux not allowing qemu to access pulseaudio socket
