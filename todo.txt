@@ -1,7 +1,16 @@
 Common
 * Ansible
-  * add /etc/gdm/custom.conf auto login
   * look into /etc/wireguard
+  * custom module for grub cmdline options
+    * some code to start with: cat /etc/default/grub | grep GRUB_CMDLINE_LINUX | python -c "import sys,shlex; filebuf = sys.stdin.read(); optsbuf = filebuf.split('=', 1)[1]; listbuf = shlex.split(optsbuf); listbuf.append('iommu=pt'); print('GRUB_CMDLINE_LINUX=\"' + ' '.join(listbuf) + '\"')"
+* i3-gnome
+  * Look into how regolith does it
+    * https://regolith-linux.org/internals.html
+    * https://github.com/regolith-linux/regolith-gnome-flashback
+    * https://github.com/regolith-linux/regolith-i3 (look at debian/patches for regolith changes)
+    * https://github.com/regolith-linux/regolith-compton-config
+    * https://github.com/chjj/compton (upstream for compton)
+    * https://github.com/deuill/i3-gnome-flashback (upstream for regolith-gnome-flashback)
 * st - terminal - https://gitlab.com/kittydoor/st
   * Check if terminfo in right dir (investigate the folder I found in ~/.terminfo)
 * Mpv MPRIS script - https://gitlab.com/kittydoor/dotfiles/tree/master/.setup/setup.d
