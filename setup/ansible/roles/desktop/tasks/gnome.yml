@@ -9,6 +9,7 @@
     - gnome-tweaks
     - dconf-editor
     - NetworkManager-tui
+    - seahorse
   become: yes
 
 - name: gsettings - general rules

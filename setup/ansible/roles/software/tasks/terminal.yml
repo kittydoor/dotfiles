@@ -20,6 +20,7 @@
     - stow
     - info
     - stress
+    - ripgrep
   become: yes
 
 - name: cite parallel
