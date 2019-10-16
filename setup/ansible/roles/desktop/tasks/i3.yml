@@ -7,6 +7,8 @@
     state: present
   loop:
     - i3
+    - i3lock
     - sway
+    - arc-theme
     - py3status
   become: yes
