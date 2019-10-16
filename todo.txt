@@ -34,6 +34,8 @@ Common
 * Network - automate setting manual dns on networks
   * ipv4.dns:                               8.8.8.8,1.1.1.1
   * ipv4.ignore-auto-dns:                   yes
+* Autologin gnome vs i3
+  * /var/lib/AccountsService/users/kitty -> change 'XSession' to 'gnome-xorg' or 'i3'
 
 Programming Projects
 * Do something with Golang
