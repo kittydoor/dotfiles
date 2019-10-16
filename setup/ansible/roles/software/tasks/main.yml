@@ -19,6 +19,9 @@
 - include: networking.yml
   tags: software_networking
 
+- include: selinux.yml
+  tags: software_selinux
+
 - include: shell.yml
   tags: software_shell
 

@@ -1,0 +1,13 @@
+---
+# roles/software/tasks/selinux.yml
+
+- name: install setroubleshoot
+  dnf:
+    name: setroubleshoot
+    state: present
+  become: yes
+  register: setroubleshoot_install
+
+- name: restart auditd
+  command: service auditd restart
+  when: setroubleshoot_install.changed
