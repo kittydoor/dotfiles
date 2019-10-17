@@ -19,6 +19,7 @@
     - wget
     - stow
     - info
+    - stress
   become: yes
 
 - name: cite parallel

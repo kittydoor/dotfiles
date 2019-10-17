@@ -8,6 +8,7 @@
   loop:
     - gnome-tweaks
     - dconf-editor
+    - NetworkManager-tui
   become: yes
 
 - name: gsettings - general rules
