@@ -50,16 +50,18 @@
   become: yes
   register: dracut_vfio
 
+#   content: "options vfio-pci ids=1002:679a,1002:aaa0\n"
+- name: modprobe vfio
+  copy:
+    content: "options vfio-pci ids=1002:687f,1002:aaf8\n"
+    dest: /etc/modprobe.d/vfio.conf
+  become: yes
+  register: modprobe_vfio
+
 - name: rebuild kernels
   command: dracut -f --regenerate-all
   become: yes
-  when: dracut_vfio.changed
-
-- name: modprobe vfio
-  copy:
-    content: "options vfio-pci ids=1002:679a,1002:aaa0\n"
-    dest: /etc/modprobe.d/vfio.conf
-  become: yes
+  when: dracut_vfio.changed or modprobe_vfio.changed
 
 - name: enable barrier (synergy)
   firewalld:
