@@ -1,5 +1,5 @@
 ---
-# roles/software/tasks/cli_tools.yml
+# roles/software/tasks/terminal.yml
 
 - name: install terminal packages
   dnf:
