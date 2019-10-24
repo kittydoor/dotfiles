@@ -1,17 +1,15 @@
-# For other agents: if [[ "$SSH_AUTH_SOCK" == "" ]]; then
-
-# Start ssh agent
-if [[ "${DESKTOP_SESSION}" = gnome ]]; then
-  #if ! pidof gnome-keyring-daemon > /dev/null; then
+# Check if there's auth sock defined, else create agent
+if [[ -z "${SSH_AUTH_SOCK}" ]]; then
+  if [[ "${DESKTOP_SESSION}" = gnome ]]; then
+    # If running on gnome, use gnome tooling
     gnome-keyring-daemon --start > ~/.ssh/agent_env
-  #fi
-else
-  if ! pidof ssh-agent > /dev/null; then
+    # Gnome doesn't add this line by default
+    echo "export SSH_AUTH_SOCK" >> ~/.ssh/agent_env
+  else
+    # If not running gnome, use universal (for ssh or other de/wm)
     ssh-agent > ~/.ssh/agent_env
   fi
-fi
 
-# on new shells
-eval "$(<~/.ssh/agent_env)" > /dev/null
-# gnome-keyring-daemon doesn't export by default
-export SSH_AUTH_SOCK
+  # Evaluate agent vars after having started an agent
+  eval "$(<~/.ssh/agent_env)" > /dev/null
+fi
