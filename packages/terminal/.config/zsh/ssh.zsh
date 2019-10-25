@@ -1,5 +1,8 @@
-# Check if there's auth sock defined, else create agent
-if [[ -z "${SSH_AUTH_SOCK}" ]]; then
+# Check if SSH_AUTH_SOCK is not a valid socket
+if [[ ! -S "${SSH_AUTH_SOCK}" ]]; then
+  # Then, launch agent
+  # Otherwise, return
+
   if [[ "${DESKTOP_SESSION}" = gnome ]]; then
     # If running on gnome, use gnome tooling
     gnome-keyring-daemon --start > ~/.ssh/agent_env
