@@ -57,6 +57,7 @@ source $ZDOTDIR/git.zsh
 source $ZDOTDIR/ssh_hosts.zsh
 source $ZDOTDIR/ssh.zsh
 source $ZDOTDIR/history.zsh
+source $ZDOTDIR/xdg.zsh
 
 # distro specific files
 DISTRO=$(cat /etc/*-release | grep "^NAME" | cut -d= -f2 | tr -d '"')
