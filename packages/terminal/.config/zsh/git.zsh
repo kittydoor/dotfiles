@@ -20,4 +20,4 @@ alias gpr="git pull --rebase "
 ### Static Named Directories
 
 hash -d git=~/Documents/Git
-hash -d pod=~git/podictive
+mkdir -p ~/Documents/Git
