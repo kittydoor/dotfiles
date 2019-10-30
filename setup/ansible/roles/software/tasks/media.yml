@@ -9,6 +9,7 @@
     - "youtube-dl"
     - "sxiv"
     - "chromium"
+    - "playerctl"
     - "zathura"
     - "zathura-pdf-mupdf"
     - "zathura-zsh-completion"
@@ -25,4 +26,23 @@
   dnf:
     name: mpv
     state: present
+  become: yes
+
+- name: ensure mpv scripts dir exists
+  file:
+    path: /etc/mpv/scripts
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+  become: yes
+
+- name: install mpv-mpris
+  unarchive:
+    src: https://github.com/hoyon/mpv-mpris/releases/download/0.2/mpv-mpris-linux-0.2-x86-64.tar.gz
+    dest: "/etc/mpv/scripts"
+    mode: "0644"
+    owner: root
+    group: root
+    remote_src: yes
   become: yes
