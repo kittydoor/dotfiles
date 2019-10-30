@@ -22,6 +22,8 @@
     - info
     - stress
     - ripgrep
+    - aespipe
+    - nmap
   become: yes
 
 - name: cite parallel
