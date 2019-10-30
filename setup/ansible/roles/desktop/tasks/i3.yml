@@ -11,4 +11,5 @@
     - sway
     - arc-theme
     - py3status
+    - pavucontrol
   become: yes
