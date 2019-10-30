@@ -18,6 +18,11 @@ alias download="curl -O -L -C -"
 alias cclip="xclip -selection clipboard"
 alias clipp="xclip -selection clipboard -o"
 
+### Fix VIM on fedora
+if type vimx > /dev/null; then
+  alias vim="vimx"
+fi
+
 ### Shortcut names
 alias doco="docker-compose"
 

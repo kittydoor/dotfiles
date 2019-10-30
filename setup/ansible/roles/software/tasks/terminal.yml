@@ -7,6 +7,7 @@
     state: present
   loop:
     - vim-enhanced
+    - vim-X11
     - neovim
     - htop
     - ranger
