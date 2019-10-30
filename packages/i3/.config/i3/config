@@ -14,6 +14,9 @@ exec --no-startup-id ~/.config/i3/libinput.sh
 # exec policykit (polkit) authentication agent
 exec --no-startup-id ~/.config/i3/polkit.sh
 
+# exec volume mute
+exec --no-startup-id ~/.config/i3/volume.sh mute
+
 # read xrdb
 exec --no-startup-id xrdb ~/.Xresources
 
@@ -261,8 +264,8 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86MonBrightnessUp exec --no-startup-id ~/.config/i3/brightness.sh inc 10 >> ~/.i3execlog
 bindsym XF86MonBrightnessDown exec --no-startup-id ~/.config/i3/brightness.sh dec 10 >> ~/.i3execlog
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.config/i3/volume.sh inc 5 >> ~/.i3execlog && pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/i3/volume.sh dec 5 >> ~/.i3execlog && pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.config/i3/volume.sh inc >> ~/.i3execlog && pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/i3/volume.sh dec >> ~/.i3execlog && pkill -SIGRTMIN+10 i3blocks
 bindsym XF86AudioMute exec --no-startup-id ~/.config/i3/volume.sh toggle >> ~/.i3execlog && pkill -SIGRTMIN+10 i3blocks
 
 bindsym --release Print exec --no-startup-id ~/.config/i3/printscreen.sh
