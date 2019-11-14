@@ -12,4 +12,5 @@
     - arc-theme
     - py3status
     - pavucontrol
+    - ImageMagick
   become: yes
