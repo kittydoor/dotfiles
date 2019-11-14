@@ -22,7 +22,7 @@
     path: /media/winvm
     src: PARTLABEL=winvm
     fstype: ntfs
-    opts: noauto
+    opts: ro,noauto
     state: present
   become: yes
 
@@ -31,6 +31,6 @@
     path: /media/winvm-games
     src: PARTLABEL=winvm-games
     fstype: ntfs
-    opts: noauto
+    opts: ro,noauto
     state: present
   become: yes
