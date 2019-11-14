@@ -3,6 +3,8 @@ Common
   * look into /etc/wireguard
   * custom module for grub cmdline options
     * some code to start with: cat /etc/default/grub | grep GRUB_CMDLINE_LINUX | python -c "import sys,shlex; filebuf = sys.stdin.read(); optsbuf = filebuf.split('=', 1)[1]; listbuf = shlex.split(optsbuf); listbuf.append('iommu=pt'); print('GRUB_CMDLINE_LINUX=\"' + ' '.join(listbuf) + '\"')"
+* i3
+  * check why background color is missing
 * i3-gnome
   * Look into how regolith does it
     * https://regolith-linux.org/internals.html
@@ -87,6 +89,10 @@ Nyaa-Gate
   * Figure out why systemd-resolved or statis dns causes issues with uni wifi
 
 Nyaa-Link
-* Setup guest and private vlan
+* config script
+  * Setup guest and private vlan
+  * Update to latest version
+  * Restart dropbear after uci commit?
+  * Check for latest ssh pubkeys to be added
 
 # vim:ts=2:sw=2:et
