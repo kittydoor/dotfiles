@@ -13,24 +13,25 @@ Common
     * https://github.com/deuill/i3-gnome-flashback (upstream for regolith-gnome-flashback)
 * st - terminal - https://gitlab.com/kittydoor/st
   * Check if terminfo in right dir (investigate the folder I found in ~/.terminfo)
-* Mpv MPRIS script - https://gitlab.com/kittydoor/dotfiles/tree/master/.setup/setup.d
 * Vim
   * command to resize window exactly to file length (for tmux and for vim splits)
-* i3 status bar - https://gitlab.com/kittydoor/dotfiles/tree/master/.config/i3
+  * find how to remove all UI elements / clean or minimalist mode for demos
+* i3 status bar
+  * Investigate py3status, i3blocks, polybar, or other options
+  * FontAwesome for icons
   * Show current wifi name
   * Show vpn status, on/off by press, altclick to change profile
-  * Fix battery being so slow
+  * Show battery status / check for updates
   * Show memory and cpu in a useful manner
   * Show disk space properly
-  * Show number of packages to be updated
-  * Shift all sound to different output on click
+  * Show available updates or last update time
+  * Show volume accurately, allow switching to different output or muting
 * Shell - https://gitlab.com/kittydoor/dotfiles/tree/master/.config/zsh
   * Profile TERMINAL doesn't work correctly when multiple are found
   * Set st window name to tmux session automatically
   * Figure out the right way (a shell script, alias, etc) to launch st with correct title and tmux
   * Disable arrow keys in zsh to match vim setup
   * READ: https://superuser.com/questions/187639/zsh-not-hitting-profile
-* On TTYs, make ssh-agent remember ssh keys
 * Network - automate setting manual dns on networks
   * ipv4.dns:                               8.8.8.8,1.1.1.1
   * ipv4.ignore-auto-dns:                   yes
@@ -47,22 +48,23 @@ Programming Projects
   * add sync missing repositories and archive deleted subcommand
   * add status on all subcommand
   * add fetch -ap, co master, pull master subcommand
-* Service for dynamic ip in do dns
+* userify.sh
+  * add help message
+  * set defaults in user xdg data dir
+  * enable profiles
+  * better messages for changes
+* Service for dynamic ip using do dns / domain
 
 Infra Projects
 * Ansible base provisioner for secure and sane machines, and some extra roles for features
-* Mesh networking with wireguard
+* Mesh networking with wireguard / look into consul
 * Investigate tinc
 
 Kubernetes
 * Figure out good baremetal kubernetes solution, and ways to add basic functionality
 * Try out kubernetes deployments
-  * OpenStack
-  * OpenShift
-  * RKE
-  * rancher 2.0
-  * Kubespray
-  * Custom scripting with kubeadm
+  * Custom scripting with kubeadm / kubernetes from scratch
+  * https://github.com/kelseyhightower/kubernetes-the-hard-way
   * k3s
   * Fedora CoreOS
   * ...
@@ -71,17 +73,18 @@ Kubernetes
   * Rook
   * Ceph
   * NFS
+  * Local disks?
   * ...
 
 Nyaa-Core
-* Work on gaming.sh
-  * Solve sound delay and glitching issue
-  * Only ask for authentication for virsh once
+* gaming.sh
+  * Ensure is correct
+  * Look into barrier stealing mouse on vm shutdown, perhaps killswitch for barrier when vm is stopped
 
 Nyaa-Gate
 * Wireless
   * From the wireless info for uni, configure wireless profile, keep in vcs
-  * Figure out why systemd-resolved causes issues with uni wifi
+  * Figure out why systemd-resolved or statis dns causes issues with uni wifi
 
 Nyaa-Link
 * Setup guest and private vlan
