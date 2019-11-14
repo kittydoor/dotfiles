@@ -1,0 +1,31 @@
+#!/bin/bash
+set -euo pipefail
+set -o xtrace
+
+# This script starts up the win-gaming vm, synergy, and audio (through spice) trio
+if [[ ${HOSTNAME:-} != nyaa-core ]]; then
+  echo Will only run on nyaa-core. Quitting...
+  exit 10
+fi
+
+# TODO: Create policy instead
+# Don't enforce SELinux because of pulseaudio socket issue
+if [[ $(sestatus | awk '/Current mode:/ { print $3 }') != "permissive" ]]; then
+  sudo setenforce 0
+fi
+
+# Start vm
+virsh -c qemu:///system start winvm || true
+
+# Kill all barrier
+pkill barrier || true
+# Run barrier / synergy
+flatpak run com.github.debauchee.barrier
+
+while true; do
+  sleep 10
+  if [[ $(virsh -c qemu:///system list | awk '/winvm/ { print $3 }') != "running" ]]; then
+    pkill barrier
+    exit
+  fi
+done

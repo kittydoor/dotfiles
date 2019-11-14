@@ -216,11 +216,11 @@ mode $mode_apps_web {
   bindsym $mod+space mode "default"
 }
 
-set $mode_apps_virt "apps/virt:  virt-[m]anager  [s]ynergy  [g]aming"
+set $mode_apps_virt "apps/virt:  virt-[m]anager  [s]ynergy  [w]invm"
 mode $mode_apps_virt {
   bindsym m exec virt-manager, mode "default"
   bindsym s exec synergy, mode "default"
-  bindsym g exec ~/.config/i3/gaming.sh, mode "default"
+  bindsym w exec ~/bin/winvm, mode "default"
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
