@@ -6,6 +6,12 @@ Common
 * i3
   * check why background color is missing
   * Add mode / status select menu for shutdown, logout, etc
+    * https://faq.i3wm.org/question/239/how-do-i-suspendlockscreen-and-logout.1.html
+  * Lock on suspend
+    * https://forum.manjaro.org/t/i3-does-not-lock-on-suspend/72393/9
+    * https://wiki.archlinux.org/index.php/I3#Screensaver_and_power_management
+  * Reorganize mode menus
+  * Find a way to show menu and other tips and tricks on wallpaper
 * i3-gnome
   * Look into how regolith does it
     * https://regolith-linux.org/internals.html
@@ -41,12 +47,18 @@ Common
 * Autologin gnome vs i3
   * /var/lib/AccountsService/users/kitty -> change 'XSession' to 'gnome-xorg' or 'i3'
 
+Packaging
+* fedora-packages - Gitlab repo
+  * package helm
+  * package st (maybe also look into urxvt more)
+  * investigate what else to package (look at what's installed by ansible)
+
 Programming Projects
 * Do something with Golang
 * Do something with Rust
 * Do something with Lisp
 * Do something with Haskell
-* groupman.py - https://gitlab.com/kittydoor/dotfiles/tree/master/bin/groupman.py
+* gitlab - https://gitlab.com/kittydoor/dotfiles/tree/master/bin/groupman.py
   * add cloning subcommand
   * add sync missing repositories and archive deleted subcommand
   * add status on all subcommand
@@ -59,6 +71,21 @@ Programming Projects
 * Service for dynamic ip using do dns / domain
 
 Infra Projects
+* terraform - https://gitlab.com/kittydoor/terraform.git or git@gitlab.com:kittydoor/terraform.git
+  * terraform for kitty.sh/katherine.sh
+    * dns records and vm
+    * provisioning
+    * partially done, however primary server is still the legacy
+    * extras
+      * one button deploy
+      * one button deploy new and switch when ready
+      * one button duplicate
+  * nginx - various methods
+    * via system packages
+    * via official nginx image with certbot sidecar
+    * via custom podman systemd image using systemd services
+    * via k8s cert managerand ingress
+  * Vagrantfile for testing
 * Ansible base provisioner for secure and sane machines, and some extra roles for features
 * Mesh networking with wireguard / look into consul
 * Investigate tinc
