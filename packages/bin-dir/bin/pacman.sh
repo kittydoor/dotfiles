@@ -33,7 +33,7 @@ fi
 if [[ "${1}" == "all" ]]; then
   for dir in "${SCRIPT_DIR}"/packages/*; do
     if [[ -d $dir ]]; then
-      echo "Package: $(basename ${dir})"
+      echo "Package: $(basename "${dir}")"
       stow "${STOW_ARGS[@]}" "$(basename "$dir")" || true
     else
       echoerr "This should not happen. There is a non-directory file in the packages directory."
