@@ -1,5 +1,7 @@
 Common
 * Ansible
+  * locate mlocate updatedb
+    * Default configuration (/etc/updatedb.conf) ignores /media, which it shouldn't
   * look into /etc/wireguard
   * custom module for grub cmdline options
     * some code to start with: cat /etc/default/grub | grep GRUB_CMDLINE_LINUX | python -c "import sys,shlex; filebuf = sys.stdin.read(); optsbuf = filebuf.split('=', 1)[1]; listbuf = shlex.split(optsbuf); listbuf.append('iommu=pt'); print('GRUB_CMDLINE_LINUX=\"' + ' '.join(listbuf) + '\"')"
