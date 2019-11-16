@@ -1,37 +1,50 @@
 #!/bin/sh
-# ssh root@192.168.1.1 "PASSWD=? NYAAKEY=? KITTIESKEY=? sh -s" < config-openwrt.sh
+set -o xtrace
 set -e
 
-# CHECK HOST
+help_message() {
+  echo 'Usage: ssh root@192.168.1.1 "PASSWD=foo NYAAKEY=bar KITTIESKEY=baz sh -s" < config-openwrt.sh'
+}
+
+help_exit() {
+  echo
+  help_message
+  exit ${1:-1}
+}
+
+# === Safety Checks ===========================
+# Ensure not running on the wrong host
+# By default, the hostname should be OpenWrt,
+# and for updates, it should be nyaa-link
 if [ "OpenWrt" != "$HOSTNAME" ] && [ "nyaa-link" != "$HOSTNAME" ]; then
-  echo 'Hostname not OpenWrt or nyaa-link.'
+  echo 'Hostname not (default) OpenWrt or (configured) nyaa-link.'
   echo 'Exitting to prevent unintended damage to host...'
-  exit 2
+  help_exit 2
 fi
 
 # REQUIRED ENVIRONMENT VARIABLES
-# PASSWD - router passwd
+# PASSWD - admin passwd
 # NYAAKEY - nyaa-wifi key
 # KITTIESKEY - kitties key
 
 if [ -z "$PASSWD" ]; then
   echo 'PASSWD not defined, exitting...'
-  exit 1
+  help_exit
 fi
 
 if [ -z "$NYAAKEY" ]; then
   echo 'NYAAKEY not defined, exitting...'
-  exit 1
+  help_exit
 fi
 
 if [ -z "$KITTIESKEY" ]; then
   echo 'KITTIESKEY not defined, exitting...'
-  exit 1
+  help_exit
 fi
 
 # === Update root password ====================
-# Ask for manual password input until passwd returns
-# a success. The sleep is to enable Ctrl-C to exit.
+# Update root password (which affects luci logins)
+# SSH as root is disabled later on
 echo 'Updating root password'
 passwd <<EOF
 $PASSWD
@@ -40,7 +53,7 @@ EOF
 
 # === Update hostname =========================
 HOSTNAME="nyaa-link"
-echo 'Setting hostname to' $HOSTNAME
+echo "Setting hostname to $HOSTNAME"
 uci set system.@system[0].hostname="$HOSTNAME"
 uci commit system
 
@@ -48,14 +61,20 @@ uci commit system
 # Download and update all the interesting packages
 # Some of these are pre-installed, but there is no harm in
 # updating/installing them a second time.
-echo 'Updating software packages'
-{
-  opkg update             # retrieve updated packages
-  opkg install luci       # install the web GUI
-  opkg install luci-ssl   # install the web GUI ssl
-  opkg install tmux
-  opkg install vim
-} > /dev/null
+echo 'Installing/Updating select software packages'
+echo 'luci luci-ssl tmux vim'
+if update_out=$(opkg update \
+    && opkg install luci \
+    && opkg install luci-ssl \
+    && opkg install tmux \
+    && opkg install vim); then
+  echo 'Success'
+else
+  echo 'There was a problem...'
+  echo
+  echo "${update_out}"
+  exit 3
+fi
 
 # === Set the Time Zone =======================
 TIMEZONE='CET-1CEST,M3.5.0,M10.5.0/3'
@@ -96,53 +115,53 @@ uci delete wireless.default_radio1 > /dev/null 2>&1 || true
 
 # === 1b) Create new interfaces ===============
 echo 'Creating the interfaces'
-uci set wireless.nyaa_wifi5="wifi-iface"
 uci set wireless.nyaa_wifi="wifi-iface"
-uci set wireless.kitties5="wifi-iface"
+uci set wireless.nyaa_wifi5="wifi-iface"
 uci set wireless.kitties="wifi-iface"
+uci set wireless.kitties5="wifi-iface"
 
 # === 1c) Assign the options ==================
 echo 'Assigning some options'
-uci set wireless.nyaa_wifi5.mode="ap"
 uci set wireless.nyaa_wifi.mode="ap"
-uci set wireless.kitties5.mode="ap"
+uci set wireless.nyaa_wifi5.mode="ap"
 uci set wireless.kitties.mode="ap"
+uci set wireless.kitties5.mode="ap"
 
-uci set wireless.nyaa_wifi5.network="lan"
 uci set wireless.nyaa_wifi.network="lan"
-uci set wireless.kitties5.network="lan"
+uci set wireless.nyaa_wifi5.network="lan"
 uci set wireless.kitties.network="lan"
+uci set wireless.kitties5.network="lan"
 
 # === 1d) AP specific options =================
 echo 'Assigning ap specific options'
-uci set wireless.nyaa_wifi5.hidden="1"
 uci set wireless.nyaa_wifi.hidden="1"
-uci set wireless.kitties5.hidden="0"
+uci set wireless.nyaa_wifi5.hidden="1"
 uci set wireless.kitties.hidden="0"
+uci set wireless.kitties5.hidden="0"
 
-uci set wireless.nyaa_wifi5.device="radio0"
 uci set wireless.nyaa_wifi.device="radio1"
-uci set wireless.kitties5.device="radio0"
+uci set wireless.nyaa_wifi5.device="radio0"
 uci set wireless.kitties.device="radio1"
+uci set wireless.kitties5.device="radio0"
 
 # === 1e) Assign the ssid and encryption ======
 
-uci set wireless.nyaa_wifi5.ssid="nyaa-wifi5"
 uci set wireless.nyaa_wifi.ssid="nyaa-wifi"
-uci set wireless.kitties5.ssid="kitties5"
+uci set wireless.nyaa_wifi5.ssid="nyaa-wifi5"
 uci set wireless.kitties.ssid="kitties"
+uci set wireless.kitties5.ssid="kitties5"
 
 WI_ENC="psk2+ccmp"
 
-uci set wireless.nyaa_wifi5.encryption=$WI_ENC
 uci set wireless.nyaa_wifi.encryption=$WI_ENC
-uci set wireless.kitties5.encryption=$WI_ENC
+uci set wireless.nyaa_wifi5.encryption=$WI_ENC
 uci set wireless.kitties.encryption=$WI_ENC
+uci set wireless.kitties5.encryption=$WI_ENC
 
-uci set wireless.nyaa_wifi5.key=$NYAAKEY
 uci set wireless.nyaa_wifi.key=$NYAAKEY
-uci set wireless.kitties5.key=$KITTIESKEY
+uci set wireless.nyaa_wifi5.key=$NYAAKEY
 uci set wireless.kitties.key=$KITTIESKEY
+uci set wireless.kitties5.key=$KITTIESKEY
 
 # === 2) Setup the radios =====================
 echo 'Setting up and enabling the radios'
@@ -159,19 +178,12 @@ uci set wireless.radio1.disabled="0"
 uci commit wireless
 
 # === Configuring dropbear
-authorized_key_core="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDPbS2YTvSfdJgbOtSCrX/bwD3Ns1/Zq/C5h6bruJnKOVfLtoxxxxzzhiO3ufYGQP3sSUkVUJHtPh/hUQjaYJfOVKAYC4zBBoVv3P+HZ2gwwXJap4IG26/+Ckwb9woMoPKOMCVTEqbZ97c+H/QVlltCxJWb4uxWanNkV57A1wx8n0s1VWZJBdzOcvs1PhtrRMYW72YGT3V+T6adQSc9Ocqr+x5KqRZjbyDukF2frUheMHUjcaeeK9x0vSSDcohip2rRC3Y5Zs8TH3i2pw4bVRQHuo/y37x2mXnt4rlAKuJRUkc/Xt6yrXIj4+LYRzltMMJDR89Z5MqELkactktGq0RY12KGXl3qWNMjafBGdwAAC7s/JeT4bKyeNi+/j5nEssrE53ROrLmL99mKzTzcvohRol9j0o7puDHE5KM35fUWx4ROHbLlq1xreZXfcq4t0pNkydE9nZ/jB8Du4h0QJ3BlreV5DsNvXv5cwXsXdtLpsFOCQ9rBevO9J4ORcDRgKz+OEEM4BrLMGimMMelofICggcxGqApBLb3FHrI5cqSHPG1HPskiMqvV3PKUopcUy/JwcHegW5FC9V5HM+HyS0ur8XbyOcBmGYMntM06WpFKQcNVLx3NgH/uZ+QVt5n9YzIsbaCExtCGUGdGfA2jUyRt+SWq5ui/Y2/LGjJjT7qWUQ== kitty@nyaa-core"
-authorized_key_note="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDc7iU7FrUt4UjQWxNOla1X/3RgtqeHPRY1fnVwHJ8qn5rMwIu+0MNkheQVVowPn3wLvFCqXaHR/HHNW9NxEX961CJb1aEHe5Y5EEjVbbuCVMQjZxHBnkBeSQjMDVsclPC1QC2K0wQwMz4Uc8TMzNNdUlKLHcjSyXOYE2FM4e+zJrgnaSfMa6avF7rkJrs0DRI6KNXXnMq+2GSsU0VV/zsWJ/eKIwVgbdFlMYJMiasEpBifOaYHFQ9TNUQIcCMKxpr0b7q0QaA/xUnA2uaOXlmPSOr9OESmuYCY+/pxiAF9Vz1ehH8wZ6fBZ3wnZ6j9FoGVlCsRETvwBfz4qGeg/G+Gka4XVaR0DPqXBo+gGnCc90w+J96VfmE9FUYYNz/3DOvTxNg5KaRwgea2QpOrSb9gbZTD3qLbdQh1EcQD1SeNw1uyc/LuPhjRE7y5tnsiYMpI9sPXRYyfaMKQ0xoropXcfpG6Sa8P5ndQ1n+Zm161kUZZ9tlceCkmuVSozZ9eLtmTXuyEGvwGxOqlluAI6J+5V9NDasUQgtqefXKyzERE8LC8Buwg1yRfhMD0Djirb3v7Lbaya4IyhdyDcVDNMXWPfCr3Hrjx6mlHuOnFm4I5oKOrOi+vFQML/w6fn/0eKsQkx/frYsieH6VOiQnI9TYZbh6TsfE4Q9CcM9GBdPAHww== nyaa-note@nyaa-link"
-authorized_key_gate="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCmSgWoYIOI01DKCCSp12XeB0DixSIkZg+KKLz+LeM360W3730nfaOETOM+uZ/Gtl1H59ogSAHeppmbe1MEewbmJP7SWBQi3PCpbXZO7STIfprgL3HfjFo6iDSVDhm9kVRkUED47mtFZv+3Svga/xNNJpfy2LP4WaWBPd1kGtx7SCWtArib71P5MfPSAYdEGKekOYNyGihTDDvutbvNtOmTiG9Q165IaFHWT6srW257XOC6tQXus7OqOv4y/aMgjQJA1hZnu5C99ugyFMbXBOyOrKXAg6rP91haD488MwsMaANH15ltfrhhWPSC2ZA3/CRUtQf+k/ub9paZ/D14k1yHS7PSE6P/8/kDELJs+tWl7S12+Qvt3lxHTVaILuEvioyvVd+5sdRAr0UMFhlAu2QMRscG1Wa7r+aPIbkUbznFt3B+zH8KMICJa3ukRtDfdqHyux5viczo9BhJl71gFFj6Gr3EOI0KGNOvGyOe+2DP6S4ul0PSVnLHvnd0iIwDTTtOq86XYks5xaKoKJx6UyvVLYaiBOkfZKS5Awi66VrzQSbEdgyjM8ZN54KYmeuy5mmQqOuk1xVHxn9huPNtd1fwq5/lBuIB1FqmoQKIWUh5WOpucVxpmSDWI5fQUZx7xUp8h6LgBxF8wUu6SXGp9O96c9lucOTHiVarUtGKe+G31Q== nyaa-gate@nyaa-link"
-
-# rm in order to make this action stateless
-rm -f /etc/dropbear/authorized_keys
-echo $authorized_key_core >> /etc/dropbear/authorized_keys
-echo $authorized_key_note >> /etc/dropbear/authorized_keys
-echo $authorized_key_gate >> /etc/dropbear/authorized_keys
+authorized_key_link="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDYgX1bygjCOUxRDoTVj9VegcJnf7v0ICJEISc8Ak7hxSg1UyINT5ltdb3ztfv9lVijrUlDLM0sB8Bv16QiN+H2p5ewf0qfLnJ9hWmX7kO7ZaUnJ/nDiKNHKt4/2rEWJmUFUcOheiy4mSatp2uJlBG0sannTUEupydi6tSquoTplTQzHIsVvj3yx2uY3/xo6ZDr3FrrX6GFRtiNMSMg9uE3XSiWgihGLTQhItIsM2Ze7fzgb5oLShxH0AKUZIscKZ2zk74pD5EUuI/I9GvKWTJG07Z1rYAHKSy3XEzzhl7T+2tL1kMSwyOt9Qc/Mz2HFo/4h1ipeAwx+AzjeJVGB4UVUa9Ub0H0ybGghDCziNUTwE7cUK7agOMvVqhU3rphT7R2xLE+CDrGHQghaNI4InYE31drtKRd3ZDCoFht1HeCyEAC2hwgObHlW4zhmLgw4hNpptV0v27qeqM75fKnXUKYPe5gHeYLS5cwaX6MM01QffJMqKS5MyL7mZMoPF2tgVQiOZ27B4x1+xxP7mmBMEerAxdsyUcbLQZtZ2+l3tHnlIir3PeYu5wYDQlbJj9DxqnlpimyuI+ncaGbJxJ6pxhZ46tQnjlqzmT+spJYUjFTKLoiYEyisM2rYp8BtscZH6Ny5KUUwYg/aF7CsfpOaAb09yejHzA1MbX+GpiegA19iQ== root@nyaa-link shared"
+echo "$authorized_key_link" > /etc/dropbear/authorized_keys
 
 # disable insecure access now that keys are set
-uci set dropbear.@dropbear[0].PasswordAuth="off"
 uci set dropbear.@dropbear[0].RootPasswordAuth="off"
+uci set dropbear.@dropbear[0].PasswordAuth="off"
 
 uci commit dropbear
 
@@ -180,45 +192,53 @@ uci commit dropbear
 # creating and renaming hosts
 echo 'Creating static lease hosts'
 uci set dhcp.core=host
-uci set dhcp.note=host
+uci set dhcp.poco=host
 uci set dhcp.gate=host
-uci set dhcp.aigent=host
+uci set dhcp.work=host
+uci set dhcp.note=host
 
 # setting up the hosts
 # nyaa-core
 echo 'Setting up the static lease hosts'
+
+CORE_MAC="4C:CC:6A:01:F4:B5"
+POCO_MAC="A4:50:46:6A:8E:31"
+GATE_MAC="9C:B6:D0:F1:18:2B"
+WORK_MAC="1C:1B:B5:C9:C0:89"
+NOTE_MAC="4C:66:41:E5:88:21"
+
 uci set dhcp.core.name="nyaa-core"
 uci set dhcp.core.dns="1"
-uci set dhcp.core.mac="BA:A1:E7:A4:6A:82"
-# uci set dhcp.core.mac="4C:CC:6A:01:F4:B5"
+uci set dhcp.core.mac="$CORE_MAC"
+# uci set dhcp.core.mac="BA:A1:E7:A4:6A:82" # bridge
 uci set dhcp.core.ip="192.168.1.2"
 uci set dhcp.core.leasetime="12h"
 
 # nyaa-poco
-uci set dhcp.note.name="nyaa-poco"
-uci set dhcp.note.dns="1"
-uci set dhcp.note.mac="A4:50:46:6A:8E:31"
-uci set dhcp.note.ip="192.168.1.3"
-uci set dhcp.note.leasetime="12h"
+uci set dhcp.poco.name="nyaa-poco"
+uci set dhcp.poco.dns="1"
+uci set dhcp.poco.mac="$POCO_MAC"
+uci set dhcp.poco.ip="192.168.1.3"
+uci set dhcp.poco.leasetime="12h"
 
 # nyaa-gate
 uci set dhcp.gate.name="nyaa-gate"
 uci set dhcp.gate.dns="1"
-uci set dhcp.gate.mac="9C:B6:D0:F1:18:2B"
+uci set dhcp.gate.mac="$GATE_MAC"
 uci set dhcp.gate.ip="192.168.1.4"
 uci set dhcp.gate.leasetime="12h"
 
-# nyaa-aigent
-uci set dhcp.gate.name="nyaa-aigent"
-uci set dhcp.gate.dns="1"
-uci set dhcp.gate.mac="1C:1B:B5:C9:C0:89"
-uci set dhcp.gate.ip="192.168.1.5"
-uci set dhcp.gate.leasetime="12h"
+# nyaa-work
+uci set dhcp.work.name="nyaa-work"
+uci set dhcp.work.dns="1"
+uci set dhcp.work.mac="$WORK_MAC"
+uci set dhcp.work.ip="192.168.1.5"
+uci set dhcp.work.leasetime="12h"
 
 # nyaa-note
 uci set dhcp.note.name="nyaa-note"
 uci set dhcp.note.dns="1"
-uci set dhcp.note.mac="4C:66:41:E5:88:21"
+uci set dhcp.note.mac="$NOTE_MAC"
 uci set dhcp.note.ip="192.168.1.201"
 uci set dhcp.note.leasetime="12h"
 
@@ -242,6 +262,16 @@ uci set firewall.ssh_core.src_dport="2222"
 uci set firewall.ssh_core.dest="lan"
 uci set firewall.ssh_core.dest_ip="192.168.1.2"
 uci set firewall.ssh_core.dest_port="22"
+
+uci set firewall.ssh_core=redirect
+uci set firewall.ssh_core.name="minecraft-core"
+uci set firewall.ssh_core.target="DNAT"
+uci set firewall.ssh_core.proto="tcp"
+uci set firewall.ssh_core.src="wan"
+uci set firewall.ssh_core.src_dport="25565"
+uci set firewall.ssh_core.dest="lan"
+uci set firewall.ssh_core.dest_ip="192.168.1.2"
+uci set firewall.ssh_core.dest_port="25565"
 
 uci commit firewall
 
