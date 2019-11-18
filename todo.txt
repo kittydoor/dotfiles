@@ -119,10 +119,6 @@ Nyaa-Gate
   * Figure out why systemd-resolved or statis dns causes issues with uni wifi
 
 Nyaa-Link
-* config script
-  * Setup guest and private vlan
-  * Update to latest version
-  * Restart dropbear after uci commit?
-  * Check for latest ssh pubkeys to be added
+* n/a
 
 # vim:ts=2:sw=2:et
