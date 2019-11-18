@@ -34,3 +34,6 @@
 
     - role: libvirt
       tags: libvirt
+
+    - role: xorg
+      tags: xorg
