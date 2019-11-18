@@ -12,3 +12,6 @@ export XDG_DATA_HOME="$HOME/.local/share"
 
 # less always intepret control chars
 export LESS='-R'
+
+# Sway socket fit
+export SWAYSOCK=$(find /run/user/1000 -name 'sway-ipc.1000.*.sock' | head -n 1)
