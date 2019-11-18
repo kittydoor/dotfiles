@@ -20,7 +20,7 @@ virsh -c qemu:///system start winvm || true
 # Kill all barrier
 pkill barrier || true
 # Run barrier / synergy
-flatpak run com.github.debauchee.barrier
+flatpak run com.github.debauchee.barrier &
 
 while true; do
   sleep 10
