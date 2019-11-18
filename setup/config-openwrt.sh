@@ -194,7 +194,7 @@ wireless_config() {
   # === 1e) Assign the ssid and encryption ======
 
   uci set wireless.nyaa_wifi.ssid="nyaa-wifi"
-  uci set wireless.nyaa_wifi5.ssid="nyaa-wifi5"
+  uci set wireless.nyaa_wifi5.ssid="nyaa-wifi"
   uci set wireless.kitties.ssid="kitties"
   uci set wireless.kitties5.ssid="kitties5"
 
