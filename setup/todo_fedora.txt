@@ -6,6 +6,3 @@ Firefox autoscroll
 Shadowfox
 Enable Shadowfox fixes in Firefox about:config
 Login to Bitwarden
-
-NEW
-autologin
