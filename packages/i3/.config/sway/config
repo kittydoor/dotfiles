@@ -272,7 +272,7 @@ bindsym $mod+Ctrl+l move workspace to output right
 bindsym $mod+Ctrl+h move workspace to output right
 
 # lock screen
-bindsym $mod+b exec i3lock -c 000000
+bindsym $mod+b exec swaylock -c 000000
 
 # function keys
 # Media player controls
