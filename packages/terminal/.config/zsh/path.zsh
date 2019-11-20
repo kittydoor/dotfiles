@@ -20,6 +20,9 @@ addpath "$HOME/.local/bin"
 addpath "$HOME/.local/share/node_modules/bin"
 export npm_config_prefix=~/.local/share/node_modules
 
+# cargo binaries
+addpath "$HOME/.local/share/cargo/bin"
+
 # krew
 addpath "$HOME/.krew/bin"
 
