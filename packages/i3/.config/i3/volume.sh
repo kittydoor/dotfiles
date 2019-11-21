@@ -42,7 +42,11 @@ check_parse() {
 }
 
 inc_vol() {
-  pactl set-sink-volume @DEFAULT_SINK@ "+$1%"
+  if (( $(current_volume) + $1 > 100 )); then
+    set_vol 100
+  else
+    pactl set-sink-volume @DEFAULT_SINK@ "+$1%"
+  fi
   smart_mute
 }
 
@@ -52,15 +56,13 @@ dec_vol() {
 }
 
 inc_snap() {
-  VOLUME_STR=$(current_volume)
-  VOLUME=${VOLUME_STR%\%}
+  VOLUME=$(current_volume)
   DELTA="$(( 5 - (VOLUME % 5) ))"
   inc_vol "${DELTA}"
 }
 
 dec_snap() {
-  VOLUME_STR=$(current_volume)
-  VOLUME=${VOLUME_STR%\%}
+  VOLUME=$(current_volume)
   DELTA="$(( VOLUME % 5 ))"
   if [[ ${DELTA} == 0 ]]; then
     dec_vol 5
@@ -83,17 +85,19 @@ mute_vol() {
 }
 
 current_volume() {
-  pactl list sinks | awk '/Volume: / { print $5 }' | head -n 1
+  # Note: If this stops working, such as perhaps with multiple sinks, check:
+  # https://unix.stackexchange.com/questions/132230/read-out-pulseaudio-volume-from-commandline-i-want-pactl-get-sink-volume
+  VOLUME_STR=$(pactl list sinks | awk '/Volume: / { print $5 }' | head -n 1)
+  echo "${VOLUME_STR%\%}"
 }
 
 smart_mute() {
-  if [[ $(current_volume) == 0% ]]; then
+  if [[ $(current_volume) == 0 ]]; then
     pactl set-sink-mute @DEFAULT_SINK@ 1
   else
     pactl set-sink-mute @DEFAULT_SINK@ 0
   fi
 }
-
 
 case "${1:-}" in
   "inc")
