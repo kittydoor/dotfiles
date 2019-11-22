@@ -1,7 +1,8 @@
-# Swap and Dump
+# Swap and Dump and Cache
 *~
 *.swp
 .zcompdump
+.mypy_cache
 
 # SSH
 **/.ssh/id_*
