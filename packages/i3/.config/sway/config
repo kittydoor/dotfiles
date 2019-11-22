@@ -2,23 +2,8 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-# Sway: Set output configuration
-output HDMI-A-1 {
-  pos 0 0
-  res 2560x1440
-  bg #000000 solid_color
-}
-
-output DVI-D-1 {
-  pos 2560 0
-  res 1920x1080
-  bg #000000 solid_color
-}
-
-focus output HDMI-A-1
-
 # setup displays to default
-exec --no-startup-id ~/.config/i3/multihead.sh default
+exec --no-startup-id ~/.config/i3/multihead.sh
 
 # exec libinput setup
 exec --no-startup-id ~/.config/i3/libinput.sh
@@ -198,12 +183,10 @@ mode $mode_resize_precise {
 set $mode_display "display:  [s]ingle  [d]ouble"
 mode $mode_display {
   # activate secondary display
-  # bindsym d exec --no-startup-id ~/.config/i3/multihead.sh dual, mode "default"
-  bindsym d output DVI-D-1 enable, mode "default"
+  bindsym d exec --no-startup-id ~/.config/i3/multihead.sh dual, mode "default"
 
   # deactivate secondary display
-  # bindsym s exec --no-startup-id ~/.config/i3/multihead.sh single, mode "default"
-  bindsym s output DVI-D-1 disable, mode "default"
+  bindsym s exec --no-startup-id ~/.config/i3/multihead.sh single, mode "default"
 
   # back to normal: Enter or Escape or $mod+r
   bindsym Return mode "default"
