@@ -59,6 +59,11 @@ source $ZDOTDIR/ssh.zsh
 source $ZDOTDIR/history.zsh
 source $ZDOTDIR/xdg.zsh
 
+# host specific configuration
+if [[ -f $ZDOTDIR/local.zsh ]]; then
+  source $ZDOTDIR/local.zsh
+fi
+
 # distro specific files
 DISTRO=$(cat /etc/*-release | grep "^NAME" | cut -d= -f2 | tr -d '"')
 if [[ $DISTRO == 'Arch Linux' ]]; then
