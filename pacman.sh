@@ -1,1 +1,0 @@
-packages/bin-dir/bin/pacman.sh

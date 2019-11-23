@@ -1,0 +1,37 @@
+# host specific configuration
+# nyaa-core
+
+output HDMI-A-1 {
+  pos 0 0 res 2560x1440
+  bg #000000 solid_color
+}
+
+output DVI-D-1 {
+  pos 2560 360 res 1920x1080
+  bg #000000 solid_color
+}
+
+output HDMI-A-1 enable
+output DVI-D-1 enable
+
+workspace $ws1 output HDMI-A-1
+workspace $ws2 output DVI-D-1
+
+focus output HDMI-A-1
+
+# external displays
+set $mode_display "display:  [s]ingle  [d]ouble"
+mode $mode_display {
+  # deactivate secondary display
+  bindsym s output disable DVI-D-1
+
+  # activate secondary display
+  bindsym d output enable DVI-D-1
+
+  # back to normal: Enter or Escape or $mod+r
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym $mod+x mode "default"
+}
+
+bindsym $mod+x mode $mode_display
