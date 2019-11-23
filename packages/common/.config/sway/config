@@ -195,6 +195,7 @@ font pango:DejaVu Sans Mono 12
 #
 # resize window (you can also use the mouse for that)
 set $mode_resize "resize:  [hjkl][<v^>]  [p]recise"
+set $mode_resize_precise "resize precise:  [hjkl][<v^>]"
 mode $mode_resize {
   # left will shrink the containers width
   # right will grow the containers width
@@ -221,7 +222,6 @@ mode $mode_resize {
 }
 bindsym $mod+r mode $mode_resize
 
-set $mode_resize_precise "resize precise:  [hjkl][<v^>]"
 mode $mode_resize_precise {
   bindsym h resize shrink width 1px
   bindsym j resize grow height 1px
@@ -241,6 +241,9 @@ mode $mode_resize_precise {
 
 # application menu
 set $mode_apps "apps:  [w]eb  [v]irt  [s]ystem"
+set $mode_apps_web "apps/web:  [f]irefox  [c]hromium"
+set $mode_apps_virt "apps/virt:  virt-[m]anager  [s]ynergy  [w]invm"
+set $mode_apps_system "apps/system: toggle-[s]peaker  pulse-[a]udio"
 mode $mode_apps {
   bindsym w mode $mode_apps_web
   bindsym v mode $mode_apps_virt
@@ -252,7 +255,6 @@ mode $mode_apps {
 }
 bindsym $mod+space mode $mode_apps
 
-set $mode_apps_web "apps/web:  [f]irefox  [c]hromium"
 mode $mode_apps_web {
   bindsym f exec firefox-developer-edition, mode "default"
   bindsym c exec chromium, mode "default"
@@ -262,7 +264,6 @@ mode $mode_apps_web {
   bindsym $mod+space mode "default"
 }
 
-set $mode_apps_virt "apps/virt:  virt-[m]anager  [s]ynergy  [w]invm"
 mode $mode_apps_virt {
   bindsym m exec virt-manager, mode "default"
   bindsym s exec synergy, mode "default"
@@ -273,7 +274,6 @@ mode $mode_apps_virt {
   bindsym $mod+space mode "default"
 }
 
-set $mode_apps_system "apps/system: toggle-[s]peaker  pulse-[a]udio"
 mode $mode_apps_system {
   bindsym s exec ~/.config/i3/speaker.sh, mode "default"
   bindsym a exec pavucontrol, mode "default"
