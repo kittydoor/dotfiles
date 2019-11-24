@@ -24,6 +24,7 @@
     - ripgrep
     - aespipe
     - nmap
+    - jq
   become: yes
 
 - name: cite parallel
