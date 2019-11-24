@@ -1,4 +1,6 @@
 Common
+* volume
+  * by default print current volume
 * Ansible
   * locate mlocate updatedb
     * Default configuration (/etc/updatedb.conf) ignores /media, which it shouldn't
