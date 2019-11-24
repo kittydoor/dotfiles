@@ -3,10 +3,10 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 # exec wallpaper setup (TODO: pass color via args)
-exec --no-startup-id ~/.config/i3/wallpaper.sh
+# exec --no-startup-id ~/.config/i3/wallpaper.sh
 
 # setup displays to default
-exec --no-startup-id ~/.config/i3/multihead.sh default
+# exec --no-startup-id ~/.config/i3/multihead.sh default
 
 # exec libinput setup
 exec --no-startup-id ~/.config/i3/libinput.sh
@@ -15,7 +15,7 @@ exec --no-startup-id ~/.config/i3/libinput.sh
 exec --no-startup-id ~/.config/i3/polkit.sh
 
 # exec volume mute
-exec --no-startup-id ~/.config/i3/volume.sh mute
+exec --no-startup-id volume mute
 
 # read xrdb
 exec --no-startup-id xrdb ~/.Xresources
@@ -264,9 +264,9 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86MonBrightnessUp exec --no-startup-id ~/.config/i3/brightness.sh inc 10 >> ~/.i3execlog
 bindsym XF86MonBrightnessDown exec --no-startup-id ~/.config/i3/brightness.sh dec 10 >> ~/.i3execlog
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.config/i3/volume.sh inc >> ~/.i3execlog && pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/i3/volume.sh dec >> ~/.i3execlog && pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioMute exec --no-startup-id ~/.config/i3/volume.sh toggle >> ~/.i3execlog && pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioRaiseVolume exec --no-startup-id volume inc
+bindsym XF86AudioLowerVolume exec --no-startup-id volume dec
+bindsym XF86AudioMute exec --no-startup-id volume toggle
 
 bindsym --release Print exec --no-startup-id ~/.config/i3/printscreen.sh
 
