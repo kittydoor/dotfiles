@@ -2,7 +2,7 @@
 # roles/desktop/tasks/sway.yml
 
 - name: enable sway:rolling module
-  command: dnf module enable sway:rolling
+  command: dnf module enable -y sway:rolling
   args:
     creates: /etc/dnf/modules.d/sway.module
   become: yes
