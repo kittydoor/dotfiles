@@ -1,6 +1,12 @@
 ---
 # roles/desktop/tasks/sway.yml
 
+- name: enable sway:rolling module
+  command: dnf module enable sway:rolling
+  args:
+    creates: /etc/dnf/modules.d/sway.module
+  become: yes
+
 - name: install sway + relevant utils
   dnf:
     name: "{{ item }}"
@@ -9,4 +15,11 @@
     - sway
     - swaylock
     - swayidle
+  become: yes
+
+- name: install grimshot
+  get_url:
+    url: https://raw.githubusercontent.com/swaywm/sway/master/contrib/grimshot
+    dest: /usr/local/bin
+    mode: '0755'
   become: yes
