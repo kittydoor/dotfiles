@@ -15,8 +15,6 @@ alias pubip="wget https://duckduckgo.com/ip -qO - | grep -oE '[0-9]{1,3}(\.[0-9]
 #alias pubip="wget http://ipinfo.io/ip -qO -"
 #alias pubip="wget ident.me -qO - && echo" # ident.me doesn't return newline
 alias download="curl -O -L -C -"
-alias cclip="xclip -selection clipboard"
-alias clipp="xclip -selection clipboard -o"
 
 ### Fix VIM on fedora
 if type vimx > /dev/null; then
@@ -89,3 +87,11 @@ alias please='sudo $(fc -ln -1)'
 alias socks="ssh -D 8080 nyaa-link.lan"
 
 alias please='sudo $(fc -ln -1)'
+
+if [[ ${XDG_SESSION_TYPE} == wayland ]]; then
+  alias copy='wl-copy'
+  alias paste='wl-paste'
+elif [[ ${XDG_SESSION_TYPE} == x11 ]]; then
+  alias copy="xclip -selection clipboard"
+  alias paste="xclip -selection clipboard -o"
+fi
