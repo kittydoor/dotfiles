@@ -1,0 +1,26 @@
+# host specific configuration
+# nyaa-gate
+
+set $MAIN_DISPLAY eDP-1
+
+output $MAIN_DISPLAY {
+  pos 0 0 res 1920x1080
+  bg #000000 solid_color
+}
+
+output $MAIN_DISPLAY enable
+
+workspace $ws1 output $MAIN_DISPLAY
+
+focus output $MAIN_DISPLAY
+
+# external displays
+set $mode_display "display:  nyi"
+mode $mode_display {
+  # back to normal: Enter or Escape or $mod+r
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym $mod+x mode "default"
+}
+
+bindsym $mod+x mode $mode_display
