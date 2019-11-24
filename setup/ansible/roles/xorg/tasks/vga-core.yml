@@ -1,8 +1,0 @@
----
-# roles/xorg/tasks/vga-core.yml
-
-- name: configure vga devices for nyaa-core
-  copy:
-    src: files/10-vga.conf
-    dest: /etc/X11/xorg.conf.d/10-vga.conf
-  become: yes

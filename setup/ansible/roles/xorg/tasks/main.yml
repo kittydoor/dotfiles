@@ -1,6 +1,0 @@
----
-# roles/xorg/tasks/main.yml
-
-- include: vga-core.yml
-  tags: xorg_vga_core
-  when: ansible_hostname == "nyaa-core"
