@@ -9,3 +9,9 @@
 
 - include: i3.yml
   tags: desktop_i3
+
+- include: sway.yml
+  tags: desktop_sway
+
+- include: themes.yml
+  tags: desktop_themes

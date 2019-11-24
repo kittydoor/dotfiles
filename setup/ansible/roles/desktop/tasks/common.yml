@@ -6,7 +6,10 @@
     name: "{{ item }}"
     state: present
   loop:
-    - "xclip"
+    - pavucontrol
+    - light
+    - xclip
+    - wl-clipboard
   become: yes
 
 - name: autologin gdm

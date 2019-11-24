@@ -1,0 +1,12 @@
+---
+# roles/desktop/tasks/sway.yml
+
+- name: install sway + relevant utils
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - sway
+    - swaylock
+    - swayidle
+  become: yes

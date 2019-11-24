@@ -1,17 +1,12 @@
 ---
-# roles/i3/tasks/main.yml
+# roles/desktop/tasks/i3.yml
 
-- name: install i3 + sway + relevant utils
+- name: install i3 + relevant utils
   dnf:
     name: "{{ item }}"
     state: present
   loop:
     - i3
     - i3lock
-    - sway
-    - swaylock
-    - arc-theme
-    - py3status
-    - pavucontrol
     - ImageMagick
   become: yes
