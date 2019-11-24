@@ -36,7 +36,7 @@ include ~/.config/sway/local
 
 ### Volume configuration
 # mute volume on boot
-exec volume mute
+exec ~/bin/volume mute
 
 ### TODO: Check
 # exec policykit (polkit) authentication agent
@@ -184,9 +184,9 @@ font pango:DejaVu Sans Mono 12
   bindsym XF86MonBrightnessDown exec brightness dec 10
 
   # Volume
-  bindsym XF86AudioRaiseVolume exec volume inc
-  bindsym XF86AudioLowerVolume exec volume dec
-  bindsym XF86AudioMute exec volume toggle
+  bindsym XF86AudioRaiseVolume exec ~/bin/volume inc
+  bindsym XF86AudioLowerVolume exec ~/bin/volume dec
+  bindsym XF86AudioMute exec ~/bin/volume toggle
 
   # Screenshot
   bindsym --release Print exec screenshot
