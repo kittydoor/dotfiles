@@ -1,8 +1,8 @@
 # .ssh permissions
 chmod 700 ~/.ssh
 chmod 600 ~/.ssh/*
-chmod 700 ~/dotfiles/packages/ssh/.ssh
-chmod 700 ~/dotfiles/packages/ssh
+chmod 700 ~/dotfiles/packages/common/.ssh
+chmod 700 ~/dotfiles/packages/common
 chmod 700 ~/dotfiles/packages
 chmod 700 ~/dotfiles
 
