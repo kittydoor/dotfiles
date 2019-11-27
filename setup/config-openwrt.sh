@@ -317,15 +317,15 @@ firewall_config() {
   uci set firewall.ssh_core.dest_ip="192.168.1.2"
   uci set firewall.ssh_core.dest_port="22"
 
-  uci set firewall.ssh_core=redirect
-  uci set firewall.ssh_core.name="minecraft-core"
-  uci set firewall.ssh_core.target="DNAT"
-  uci set firewall.ssh_core.proto="tcp"
-  uci set firewall.ssh_core.src="wan"
-  uci set firewall.ssh_core.src_dport="25565"
-  uci set firewall.ssh_core.dest="lan"
-  uci set firewall.ssh_core.dest_ip="192.168.1.2"
-  uci set firewall.ssh_core.dest_port="25565"
+  uci set firewall.minecraft_core=redirect
+  uci set firewall.minecraft_core.name="minecraft-core"
+  uci set firewall.minecraft_core.target="DNAT"
+  uci set firewall.minecraft_core.proto="tcp"
+  uci set firewall.minecraft_core.src="wan"
+  uci set firewall.minecraft_core.src_dport="25565"
+  uci set firewall.minecraft_core.dest="lan"
+  uci set firewall.minecraft_core.dest_ip="192.168.1.2"
+  uci set firewall.minecraft_core.dest_port="25565"
 
   uci commit firewall
 }
