@@ -23,10 +23,10 @@ focus output HDMI-A-1
 set $mode_display "display:  [s]ingle  [d]ouble"
 mode $mode_display {
   # deactivate secondary display
-  bindsym s output disable DVI-D-1
+  bindsym s output DVI-D-1 disable, mode "default"
 
   # activate secondary display
-  bindsym d output enable DVI-D-1
+  bindsym d output DVI-D-1 enable, mode "default"
 
   # back to normal: Enter or Escape or $mod+r
   bindsym Return mode "default"
