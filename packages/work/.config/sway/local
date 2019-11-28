@@ -29,10 +29,10 @@ focus output eDP-1
 set $mode_display "display:  [s]ingle  [d]ouble"
 mode $mode_display {
   # deactivate secondary display
-  bindsym s output disable DP-1
+  bindsym s output DP-1 disable, mode "default"
 
   # activate secondary display
-  bindsym d output enable DP-1
+  bindsym d output DP-1 enable, mode "default"
 
   # back to normal: Enter or Escape or $mod+r
   bindsym Return mode "default"
