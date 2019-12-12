@@ -8,7 +8,7 @@ URxvt*scrollWithBuffer: true
 URxvt*scrollTtyKeypress: true
 
 ! default font settings
-URxvt*font: xft:DejaVu Sans Mono:size=12
+URxvt*font: xft:DejaVu Sans Mono:size=9
 
 ! for tighter spacing
 ! URxvt*letterSpace: -1
