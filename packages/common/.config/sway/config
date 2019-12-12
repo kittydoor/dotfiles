@@ -4,6 +4,7 @@
 
 ### Variables
 # Modifier Key - Mod4 -> Super
+# see xmodmap
 set $mod Mod4
 # Home row direction keys
 set $left h
@@ -189,7 +190,9 @@ font pango:DejaVu Sans Mono 12
   bindsym XF86AudioMute exec ~/bin/volume toggle
 
   # Screenshot
-  bindsym --release Print exec screenshot
+  bindsym --release Print exec grimshot copy area
+  bindsym --release Shift+Print exec grimshot copy win
+  bindsym --release Ctrl+Shift+Print exec grimshot copy screen
 #
 # Resizing containers:
 #
