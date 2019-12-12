@@ -35,9 +35,21 @@
     remote_src: yes
   become: yes
 
-- name: install helm (check for updates manually)
+#curl -L https://github.com/helm/helm/releases/latest/ | grep -oP -- 'https://get.helm.sh/helm-.*?-linux-amd64.tar.gz' | head -n 1
+- name: find latest version of helm
+  shell: |
+    set -o pipefail
+    curl -sL https://github.com/helm/helm/releases/latest/ | grep -oP -- "Release Helm \Kv[0-9.]*"
+  register: latest_helm_version
+  changed_when: false
+
+- name: Helm version verification
+  debug:
+    msg: "Helm version found: {{ latest_helm_version.stdout }}"
+
+- name: install helm
   unarchive:
-    src: https://get.helm.sh/helm-v2.14.3-linux-amd64.tar.gz
+    src: https://get.helm.sh/helm-{{ latest_helm_version.stdout }}-linux-amd64.tar.gz
     dest: /usr/local/bin
     mode: '0755'
     remote_src: yes
@@ -48,11 +60,6 @@
     extra_opts:
       - --strip-components=1
   become: yes
-  register: install_helm
-
-- name: init helm if new install
-  command: helm init --client-only
-  when: install_helm.changed
 
 - name: install minikube
   get_url:
