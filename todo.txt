@@ -121,6 +121,6 @@ Nyaa-Gate
   * Figure out why systemd-resolved or statis dns causes issues with uni wifi
 
 Nyaa-Link
-* n/a
+* fallback dns (dhcp.@dnsmasq[0].servers list) set to 1.1.1.1
 
 # vim:ts=2:sw=2:et
