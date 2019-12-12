@@ -51,9 +51,10 @@
   register: dracut_vfio
 
 #   content: "options vfio-pci ids=1002:679a,1002:aaa0\n"
+# https://www.reddit.com/r/VFIO/comments/czknu8/anyone_successfully_passing_through_vega_5664_on/
 - name: modprobe vfio
   copy:
-    content: "options vfio-pci ids=1002:687f,1002:aaf8\n"
+    content: "options vfio-pci ids=1002:687f,1002:aaf8 disable_idle_d3=1\n"
     dest: /etc/modprobe.d/vfio.conf
   become: yes
   register: modprobe_vfio
