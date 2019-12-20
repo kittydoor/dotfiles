@@ -1,6 +1,15 @@
 # host specific configuration
 # nyaa-gate
 
+### Idle configuration
+exec swayidle -w \
+  timeout 1500 'swaylock -f -c 000000' \
+  timeout 1500 'swaymsg "output * dpms off"' \
+        resume 'swaymsg "output * dpms on"' \
+  timeout 1800 'systemctl hybrid-sleep' \
+  before-sleep 'swaylock -f -c 000000'
+
+### Outputs
 set $MAIN_DISPLAY eDP-1
 
 output $MAIN_DISPLAY {

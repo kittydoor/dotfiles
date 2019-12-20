@@ -33,9 +33,6 @@ set $ws10 "10"
 # include host specific configuration (e.g. input, output)
 include ~/.config/sway/local
 
-### Idle configuration
-# exec swayidle -w foo bar
-
 ### Volume configuration
 # mute volume on boot
 exec ~/bin/volume mute
