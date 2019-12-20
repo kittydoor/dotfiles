@@ -12,7 +12,8 @@ set $down j
 set $up k
 set $right l
 # Terminal emulator
-set $term urxvt
+# set $term urxvt
+set $term gnome-terminal
 # Application launchers
 set $menu dmenu_path | dmenu | xargs swaymsg exec --
 set $desktop_menu i3-dmenu-desktop
