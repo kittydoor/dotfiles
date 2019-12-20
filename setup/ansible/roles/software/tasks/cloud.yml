@@ -11,10 +11,31 @@
     - "kubernetes-client"
   become: yes
 
-- name: ensure http exists (for terraform version fetch)
+- name: ensure http(ie) exists (for terraform version fetch)
   dnf:
     name: httpie
     state: present
+  become: yes
+
+# manually pulling kubectl due to repo versions being too old
+# however, kubernetes-client still provides useful docs
+- name: find latest version of kubectl
+  shell: |
+    set -o pipefail
+    curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt
+  register: latest_kubectl_version
+  changed_when: false
+
+- name: Kubectl version verification
+  debug:
+    msg: "Kubectl version found: {{ latest_kubectl_version.stdout }}"
+
+- name: install kubectl
+  get_url:
+    url: https://storage.googleapis.com/kubernetes-release/release/{{ latest_kubectl_version.stdout }}/bin/linux/amd64/kubectl
+    dest: /usr/local/bin
+    owner: root
+    mode: '0755'
   become: yes
 
 - name: find latest version of terraform
@@ -32,6 +53,8 @@
   unarchive:
     src: https://releases.hashicorp.com/terraform/{{ latest_terraform_version.stdout }}/terraform_{{ latest_terraform_version.stdout }}_linux_amd64.zip
     dest: /usr/local/bin
+    owner: root
+    mode: '0755'
     remote_src: yes
   become: yes
 
