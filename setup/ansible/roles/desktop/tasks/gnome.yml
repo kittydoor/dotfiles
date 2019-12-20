@@ -26,6 +26,12 @@
     - org.gnome.GWeather temperature-unit "'centigrade'"
     - org.gnome.desktop.input-sources xkb-options "['compose:ralt']"
 
+- name: gsettings - gnome terminal global settings
+  command: gsettings set "org.gnome.Terminal.Legacy.Settings" {{ item }}
+  changed_when: false
+  loop:
+    - default-show-menubar false
+
 - name: get default gnome terminal profile
   shell: gsettings get org.gnome.Terminal.ProfilesList default | tr -d "'"
   changed_when: false
