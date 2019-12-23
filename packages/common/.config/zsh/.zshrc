@@ -12,22 +12,6 @@ zstyle ':completion:*' menu select
 # TODO: Create issue
 setopt COMPLETE_ALIASES
 
-# prompt themes
-autoload -Uz promptinit
-promptinit
-# prompt walters
-# $vcs_info_msg_0_ <- git branch
-# %B <- start bold
-# %(?..[%?] ) <- if last exit was 0, nothing, else the code in brackets
-# %b <- stop bold
-# %n <- username
-# @ <- literal @
-# %U <- start underline
-# %m <- hostname up to the first .
-# %u <- stop underline
-PS1="%F{red}%B%(?..[%?] )%b%f%F{yellow}%n%f%F{green}@%f%U%F{blue}%m%f%u%F{green}>%f "
-RPS1="%F{green}%~%f"
-
 # say no to beep
 unsetopt BEEP
 
@@ -51,12 +35,13 @@ bindkey '^[[B' down-line-or-beginning-search
 
 # source various files
 source $ZDOTDIR/path.zsh
+source $ZDOTDIR/prompt.zsh
+source $ZDOTDIR/history.zsh
 source $ZDOTDIR/aliases.zsh
 source $ZDOTDIR/functions.zsh
 source $ZDOTDIR/git.zsh
 source $ZDOTDIR/ssh_hosts.zsh
 source $ZDOTDIR/ssh.zsh
-source $ZDOTDIR/history.zsh
 source $ZDOTDIR/xdg.zsh
 
 # host specific configuration
