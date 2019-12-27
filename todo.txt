@@ -1,4 +1,6 @@
 Common
+* hibernate
+  * investigate suspend, hibernate, hybrid-sleep, suspend-then-hibernate across systems
 * volume
   * by default print current volume
 * Ansible
