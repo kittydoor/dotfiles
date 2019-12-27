@@ -2,6 +2,8 @@
 set -o xtrace
 set -e
 
+DEFAULT_DNS="1.1.1.1 8.8.8.8"
+
 help_message() {
   echo 'Usage: ssh root@192.168.1.1 "NYAAKEY=foo KITTIESKEY=bar sh -s" < config-openwrt.sh'
 }
@@ -84,6 +86,13 @@ packages() {
   fi
 }
 
+lan_config() {
+  # Configure dns for lan
+  uci set network.lan.peerdns=0
+  uci set network.lan.dns="${DEFAULT_DNS}"
+  uci commit network
+}
+
 guest_config() {
   # Create guest interface
   uci set network.guest=interface
@@ -92,6 +101,8 @@ guest_config() {
   uci set network.guest.proto=static
   uci set network.guest.ipaddr=192.168.2.1
   uci set network.guest.netmask=255.255.255.0
+  uci set network.guest.peerdns=0
+  uci set network.guest.dns="${DEFAULT_DNS}"
   uci commit network
 
   # Create dhcp server for guest network
@@ -241,6 +252,17 @@ ssh_config() {
   uci commit dropbear
 }
 
+dnsmasq_config() {
+  # Disable rebind protection
+  # (required for allowing dns records to return private ips)
+  # such as ones routed via wireguard
+
+  echo 'Configuring dnsmasq'
+
+  uci set dhcp.@dnsmasq[0].rebind_protection=0
+  uci commit dhcp
+}
+
 dhcp_config() {
   # === Static leases / Static Hosts ====
   # TODO: Maybe use /etc/ethers instead
@@ -337,6 +359,8 @@ safety_check
 system_config
 # Install and update some packages
 packages
+# Lan config (dns)
+lan_config
 # Guest network interface, dhcp, and firewall rules
 guest_config
 # Configure wireless radios
@@ -344,6 +368,10 @@ guest_config
 wireless_config
 # Remove ssh root or password access
 ssh_config
+# Disable rebind protection
+# (required for allowing dns records to return private ips)
+# such as ones routed via wireguard
+dnsmasq_config
 # Dhcp leases
 dhcp_config
 # Firewall, and port forwards
