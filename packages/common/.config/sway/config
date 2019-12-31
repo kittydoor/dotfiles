@@ -241,13 +241,15 @@ mode $mode_resize_precise {
 }
 
 # application menu
-set $mode_apps "apps:  [w]eb  [v]irt  [s]ystem"
+set $mode_apps "apps:  [w]eb  [v]irt [c]ontrol [s]ystem"
 set $mode_apps_web "apps/web:  [f]irefox  [c]hromium"
 set $mode_apps_virt "apps/virt:  virt-[m]anager  [s]ynergy  [w]invm"
-set $mode_apps_system "apps/system: toggle-[s]peaker  pulse-[a]udio"
+set $mode_apps_control "apps/control: toggle-[s]peaker  pulse-[a]udio"
+set $mode_apps_system "apps/system: [l]ogout [s]uspend [r]eboot [S]hutdown"
 mode $mode_apps {
   bindsym w mode $mode_apps_web
   bindsym v mode $mode_apps_virt
+  bindsym c mode $mode_apps_control
   bindsym s mode $mode_apps_system
 
   bindsym Return mode "default"
@@ -275,9 +277,20 @@ mode $mode_apps_virt {
   bindsym $mod+space mode "default"
 }
 
-mode $mode_apps_system {
+mode $mode_apps_control {
   bindsym s exec ~/.config/i3/speaker.sh, mode "default"
   bindsym a exec pavucontrol, mode "default"
+
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym $mod+space mode "default"
+}
+
+mode $mode_apps_system {
+  bindsym l exec i3-msg exit, mode "default"
+  bindsym s exec systemctl suspend, mode "default"
+  bindsym r exec systemctl reboot, mode "default"
+  bindsym Shift+s exec systemctl poweroff, mode "default"
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
@@ -291,6 +304,7 @@ bar {
   position top
 
   status_command i3status
+  # swaybar_command waybar
 
   # When the status_command prints a new line to stdout, swaybar updates.
   # The default just shows the current date and time.
