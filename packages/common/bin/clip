@@ -1,0 +1,70 @@
+#!/bin/sh
+set -e
+
+x11_copy() {
+  if command -v xclip > /dev/null; then
+    xclip -selection clipboard -i <&0
+  else
+    echo "xclip not found..."
+  fi
+}
+
+x11_paste() {
+  if command -v xclip > /dev/null; then
+    xclip -selection clipboard -o
+  else
+    echo "xclip not found..."
+  fi
+}
+
+wayland_copy() {
+  if command -v wl-copy > /dev/null; then
+    wl-copy "$@" <&0
+  else
+    echo "wl-copy not found..."
+    exit 1
+  fi
+}
+
+wayland_paste() {
+  if command -v wl-paste > /dev/null; then
+    wl-paste "$@"
+  else
+    echo "wl-paste not found..."
+    exit 1
+  fi
+}
+
+case "$1" in
+  copy)
+    shift
+    MODE="copy"
+    ;;
+  paste)
+    shift
+    MODE="paste"
+    ;;
+  -h|--help)
+    echo "Usage: $0 [option]"
+    echo "  copy - copies to clipboard from stdin"
+    echo "  paste - pastes to stdout"
+    echo "Default behavior is to paste"
+    exit
+    ;;
+  *)
+    MODE="paste"
+    ;;
+esac
+
+COMMAND="${XDG_SESSION_TYPE}_${MODE}"
+if declare -F "${COMMAND}" > /dev/null; then
+  ${COMMAND} "$@"
+else
+  if [ "${XDG_SESSION_TYPE}" != wayland ] && [ "${XDG_SESSION_TYPE}" != x11 ]; then
+    echo "No supported active session found (XDG_SESSION_TYPE is not wayland or x11)"
+    exit 2
+  else
+    echo "Unknown error occurred (COMMAND=\"${COMMAND}\")"
+    exit 3
+  fi
+fi
