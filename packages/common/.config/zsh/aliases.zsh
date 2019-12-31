@@ -88,10 +88,5 @@ alias socks="ssh -D 8080 nyaa-link.lan"
 
 alias please='sudo $(fc -ln -1)'
 
-if [[ ${XDG_SESSION_TYPE} == wayland ]]; then
-  alias copy='wl-copy'
-  alias paste='wl-paste'
-elif [[ ${XDG_SESSION_TYPE} == x11 ]]; then
-  alias copy="xclip -selection clipboard"
-  alias paste="xclip -selection clipboard -o"
-fi
+alias copy="clip copy"
+alias paste="clip paste"
