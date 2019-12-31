@@ -42,6 +42,7 @@ Common
   * Show available updates or last update time
   * Show volume accurately, allow switching to different output or muting
 * Shell - https://gitlab.com/kittydoor/dotfiles/tree/master/.config/zsh
+  * Integrate directory to left prompt, since it makes copying terminal outfit (for slack/git ticketsetc) and sanitizing it easier
   * Profile TERMINAL doesn't work correctly when multiple are found
   * Set st window name to tmux session automatically
   * Figure out the right way (a shell script, alias, etc) to launch st with correct title and tmux
@@ -123,6 +124,5 @@ Nyaa-Gate
   * Figure out why systemd-resolved or statis dns causes issues with uni wifi
 
 Nyaa-Link
-* fallback dns (dhcp.@dnsmasq[0].servers list) set to 1.1.1.1
 
 # vim:ts=2:sw=2:et
