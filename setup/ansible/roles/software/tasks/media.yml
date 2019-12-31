@@ -6,6 +6,8 @@
     name: "{{ item }}"
     state: present
   loop:
+    - "firefox"
+    - "firefox-wayland"
     - "youtube-dl"
     - "sxiv"
     - "chromium"
