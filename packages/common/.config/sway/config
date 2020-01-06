@@ -35,7 +35,10 @@ include ~/.config/sway/local
 
 ### Volume configuration
 # mute volume on boot
-exec ~/bin/volume mute
+exec ~/bin/volume set 75 && ~/bin/volume mute
+
+### SSH Agent
+exec ssh-agent > ~/.ssh/agent_env
 
 ### TODO: Check
 # exec policykit (polkit) authentication agent
