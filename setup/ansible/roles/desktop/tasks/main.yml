@@ -15,3 +15,6 @@
 
 - include: themes.yml
   tags: desktop_themes
+
+- include: mimeapps.yml
+  tags: desktop_mimeapps
