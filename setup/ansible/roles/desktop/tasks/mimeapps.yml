@@ -6,3 +6,4 @@
     src: "/home/{{ ansible_user_id }}/.config/mimeapps.list"
     dest: "/home/{{ ansible_user_id }}/.local/share/applications/mimeapps.list"
     state: link
+    force: yes
