@@ -29,6 +29,7 @@ Common
 * st - terminal - https://gitlab.com/kittydoor/st
   * Check if terminfo in right dir (investigate the folder I found in ~/.terminfo)
 * Vim
+  * wayland/x11 smart clipboard (by default, clipboard only works on x11 itself, or xwayland terminals)
   * command to resize window exactly to file length (for tmux and for vim splits)
   * find how to remove all UI elements / clean or minimalist mode for demos
 * i3 status bar
