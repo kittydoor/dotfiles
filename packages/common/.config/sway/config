@@ -182,8 +182,8 @@ font pango:DejaVu Sans Mono 12
   bindsym XF86AudioNext exec playerctl next
 
   # Brighness
-  bindsym XF86MonBrightnessUp exec brightness inc 10
-  bindsym XF86MonBrightnessDown exec brightness dec 10
+  bindsym XF86MonBrightnessUp exec light -A 10
+  bindsym XF86MonBrightnessDown exec light -U 10
 
   # Volume
   bindsym XF86AudioRaiseVolume exec ~/bin/volume inc
