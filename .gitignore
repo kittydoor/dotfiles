@@ -13,3 +13,6 @@
 **/.vim/bundle
 **/.vim/autoload/plug.vim
 **/.viminfo
+
+# symlink from ansible setup
+packages/common/.local/share/applications/mimeapps.list
