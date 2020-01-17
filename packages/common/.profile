@@ -15,6 +15,3 @@ export PATH="$PATH:/home/$USER/bin"
 
 # less always intepret control chars
 export LESS='-R'
-
-# Sway socket fix
-# export SWAYSOCK='$(find /run/user/1000 -name 'sway-ipc.1000.*.sock' | head -n 1)'
