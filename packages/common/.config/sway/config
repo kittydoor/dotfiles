@@ -262,7 +262,7 @@ mode $mode_apps {
 bindsym $mod+space mode $mode_apps
 
 mode $mode_apps_web {
-  bindsym f exec firefox-developer-edition, mode "default"
+  bindsym f exec firefox, mode "default"
   bindsym c exec chromium, mode "default"
 
   bindsym Return mode "default"
