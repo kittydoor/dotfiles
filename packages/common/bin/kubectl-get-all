@@ -1,0 +1,3 @@
+#!/bin/sh
+
+kubectl get "$(kubectl api-resources --verbs=list -o name | paste -sd, -)" --ignore-not-found --all-namespaces
