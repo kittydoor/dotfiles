@@ -1,0 +1,9 @@
+---
+# roles/software/tasks/firefox_wayland.yml
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1792437
+- name: generalize firefox wayland support check to all
+  patch:
+    src: files/firefox_wayland.patch
+    dest: /usr/bin/firefox
+  become: yes

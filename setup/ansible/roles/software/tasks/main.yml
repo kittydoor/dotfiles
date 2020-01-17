@@ -33,3 +33,6 @@
 
 - include: automatic_updates.yml
   tags: software_automatic_updates
+
+- include: firefox_wayland.yml
+  tags: software_firefox_wayland
