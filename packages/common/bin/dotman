@@ -30,23 +30,25 @@ if [[ -z "${1:-}" ]]; then
   exit 1
 fi
 
-if [[ "${1}" == "all" ]]; then
-  for dir in "${SCRIPT_DIR}"/packages/*; do
-    if [[ -d $dir ]]; then
-      echo "Package: $(basename "${dir}")"
-      stow "${STOW_ARGS[@]}" "$(basename "$dir")" || true
-    else
-      echoerr "This should not happen. There is a non-directory file in the packages directory."
-      exit 2
-    fi
-  done
-else
-  for item in "$@"; do
-    if [[ -d "${SCRIPT_DIR}/packages/${item}" ]]; then
-      echo "Package: ${1}"
-      stow "${STOW_ARGS[@]}" "$item"
-    else
-      echoerr "Package not found: ${1}"
-    fi
-  done
-fi
+for item in "$@"; do
+  if [[ -d "${SCRIPT_DIR}/packages/${item}" ]]; then
+    echo "Package: ${1}"
+    stow "${STOW_ARGS[@]}" "$item"
+  else
+    echoerr "Package not found: ${1}"
+  fi
+done
+
+# # Deprecated, old "all" shortcut
+# if [[ "${1}" == "all" ]]; then
+#   for dir in "${SCRIPT_DIR}"/packages/*; do
+#     if [[ -d $dir ]]; then
+#       echo "Package: $(basename "${dir}")"
+#       stow "${STOW_ARGS[@]}" "$(basename "$dir")" || true
+#     else
+#       echoerr "This should not happen. There is a non-directory file in the packages directory."
+#       exit 2
+#     fi
+#   done
+# else
+# fi
