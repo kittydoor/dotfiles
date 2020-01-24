@@ -30,3 +30,11 @@
 - name: cite parallel
   shell: echo 'will cite' | parallel --citation
   changed_when: false
+
+- name: pip packages
+  pip:
+    name: "{{ item }}"
+    state: present
+    extra_args: --user
+  loop:
+    - yq
