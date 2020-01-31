@@ -3,7 +3,7 @@
 
 - name: git directory
   file:
-    path: "/home/{{ ansible_user_id }}/Documents/Git"
+    path: "{{ ansible_user_dir }}/Documents/Git"
     state: directory
     mode: '0700'
     owner: "{{ ansible_user_id }}"

@@ -3,7 +3,7 @@
 
 - name: symlink deprecated config path to -> ~/.config/mimeapps.list
   file:
-    src: "/home/{{ ansible_user_id }}/.config/mimeapps.list"
-    dest: "/home/{{ ansible_user_id }}/.local/share/applications/mimeapps.list"
+    src: "{{ ansible_user_dir }}/.config/mimeapps.list"
+    dest: "{{ ansible_user_dir }}/.local/share/applications/mimeapps.list"
     state: link
     force: yes
