@@ -1,0 +1,28 @@
+---
+# roles/wireguard/tasks/install.yml
+
+- name: enable copr for wireguard
+  command: dnf copr enable -y jdoss/wireguard
+  args:
+    creates: /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:jdoss:wireguard.repo
+  become: yes
+
+- name: install wireguard
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - wireguard-dkms
+    - wireguard-tools
+  become: yes
+
+- name: ensure cargo available
+  dnf:
+    name: cargo
+    state: present
+  become: yes
+
+- name: wireguard-vanity-address utility
+  command: cargo install wireguard-vanity-address
+  args:
+    creates: "{{ ansible_user_dir }}/.local/share/cargo/bin/wireguard-vanity-address"

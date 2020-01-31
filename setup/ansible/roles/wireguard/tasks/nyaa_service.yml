@@ -1,0 +1,10 @@
+---
+# roles/wireguard/tasks/nyaa_service.yml
+
+- name: enable nyaa network
+  systemd:
+    name: wg-quick@nyaa
+    state: started
+    enabled: yes
+  become: yes
+  when: wg_addrs is defined

@@ -1,0 +1,12 @@
+---
+# roles/wireguard/tasks/nyaa_conf.yml
+
+- name: wireguard nyaa network config
+  template:
+    src: templates/wg-nyaa.conf.j2
+    dest: "{{ wireguard_template_override | default('/etc/wireguard/nyaa.conf') }}"
+    owner: "{{ wireguard_template_override is undefined | ternary('root', ansible_user_id) }}"
+    group: "{{ wireguard_template_override is undefined | ternary('root', ansible_user_id) }}"
+    mode: '0600'
+  become: "{{ wireguard_template_override is undefined | ternary('yes', 'no') }}"
+  when: wg_addrs is defined
