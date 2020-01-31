@@ -1,0 +1,70 @@
+---
+# roles/wireguard/tasks/main.yml
+
+- name: enable copr for wireguard
+  command: dnf copr enable -y jdoss/wireguard
+  args:
+    creates: /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:jdoss:wireguard.repo
+  become: yes
+
+- name: install wireguard
+  dnf:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - wireguard-dkms
+    - wireguard-tools
+  become: yes
+
+- name: make /etc/wireguard/ directory listable
+  file:
+    path: /etc/wireguard
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+  become: yes
+
+- name: register all files in /etc/wireguard/
+  find:
+    paths: /etc/wireguard
+  become: yes
+  register: etc_wireguard_files
+
+- name: ensure all files in /etc/wireguard/ are only readable by root
+  file:
+    path: "{{ item.path }}"
+    mode: '0600'
+    owner: root
+    group: root
+  loop: "{{ etc_wireguard_files.files }}"
+  become: yes
+
+- name: ensure cargo available
+  dnf:
+    name: cargo
+    state: present
+  become: yes
+
+- name: wireguard-vanity-address utility
+  command: cargo install wireguard-vanity-address
+  args:
+    creates: "{{ ansible_user_dir }}/.local/share/cargo/bin/wireguard-vanity-address"
+
+- name: wireguard nyaa network config
+  template:
+    src: templates/wg-nyaa.conf.j2
+    dest: /etc/wireguard/nyaa.conf
+    owner: root
+    group: root
+    mode: '0600'
+  become: yes
+  when: wg_addrs is defined
+
+- name: enable nyaa network
+  systemd:
+    name: wg-quick@nyaa
+    state: started
+    enabled: yes
+  become: yes
+  when: wg_addrs is defined

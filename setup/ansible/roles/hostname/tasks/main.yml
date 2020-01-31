@@ -3,6 +3,5 @@
 
 - name: set hostname
   hostname:
-    name: "{{ hostname }}"
+    name: "{{ inventory_hostname }}"
   become: yes
-  when: hostname|length > 0

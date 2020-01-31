@@ -16,9 +16,6 @@
 - include: media.yml
   tags: software_media
 
-- include: networking.yml
-  tags: software_networking
-
 - include: selinux.yml
   tags: software_selinux
 
