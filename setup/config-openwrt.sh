@@ -273,6 +273,8 @@ dhcp_config() {
   uci set dhcp.poco=host
   uci set dhcp.gate=host
   uci set dhcp.work=host
+  uci set dhcp.pi4=host
+  uci set dhcp.pi4_wifi=host
   uci set dhcp.note=host
 
   # setting up the hosts
@@ -284,6 +286,8 @@ dhcp_config() {
   POCO_MAC="A4:50:46:6A:8E:31"
   GATE_MAC="9C:B6:D0:F1:18:2B"
   WORK_MAC="1C:1B:B5:C9:C0:89"
+  PI4_MAC="DC:A6:32:51:64:ED"
+  PI4_WIFI_MAC="DC:A6:32:51:64:F0"
   NOTE_MAC="4C:66:41:E5:88:21"
 
   uci set dhcp.core.name="nyaa-core"
@@ -310,10 +314,22 @@ dhcp_config() {
   uci set dhcp.work.ip="192.168.1.5"
   uci set dhcp.work.leasetime="12h"
 
+  # nyaa-pi4
+  uci set dhcp.pi4.name="nyaa-pi4"
+  uci set dhcp.pi4.mac="$PI4_MAC"
+  uci set dhcp.pi4.ip="192.168.1.6"
+  uci set dhcp.pi4.leasetime="12h"
+
+  # nyaa-pi4-wifi
+  uci set dhcp.pi4_wifi.name="nyaa-pi4-wifi"
+  uci set dhcp.pi4_wifi.mac="$PI4_WIFI_MAC"
+  uci set dhcp.pi4_wifi.ip="192.168.1.201"
+  uci set dhcp.pi4_wifi.leasetime="12h"
+
   # nyaa-note
   uci set dhcp.note.name="nyaa-note"
   uci set dhcp.note.mac="$NOTE_MAC"
-  uci set dhcp.note.ip="192.168.1.201"
+  uci set dhcp.note.ip="192.168.1.202"
   uci set dhcp.note.leasetime="12h"
 
   uci commit dhcp
