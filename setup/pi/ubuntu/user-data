@@ -1,0 +1,47 @@
+#cloud-config
+
+hostname: nyaa-pi4
+manage_etc_hosts: true
+
+locale: "en_US.UTF-8"
+timezone: "Europe/Amsterdam"
+
+apt:
+  preserve_sources_list: true
+
+package_upgrade: true
+package_reboot_if_required: true
+
+packages:
+ - zsh
+ - python3
+
+# NOPASSWD required for netplan apply
+users:
+  - name: kitty
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, admin
+    ssh_authorized_keys:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINgiVkcrXrIJk2T6tsQjGvF4YcCNbcef8eaSFPInnPSQ kitty@nyaa-core"
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIORXcgKF9zB46GzzyW5wBOhybCqE2WfmpSPdH6UWveYB kitty@nyaa-gate"
+
+# Hidden ssid hack
+write_files:
+  - path: /etc/netplan/50-cloud-init.yaml
+    permissions: '0644'
+    content: |
+      network:
+        version: 2
+        ethernets:
+          eth0:
+            dhcp4: yes
+        wifis:
+          wlan0:
+            dhcp4: yes
+            access-points:
+              "nyaa-wifi\"\n  scan_ssid=1\n  # hacky escape":
+                password: "${WIFI_PSK}"
+
+runcmd:
+  - [sudo, netplan, apply]

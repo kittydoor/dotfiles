@@ -1,0 +1,5 @@
+arch (32 official, 64 unofficial)
+manjaro (64 official)
+raspbian (32 official)
+ubuntu (64 official)
+fedora (64 unofficial)
