@@ -1,0 +1,7 @@
+#!/bin/bash
+set -e
+
+spectool -g $1
+sudo dnf builddep $1
+fedpkg --release f31 local
+echo sudo dnf install ./x86_64/foo
