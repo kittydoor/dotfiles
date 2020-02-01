@@ -365,6 +365,16 @@ firewall_config() {
   uci set firewall.minecraft_core.dest_ip="192.168.1.2"
   uci set firewall.minecraft_core.dest_port="25565"
 
+  uci set firewall.wireguard_core=redirect
+  uci set firewall.wireguard_core.name="wireguard-core"
+  uci set firewall.wireguard_core.target="DNAT"
+  uci set firewall.wireguard_core.proto="tcp"
+  uci set firewall.wireguard_core.src="wan"
+  uci set firewall.wireguard_core.src_dport="51821"
+  uci set firewall.wireguard_core.dest="lan"
+  uci set firewall.wireguard_core.dest_ip="192.168.1.2"
+  uci set firewall.wireguard_core.dest_port="51821"
+
   uci commit firewall
 }
 
