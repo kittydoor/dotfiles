@@ -1,0 +1,91 @@
+---
+- name: pi4 init
+  hosts: all
+  gather_facts: no
+
+  remote_user: alarm
+  become: yes
+  become_method: su
+  vars:
+    ansible_ssh_password: alarm
+    ansible_become_password: root
+
+  tasks:
+    - name: Init keyring
+      raw: pacman-key --init
+
+    - name: Populate keyring
+      raw: pacman-key --populate archlinuxarm
+
+    - name: Install python
+      raw: pacman -Sy --noconfirm --needed python
+
+    - name: Gathering facts
+      setup:
+
+    - name: Update system
+      pacman:
+        update_cache: yes
+        upgrade: yes
+      async: 180
+      poll: 5
+
+    - name: Install shells
+      pacman:
+        name: "{{ item }}"
+        state: present
+      loop:
+      - zsh
+      - fish
+
+    - name: Install base base-devel
+      pacman:
+        name: "{{ item }}"
+        state: present
+      loop:
+      - base
+      - base-devel
+
+    - name: Give sudo access to wheel
+      lineinfile:
+        path: "/etc/sudoers"
+        regex: "^(# |)%wheel ALL=\(ALL\) ALL$"
+        line: "%wheel ALL=(ALL) ALL"
+
+    - name: Create users
+      user:
+        name: "{{ item.name }}"
+        comment: "{{ item.comment }}"
+        groups:
+        - "{{ item.name }}"
+        - wheel
+        shell: "{{ item.shell }}"
+        password: "{{ item.password }}"
+        update_password: always
+        createhome: yes
+        state: present
+      loop: "{{ users }}"
+
+    - name: Ensure alarm account is removed
+      user:
+        name: alarm
+        force: yes
+        state: absent
+
+#    - name: Setup sshd config
+#      copy:
+#        src: sshd_config
+#        dest: /etc/ssh/sshd_config
+#      register: sshd_config
+#
+#    - name: Reload sshd on new config
+#      systemd:
+#        name: sshd
+#        state: reloaded
+#      when: sshd_config.changed
+#
+#    - name: Ensure root is locked
+#      user:
+#        name: root
+#        password: "!"
+#        state: present
