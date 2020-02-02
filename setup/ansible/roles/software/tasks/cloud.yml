@@ -3,7 +3,7 @@
 
 - name: install cloud software
   dnf:
-    name: "{{ item }}"
+    name: "install {{ item }}"
     state: present
   loop:
     - "ansible"
@@ -11,18 +11,12 @@
     - "kubernetes-client"
   become: yes
 
-- name: ensure http(ie) exists (for terraform version fetch)
-  dnf:
-    name: httpie
-    state: present
-  become: yes
-
 # manually pulling kubectl due to repo versions being too old
 # however, kubernetes-client still provides useful docs
 - name: find latest version of kubectl
   shell: |
     set -o pipefail
-    curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt
+    curl -sL https://storage.googleapis.com/kubernetes-release/release/stable.txt
   register: latest_kubectl_version
   changed_when: false
 
@@ -38,37 +32,43 @@
     mode: '0755'
   become: yes
 
-- name: find latest version of terraform
-  shell: |
-    set -o pipefail
-    http get https://releases.hashicorp.com/terraform/ | awk -F/ '/terraform/ { print $3 }' | head -n 1
-  register: latest_terraform_version
-  changed_when: false
+- name: install hashicorp latest bin
+  block:
+    - name: find latest version of {{ item }}
+      shell: |
+        set -o pipefail
+        curl -sL https://releases.hashicorp.com/{{ item }}/ | awk -F/ '/{{ item }}/ { print $3 }' | head -n 1
+      register: latest_release
+      changed_when: false
 
-- name: Terraform version verification
-  debug:
-    msg: "Terraform version found: {{ latest_terraform_version.stdout }}"
+    - name: "{{ item }} version"
+      debug:
+        msg: "{{ item }} version found: {{ latest_release.stdout }}"
 
-- name: install terraform
-  unarchive:
-    src: https://releases.hashicorp.com/terraform/{{ latest_terraform_version.stdout }}/terraform_{{ latest_terraform_version.stdout }}_linux_amd64.zip
-    dest: /usr/local/bin
-    owner: root
-    mode: '0755'
-    remote_src: yes
-  become: yes
+    - name: install {{ item }}
+      unarchive:
+        src: https://releases.hashicorp.com/{{ item }}/{{ latest_release.stdout }}/{{ item }}_{{ latest_release.stdout }}_linux_amd64.zip
+        dest: /usr/local/bin/
+        owner: root
+        mode: '0755'
+        remote_src: yes
+      become: yes
+  loop:
+    - terraform
+    - packer
 
 #curl -L https://github.com/helm/helm/releases/latest/ | grep -oP -- 'https://get.helm.sh/helm-.*?-linux-amd64.tar.gz' | head -n 1
+# \K is lookbehind
 - name: find latest version of helm
   shell: |
     set -o pipefail
-    curl -sL https://github.com/helm/helm/releases/latest/ | grep -oP -- "Release Helm \Kv[0-9.]*"
+    curl -sL https://github.com/helm/helm/releases/latest/ | grep -oP -- "Release \Kv[0-9]\.[0-9]{1,2}\.[0-9]{1,2}"
   register: latest_helm_version
   changed_when: false
 
 - name: Helm version verification
   debug:
-    msg: "Helm version found: {{ latest_helm_version.stdout }}"
+    msg: "helm version found: {{ latest_helm_version.stdout }}"
 
 - name: install helm
   unarchive:
@@ -84,17 +84,9 @@
       - --strip-components=1
   become: yes
 
-- name: install minikube
-  get_url:
-    url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-    dest: /usr/local/bin/minikube
-    owner: root
-    mode: '0755'
-  become: yes
-
 - name: install minishift
   unarchive:
-    src: https://github.com/minishift/minishift/releases/download/v1.34.1/minishift-1.34.1-linux-amd64.tgz
+    src: https://github.com/minishift/minishift/releases/download/v1.34.2/minishift-1.34.2-linux-amd64.tgz
     dest: /usr/local/bin
     owner: root
     mode: '0755'
@@ -106,25 +98,35 @@
       - --strip-components=1
   become: yes
 
-- name: install docker-machine (minishift dependency)
-  get_url:
-    url: https://github.com/docker/machine/releases/download/v0.16.2/docker-machine-Linux-x86_64
-    dest: /usr/local/bin/docker-machine
-    owner: root
-    mode: '0755'
-  become: yes
-
-- name: install docker-machine (minishift dependency)
-  get_url:
-    url: https://github.com/dhiltgen/docker-machine-kvm/releases/download/v0.10.0/docker-machine-driver-kvm-centos7
-    dest: /usr/local/bin/docker-machine-driver-kvm
-    owner: root
-    mode: '0755'
-  become: yes
+# # If project has a path to latest unversioned unarchived release, or latest github release:
+# # https://github.com/<owner/project>/releases/latest/<unversioned name>
+# # Install it in /usr/local/bin
+# - name: install {{ item.name }} {{ item.version }} to /usr/local/bin
+#   get_url:
+#     url: "{{ item.url }}"
+#     dest: "/usr/local/bin/{{ item.name }}"
+#     owner: root
+#     mode: '0755'
+#   loop:
+#     - name: minikube
+#       url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+#       version: latest
+#     - name: docker-machine
+#       url: https://github.com/docker/machine/releases/download/v0.16.2/docker-machine-Linux-x86_64
+#       version: v0.16.2
+#     - name: docker-machine-driver-kvm
+#       url: https://github.com/dhiltgen/docker-machine-kvm/releases/download/v0.10.0/docker-machine-driver-kvm-centos7
+#       version: v0.10.0
+#   loop_control:
+#     label: "{{ item.name }}"
+#   become: yes
 
 # TODO: Remove this at some point
-- name: legacy - delete minikube package
-  dnf:
-    name: minikube
+- name: remove minishift and dependencies from /usr/local/bin
+  file:
+    path: "{{ item }}"
     state: absent
-  become: yes
+  loop:
+    - minishift
+    - docker-machine
+    - docker-machine-driver-kvm
