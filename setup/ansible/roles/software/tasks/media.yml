@@ -3,19 +3,18 @@
 
 - name: install media viewers
   dnf:
-    name: "{{ item }}"
+    name:
+      - "firefox"
+      - "firefox-wayland"
+      - "youtube-dl"
+      - "sxiv"
+      - "chromium"
+      - "playerctl"
+      - "zathura"
+      - "zathura-pdf-mupdf"
+      - "zathura-zsh-completion"
+      - "zathura-bash-completion"
     state: present
-  loop:
-    - "firefox"
-    - "firefox-wayland"
-    - "youtube-dl"
-    - "sxiv"
-    - "chromium"
-    - "playerctl"
-    - "zathura"
-    - "zathura-pdf-mupdf"
-    - "zathura-zsh-completion"
-    - "zathura-bash-completion"
   become: yes
 
 - name: enable rpmfusion free

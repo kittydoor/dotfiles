@@ -3,15 +3,14 @@
 
 - name: install container packages
   dnf:
-    name: "{{ item }}"
+    name:
+      - "@container-management"
     state: present
-  loop:
-    - "@container-management"
   become: yes
 
 - name: install podman-compose
   pip:
     executable: pip3
     name: podman-compose
-    state: latest
+    state: present
     extra_args: --user

@@ -3,10 +3,9 @@
 
 - name: install container packages
   dnf:
-    name: "{{ item }}"
+    name:
+      - "@virtualization"
+      - "@vagrant"
+      - vagrant-hostmanager
     state: present
-  loop:
-    - "@virtualization"
-    - "@vagrant"
-    - vagrant-hostmanager
   become: yes

@@ -3,13 +3,12 @@
 
 - name: common desktop utilities
   dnf:
-    name: "{{ item }}"
+    name:
+      - pavucontrol
+      - light
+      - xclip
+      - wl-clipboard
     state: present
-  loop:
-    - pavucontrol
-    - light
-    - xclip
-    - wl-clipboard
   become: yes
 
 - name: autologin gdm

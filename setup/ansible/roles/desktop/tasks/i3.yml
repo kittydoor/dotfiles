@@ -3,10 +3,9 @@
 
 - name: install i3 + relevant utils
   dnf:
-    name: "{{ item }}"
+    name:
+      - i3
+      - i3lock
+      - ImageMagick
     state: present
-  loop:
-    - i3
-    - i3lock
-    - ImageMagick
   become: yes

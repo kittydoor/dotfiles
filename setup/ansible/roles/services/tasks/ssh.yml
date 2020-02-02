@@ -3,11 +3,10 @@
 #
 - name: ensure openssh installed
   dnf:
-    name: "{{ item }}"
+    name:
+      - openssh-server
+      - openssh-clients
     state: present
-  loop:
-    - openssh-server
-    - openssh-clients
   become: yes
 
 - name: prohibit password authentication

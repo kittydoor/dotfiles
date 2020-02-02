@@ -9,11 +9,10 @@
 
 - name: install wireguard
   dnf:
-    name: "{{ item }}"
+    name:
+      - wireguard-dkms
+      - wireguard-tools
     state: present
-  loop:
-    - wireguard-dkms
-    - wireguard-tools
   become: yes
 
 - name: ensure cargo available

@@ -1,0 +1,7 @@
+---
+# roles/software/handlers/main.yml
+
+# TODO: Investigate if this exact command is required
+# systemctl or service modules don't seem to behave the same way?
+- name: restart auditd
+  command: "service auditd restart"  # noqa 303

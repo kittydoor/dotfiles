@@ -1,0 +1,16 @@
+---
+# roles/libvirt/handlers/main.yml
+
+- name: restart libvirtd
+  systemd:
+    name: libvirtd
+    state: restarted
+  become: yes
+
+- name: regenerate grub
+  command: grub2-mkconfig -o /etc/grub2-efi.cfg
+  become: yes
+
+- name: rebuild kernels
+  command: dracut -f --regenerate-all
+  become: yes

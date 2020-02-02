@@ -3,32 +3,33 @@
 
 - name: install terminal packages
   dnf:
-    name: "{{ item }}"
+    name:
+      - vim-enhanced
+      - vim-X11
+      - neovim
+      - htop
+      - ranger
+      - tldr
+      - lshw
+      - ncdu
+      - parallel
+      - httpie
+      - curl
+      - wget
+      - stow
+      - info
+      - stress
+      - ripgrep
+      - aespipe
+      - nmap
+      - jq
     state: present
-  loop:
-    - vim-enhanced
-    - vim-X11
-    - neovim
-    - htop
-    - ranger
-    - tldr
-    - lshw
-    - ncdu
-    - parallel
-    - httpie
-    - curl
-    - wget
-    - stow
-    - info
-    - stress
-    - ripgrep
-    - aespipe
-    - nmap
-    - jq
   become: yes
 
 - name: cite parallel
-  shell: echo 'will cite' | parallel --citation
+  shell: |
+    set -o pipefail
+    echo 'will cite' | parallel --citation
   changed_when: false
 
 - name: pip packages

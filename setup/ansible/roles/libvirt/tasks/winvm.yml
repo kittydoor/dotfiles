@@ -7,14 +7,7 @@
     line: "user = \"{{ ansible_user_id }}\""
     regexp: "^#?user = \""
   become: yes
-  register: qemu_user
-
-- name: restart libvirtd
-  systemd:
-    name: libvirtd
-    state: restarted
-  become: yes
-  when: qemu_user.changed
+  notify: restart libvirtd
 
 - name: enable virtio repo
   get_url:
@@ -33,22 +26,17 @@
 
 - name: check for iommu in grub (must manually add these to GRUB_CMDLINE_LINUX)
   command: grep 'intel_iommu=on iommu=pt rd.driver.pre=vfio-pci' /etc/default/grub
-  register: grub_iommu
   failed_when: grub_iommu.rc != 0
   changed_when: true
   become: yes
-
-- name: regenerate grub
-  command: grub2-mkconfig -o /etc/grub2-efi.cfg
-  become: yes
-  when: grub_iommu.changed
+  notify: regenerate grub
 
 - name: dracut vfio
   copy:
     content: "add_drivers+=\"vfio vfio_iommu_type1 vfio_pci vfio_virqfd\"\n"
     dest: /etc/dracut.conf.d/vfio.conf
   become: yes
-  register: dracut_vfio
+  notify: rebuild kernels
 
 #   content: "options vfio-pci ids=1002:679a,1002:aaa0\n"
 # https://www.reddit.com/r/VFIO/comments/czknu8/anyone_successfully_passing_through_vega_5664_on/
@@ -57,12 +45,7 @@
     content: "options vfio-pci ids=1002:687f,1002:aaf8 disable_idle_d3=1\n"
     dest: /etc/modprobe.d/vfio.conf
   become: yes
-  register: modprobe_vfio
-
-- name: rebuild kernels
-  command: dracut -f --regenerate-all
-  become: yes
-  when: dracut_vfio.changed or modprobe_vfio.changed
+  notify: rebuild kernels
 
 - name: enable barrier (synergy)
   firewalld:

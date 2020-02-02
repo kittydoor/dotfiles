@@ -3,8 +3,8 @@
 
 - name: install gtk/qt/etc themes
   dnf:
-    name: "{{ item }}"
+    name:
+      - arc-theme
     state: present
   loop:
-    - arc-theme
   become: yes

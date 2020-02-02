@@ -3,12 +3,11 @@
 
 - name: install cloud software
   dnf:
-    name: "install {{ item }}"
+    name:
+      - "ansible"
+      - "python3-ansible-lint"
+      - "kubernetes-client"
     state: present
-  loop:
-    - "ansible"
-    - "python3-ansible-lint"
-    - "kubernetes-client"
   become: yes
 
 # manually pulling kubectl due to repo versions being too old

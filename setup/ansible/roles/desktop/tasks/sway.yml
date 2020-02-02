@@ -9,12 +9,11 @@
 
 - name: install sway + relevant utils
   dnf:
-    name: "{{ item }}"
+    name:
+      - sway
+      - swaylock
+      - swayidle
     state: present
-  loop:
-    - sway
-    - swaylock
-    - swayidle
   become: yes
 
 - name: install grimshot

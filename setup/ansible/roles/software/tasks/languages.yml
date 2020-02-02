@@ -3,29 +3,27 @@
 
 - name: install language runtimes
   dnf:
-    name: "{{ item }}"
+    name:
+      - "@c-development"
+      - "golang"
+      - "@python-classroom"
+      - "@python-science"
+      - "rust"
+      - "cargo"  # rust package manager
+      - "@haskell"
+      - "@java-development"
+      - "R"
     state: present
-  loop:
-    - "@c-development"
-    - "golang"
-    - "@python-classroom"
-    - "@python-science"
-    - "rust"
-    - "cargo"  # rust package manager
-    - "@haskell"
-    - "@java-development"
-    - "R"
   become: yes
 
 - name: install language servers and linters
   dnf:
-    name: "{{ item }}"
+    name:
+      - "astyle"
+      - "ShellCheck"
+      - "rls"  # rust language server
+      - "ccls"  # C/C++ language server
     state: present
-  loop:
-    - "astyle"
-    - "ShellCheck"
-    - "rls"  # rust language server
-    - "ccls"  # C/C++ language server
   become: yes
 
 # pip install python-language-server[all] (which requires jedi)
