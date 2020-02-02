@@ -1,11 +1,19 @@
 ---
 # roles/wireguard/tasks/main.yml
 
-- include: install.yml
-  tags: wireguard_install
+- name: install mode
+  block:
+  - include: install.yml
+    tags: wireguard_install
 
-- include: etc_wireguard.yml
-  tags: wireguard_etc_wireguard
+  - include: etc_wireguard.yml
+    tags: wireguard_etc_wireguard
 
-- include: nyaa_network.yml
-  tags: wireguard_nyaa_network
+  - include: nyaa_network.yml
+    tags: wireguard_nyaa_network
+  when: wireguard_mode == "install"
+
+- name: template mode
+  include: nyaa_template.yml
+  tags: wireguard_nyaa_template
+  when: wireguard_mode == "template"

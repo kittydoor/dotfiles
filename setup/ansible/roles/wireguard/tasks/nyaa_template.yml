@@ -1,0 +1,17 @@
+---
+# roles/wireguard/tasks/nyaa_network.yml
+
+- name: create local nyaa-network directory
+  file:
+    path: ../nyaa-network
+    state: directory
+  run_once: true
+
+- name: wireguard nyaa network config
+  template:
+    src: templates/wg-nyaa.conf.j2
+    dest: ../nyaa-network/wg-{{ inventory_hostname }}.conf
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    mode: '0600'
+  when: wg_addrs is defined

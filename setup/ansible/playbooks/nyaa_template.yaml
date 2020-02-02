@@ -1,10 +1,11 @@
 ---
 - name: wireguard config templater
   hosts: all
+  connection: local
   become: no
 
   roles:
     - role: wireguard
       tags: wireguard
       vars:
-        wireguard_template_override: nyaa.conf
+        wireguard_mode: template
