@@ -23,4 +23,6 @@
     owner: root
     group: root
   loop: "{{ etc_wireguard_files.files }}"
+  loop_control:
+    label: "{{ item.path }}"
   become: yes
