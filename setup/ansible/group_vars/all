@@ -1,0 +1,10 @@
+---
+ansible_python_interpreter: auto
+
+users:
+- name: "kitty"
+  comment: "kittydoor"
+  shell: "/bin/zsh"
+  password: "$6$NYyX5KcJrnk77JC5$BmhXpuQwl9oCCBrLoTEXcl33ZSs4xZl1hMAEswkWrx8blJUhV8kA3g0UGjzUdWcx0TvV.LJWuEdGqH9ZnBpuv/"
+  groups:
+  - wheel
