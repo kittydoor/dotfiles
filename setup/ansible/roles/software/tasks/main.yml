@@ -4,6 +4,23 @@
 - include: cloud.yml
   tags: software_cloud
 
+- include: hashicorp.yml
+  vars:
+    item: terraform
+  tags: software_hashicorp
+
+- include: hashicorp.yml
+  vars:
+    item: packer
+  tags: software_hashicorp
+
+# TODO: Investigate why this doesn't work
+# - include: hashicorp.yml
+#   loop:
+#     - "terraform"
+#     - "packer"
+#   tags: software_hashicorp_loop
+
 - include: containers.yml
   tags: software_containers
 

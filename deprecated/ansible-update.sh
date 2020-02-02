@@ -61,5 +61,5 @@ ansible-playbook \
   -i inv \
   -c local \
   --limit "${HOSTNAME}" \
-  site.yaml \
+  playbooks/site.yaml \
   "${PASSTHROUGH[@]}"
