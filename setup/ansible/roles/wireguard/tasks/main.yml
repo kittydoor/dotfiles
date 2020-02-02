@@ -3,15 +3,9 @@
 
 - include: install.yml
   tags: wireguard_install
-  when: wireguard_template_override is undefined
 
 - include: etc_wireguard.yml
   tags: wireguard_etc_wireguard
-  when: wireguard_template_override is undefined
 
-- include: nyaa_conf.yml
-  tags: wireguard_nyaa_conf
-
-- include: nyaa_service.yml
-  tags: wireguard_nyaa_service
-  when: wireguard_template_override is undefined
+- include: nyaa_network.yml
+  tags: wireguard_nyaa_network

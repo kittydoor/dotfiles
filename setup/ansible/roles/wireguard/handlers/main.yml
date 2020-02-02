@@ -1,0 +1,8 @@
+---
+# roles/wireguard/handlers/main.yml
+
+- name: restart wg-quick@nyaa
+  systemd:
+    name: wg-quick@nyaa
+    state: restarted
+  become: yes
