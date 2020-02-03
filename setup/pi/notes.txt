@@ -16,3 +16,36 @@ https://ubuntu.com/download/raspberry-pi
 
 https://github.com/Hexxeh/rpi-update
 
+# PCIe slot
+
+Pine64 RockPro64
+
+Raspberry Pi 4 solder instead of USB 3.0
+http://mloduchowski.com/en/blog/raspberry-pi-4-b-pci-express/
+http://labs.domipheus.com/blog/raspberry-pi-4-pci-express-it-actually-works-usb-sata-gpu/
+
+Orange Pi 4 somehow use the 24 pin PCIe header - there are expansions
+http://linuxgizmos.com/orange-pi-4-launches-at-60-with-4gb-ram/
+
+Find the 4 sata hat - addon to pi 4
+http://linuxgizmos.com/sata-hats-support-up-to-four-drives-on-raspberry-pi-4-or-rock-pi-4/
+
+Helios 64 - 5 bay nas enclosure + soc
+http://linuxgizmos.com/five-bay-open-source-nas-features-rk3399-ups-and-2-5gbe/
+
+Sheet for finding m.2 or pcie slots
+http://linuxgizmos.com/ringing-in-the-new-year-with-136-open-spec-linux-sbcs-under-200/
+
+Example m.2 to pcie card
+https://www.amazon.com/NGFF-Express-Riser-Speed-Cable/dp/B07KSZ62B8
+
+https://shop.allnetchina.cn/
+https://shop.allnetchina.cn/products/m-2-pci-e-protocol-to-4x-sata3-0-expansion
+https://shop.allnetchina.cn/products/m-2-to-pcie-x4-adapter
+
+http://linuxgizmos.com/rock-pi-n10-sbc-delivers-ai-enhanced-rk3399pro-starting-at-99/
+
+PCIe 3.0 SAS card
+https://www.amazon.com/LSI-Broadcom-9300-8i-PCI-Express-Profile/dp/B00DSURZYS
+PCIe 2.0 SAS card
+https://www.amazon.com/SAS9211-8I-8PORT-Int-Sata-Pcie/dp/B002RL8I7M
