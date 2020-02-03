@@ -263,7 +263,7 @@ bindsym $mod+space mode $mode_apps
 
 mode $mode_apps_web {
   bindsym f exec firefox, mode "default"
-  bindsym c exec chromium, mode "default"
+  bindsym c exec chromium-browser, mode "default"
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
