@@ -7,7 +7,7 @@ Usage: $0 <img>
 EOF
 }
 
-if [[ -z $1 ]]; then
+if [[ -z ${1:-} ]]; then
   echo "No image specified..."
   help_message
   exit 1
