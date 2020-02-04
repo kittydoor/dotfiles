@@ -58,6 +58,14 @@
       - --strip-components=1
   become: yes
 
+- name: install helmfile
+  get_url:
+    url: https://github.com/roboll/helmfile/releases/latest/download/helmfile_linux_amd64
+    dest: /usr/local/bin/helmfile
+    owner: root
+    mode: '0755'
+  become: yes
+
 - name: install minishift
   unarchive:
     src: https://github.com/minishift/minishift/releases/download/v1.34.2/minishift-1.34.2-linux-amd64.tgz
