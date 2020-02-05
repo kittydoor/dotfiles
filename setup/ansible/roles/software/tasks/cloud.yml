@@ -58,6 +58,16 @@
       - --strip-components=1
   become: yes
 
+- name: install helm-diff (helmfile dependency)
+  shell: |
+    set -o pipefail
+    helm plugin install https://github.com/databus23/helm-diff
+  register: helm_plugin_diff
+  failed_when:
+    - helm_plugin_diff.rc != 0
+    - helm_plugin_diff.rc != 1
+  changed_when: '"Error: plugin already exists" != helm_plugin_diff.stderr'
+
 - name: install helmfile
   get_url:
     url: https://github.com/roboll/helmfile/releases/latest/download/helmfile_linux_amd64
