@@ -1,0 +1,63 @@
+repositories:
+- name: stable
+  url: https://kubernetes-charts.storage.googleapis.com/
+- name: loki
+  url: https://grafana.github.io/loki/charts
+
+releases:
+- name: loki
+  chart: loki/loki-stack
+  values:
+  - loki.persistence.enabled: true
+- name: grafana
+  chart: stable/grafana
+  force: false
+  values:
+  - persistence:
+      enabled: true
+  - ingress:
+      enabled: true
+      hosts:
+      - nyaa-pi4.lan
+      path: /grafana
+  - env:
+      GF_SERVER_ROOT_URL: https://nyaa-pi4.lan/grafana
+      GF_SERVER_DOMAIN: nyaa-pi4.lan
+      GF_SERVER_SERVE_FROM_SUB_PATH: true
+- name: prometheus
+  chart: stable/prometheus
+  values:
+  - kubeStateMetrics:
+      image:
+        repository: quay.io/coreos/kube-state-metrics-arm64
+- name: influxdb
+  chart: stable/influxdb
+  values:
+  - image:
+      tag: 1.7
+- name: telegraf
+  chart: stable/telegraf
+  values:
+  - image:
+      tag: 1.13
+  - config:
+      inputs:
+      - net:
+      - netstat:
+      - file:
+          files:
+          - /sys/class/thermal/thermal_zone0/temp
+          name_override: cpu_temperature
+          data_format: value
+          data_type: integer
+      - exec:
+          commands:
+          - /opt/vc/bin/vcgencmd measure_temp
+          name_override: gpu_temperature
+          data_format: grok
+          grok_patterns:
+          - '%{NUMBER:value:float}'
+      outputs:
+      - influxdb:
+          urls:
+          - http://influxdb:8086
