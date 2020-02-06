@@ -15,33 +15,84 @@ releases:
   values:
   - persistence:
       enabled: true
+      # https://github.com/helm/charts/pull/17806/files
+      # if left empty, chart has empty storageClassName
+      # which breaks "upgrade --install"s
+      storageClassName: local-path
   - ingress:
       enabled: true
       hosts:
       - nyaa-pi4.lan
       path: /grafana
+    # if left empty, password gets lost, as it is regenerated on every upgrade
+    # but doesn't actually get changed in grafana
+  - adminPassword: "foobar"
   - env:
       GF_SERVER_ROOT_URL: https://nyaa-pi4.lan/grafana
       GF_SERVER_DOMAIN: nyaa-pi4.lan
       GF_SERVER_SERVE_FROM_SUB_PATH: true
+  - datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+        - name: Prometheus
+          type: prometheus
+          url: http://prometheus-server
+          access: proxy
+          isDefault: true
+        - name: Loki
+          type: loki
+          url: http://loki:3100
+          access: proxy
+        - name: Telegraf
+          type: influxdb
+          access: proxy
+          url: http://influxdb:8086
+          database: telegraf
 - name: prometheus
   chart: stable/prometheus
   values:
   - kubeStateMetrics:
       image:
-        repository: quay.io/coreos/kube-state-metrics-arm64
+        repository: k8s.gcr.io/kube-state-metrics-arm64
+        # v1.9.4 seems to be missing for some reason
+        # tag: v1.9.4
+        tag: v1.8.0
 - name: influxdb
   chart: stable/influxdb
   values:
   - image:
+      # Alpine image doesn't seem to support arm64
       tag: 1.7
 - name: telegraf
   chart: stable/telegraf
   values:
   - image:
+      # Alpine image doesn't seem to support arm64
       tag: 1.13
   - config:
+      outputs:
+      - health:
+          service_address: "http://:8888"
+          compares:
+            field: buffer_size
+            lt: 5000.0
+          contains:
+            field: buffer_size
+      - influxdb:
+          urls:
+          - "http://influxdb:8086"
+          database: "telegraf"
       inputs:
+      # - statsd:
+      #     service_address: ":8125"
+      #     percentiles:
+      #       - 50
+      #       - 95
+      #       - 99
+      #     metric_separator: "_"
+      #     allowed_pending_messages: 10000
+      #     percentile_limit: 1000
       - net:
       - netstat:
       - file:
@@ -50,14 +101,3 @@ releases:
           name_override: cpu_temperature
           data_format: value
           data_type: integer
-      - exec:
-          commands:
-          - /opt/vc/bin/vcgencmd measure_temp
-          name_override: gpu_temperature
-          data_format: grok
-          grok_patterns:
-          - '%{NUMBER:value:float}'
-      outputs:
-      - influxdb:
-          urls:
-          - http://influxdb:8086
