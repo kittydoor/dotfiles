@@ -16,6 +16,22 @@
     state: present
   become: yes
 
+# TODO: replace msg with actual functionality that replaces local builds with
+# from repo packages
+- name: replace locally built grim and slurp packages with versions from repo
+  debug:
+    msg: "Not yet implemented"
+
+- name: install grimshot dependencies
+  dnf:
+    name:
+      - grim
+      - slurp
+      - wl-clipboard
+      - jq
+    state: present
+  become: yes
+
 - name: install grimshot
   get_url:
     url: https://raw.githubusercontent.com/swaywm/sway/master/contrib/grimshot
