@@ -1,9 +1,0 @@
----
-# roles/software/tasks/selinux.yml
-
-- name: install setroubleshoot
-  dnf:
-    name: setroubleshoot
-    state: present
-  become: yes
-  notify: restart auditd

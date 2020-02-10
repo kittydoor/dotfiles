@@ -1,7 +1,0 @@
----
-# roles/hostname/tasks/main.yml
-
-- name: set hostname
-  hostname:
-    name: "{{ inventory_hostname }}"
-  become: yes

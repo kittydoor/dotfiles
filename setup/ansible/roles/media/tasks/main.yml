@@ -1,6 +1,0 @@
----
-# roles/media/tasks/main.yml
-
-- include: core.yml
-  tags: media_core
-  when: ansible_hostname == "nyaa-core"

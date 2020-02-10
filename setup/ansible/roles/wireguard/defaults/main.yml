@@ -1,4 +1,0 @@
----
-# roles/wireguard/defaults/main.yml
-
-wireguard_mode: install
