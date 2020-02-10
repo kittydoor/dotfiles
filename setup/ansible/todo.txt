@@ -1,0 +1,6 @@
+Update playbook for various packages/files
+* System packages? There's already automatic updates.
+* Pip user packages
+* Helm plugins
+* Kubernetes deployments?
+* Get url /usr/local/bin's
