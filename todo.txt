@@ -6,30 +6,21 @@ Common
 * Ansible
   * locate mlocate updatedb
     * Default configuration (/etc/updatedb.conf) ignores /media, which it shouldn't
-  * look into /etc/wireguard
   * custom module for grub cmdline options
     * some code to start with: cat /etc/default/grub | grep GRUB_CMDLINE_LINUX | python -c "import sys,shlex; filebuf = sys.stdin.read(); optsbuf = filebuf.split('=', 1)[1]; listbuf = shlex.split(optsbuf); listbuf.append('iommu=pt'); print('GRUB_CMDLINE_LINUX=\"' + ' '.join(listbuf) + '\"')"
-* i3
-  * check why background color is missing
-  * Add mode / status select menu for shutdown, logout, etc
-    * https://faq.i3wm.org/question/239/how-do-i-suspendlockscreen-and-logout.1.html
-  * Lock on suspend
-    * https://forum.manjaro.org/t/i3-does-not-lock-on-suspend/72393/9
-    * https://wiki.archlinux.org/index.php/I3#Screensaver_and_power_management
-  * Reorganize mode menus
+* sway
+  * sway-gnome - https://github.com/Drakulix/sway-gnome
   * Find a way to show menu and other tips and tricks on wallpaper
 * i3-gnome
   * Look into how regolith does it
     * https://regolith-linux.org/internals.html
-    * https://github.com/regolith-linux/regolith-gnome-flashback
-    * https://github.com/regolith-linux/regolith-i3 (look at debian/patches for regolith changes)
-    * https://github.com/regolith-linux/regolith-compton-config
-    * https://github.com/chjj/compton (upstream for compton)
-    * https://github.com/deuill/i3-gnome-flashback (upstream for regolith-gnome-flashback)
-* st - terminal - https://gitlab.com/kittydoor/st
-  * Check if terminfo in right dir (investigate the folder I found in ~/.terminfo)
+    * https://github.com/regolith-linux/
+* terminals
+  * st - terminal - https://gitlab.com/kittydoor/st
+    * Check if terminfo in right dir (investigate the folder I found in ~/.terminfo)
+  * kitty
 * Vim
-  * wayland/x11 smart clipboard (by default, clipboard only works on x11 itself, or xwayland terminals)
+  * wayland/x11 smart clipboard (by default, clipboard only works on x11 itself, or xwayland terminals) (or use neovim)
   * command to resize window exactly to file length (for tmux and for vim splits)
   * find how to remove all UI elements / clean or minimalist mode for demos
 * i3 status bar
@@ -43,7 +34,7 @@ Common
   * Show available updates or last update time
   * Show volume accurately, allow switching to different output or muting
 * Shell - https://gitlab.com/kittydoor/dotfiles/tree/master/.config/zsh
-  * Integrate directory to left prompt, since it makes copying terminal outfit (for slack/git ticketsetc) and sanitizing it easier
+  * Integrate directory to left prompt, since it makes copying terminal outfit (for slack/git/tickets/etc) and sanitizing it easier
   * Profile TERMINAL doesn't work correctly when multiple are found
   * Set st window name to tmux session automatically
   * Figure out the right way (a shell script, alias, etc) to launch st with correct title and tmux
@@ -66,12 +57,12 @@ Programming Projects
 * Do something with Rust
 * Do something with Lisp
 * Do something with Haskell
-* gitlab - https://gitlab.com/kittydoor/dotfiles/tree/master/bin/groupman.py
+* gitman - https://gitlab.com/kittydoor/dotfiles/ groupman.py
   * add cloning subcommand
   * add sync missing repositories and archive deleted subcommand
   * add status on all subcommand
   * add fetch -ap, co master, pull master subcommand
-* userify.sh
+* userify.sh - https://gitlab.com/kittydoor/dotfiles/ groupman.py
   * add help message
   * set defaults in user xdg data dir
   * enable profiles
@@ -79,50 +70,34 @@ Programming Projects
 * Service for dynamic ip using do dns / domain
 
 Infra Projects
-* terraform - https://gitlab.com/kittydoor/terraform.git or git@gitlab.com:kittydoor/terraform.git
+* terraform - https://gitlab.com/kittydoor/terraform.git
   * terraform for kitty.sh/katherine.sh
-    * dns records and vm
+    * dns records and vps
     * provisioning
     * partially done, however primary server is still the legacy
     * extras
       * one button deploy
       * one button deploy new and switch when ready
       * one button duplicate
-  * nginx - various methods
-    * via system packages
-    * via official nginx image with certbot sidecar
-    * via custom podman systemd image using systemd services
-    * via k8s cert managerand ingress
-  * Vagrantfile for testing
+  * k8s and ingress
 * Ansible base provisioner for secure and sane machines, and some extra roles for features
-* Mesh networking with wireguard / look into consul
-* Investigate tinc
-
-Kubernetes
-* Figure out good baremetal kubernetes solution, and ways to add basic functionality
-* Try out kubernetes deployments
-  * Custom scripting with kubeadm / kubernetes from scratch
-  * https://github.com/kelseyhightower/kubernetes-the-hard-way
-  * k3s
-  * Fedora CoreOS
-  * ...
-* Try out kubernetes PV providers
-  * Longhorn
-  * Rook
-  * Ceph
-  * NFS
-  * Local disks?
-  * ...
+  * SSH Hardening
+  * Automatic updates
+* VPN
+  * Ansible Wireguard
+  * Investigate tinc - https://tinc-vpn.org/
+  * Investigate Nebula by Slack - https://github.com/slackhq/nebula
+  * Investigate Gravitational Wormhole (Wireguard) for Kubernetes - https://gravitational.com/blog/announcing_wormhole/
 
 Nyaa-Core
 * gaming.sh
   * Ensure is correct
-  * Look into barrier stealing mouse on vm shutdown, perhaps killswitch for barrier when vm is stopped
+  * Look into looking glass again
 
 Nyaa-Gate
 * Wireless
   * From the wireless info for uni, configure wireless profile, keep in vcs
-  * Figure out why systemd-resolved or statis dns causes issues with uni wifi
+  * Figure out why systemd-resolved or static dns causes issues with uni wifi
 
 Nyaa-Link
 
