@@ -198,8 +198,8 @@ font pango:DejaVu Sans Mono 12
 # Resizing containers:
 #
 # resize window (you can also use the mouse for that)
-set $mode_resize "resize:  [hjkl][<v^>]  [p]recise"
-set $mode_resize_precise "resize precise:  [hjkl][<v^>]"
+# [<v^>]
+set $mode_resize "resize:  [hjkl]  mod:  [Ctrl = slow]  [Shift = fast]"
 mode $mode_resize {
   # left will shrink the containers width
   # right will grow the containers width
@@ -210,14 +210,21 @@ mode $mode_resize {
   bindsym $up resize shrink height 10px
   bindsym $right resize grow width 10px
 
+  bindsym Shift+$left resize shrink width 50px
+  bindsym Shift+$down resize grow height 50px
+  bindsym Shift+$up resize shrink height 50px
+  bindsym Shift+$right resize grow width 50px
+
+  bindsym Ctrl+$left resize shrink width 1px
+  bindsym Ctrl+$down resize grow height 1px
+  bindsym Ctrl+$up resize shrink height 1px
+  bindsym Ctrl+$right resize grow width 1px
+
   # ditto, with arrow keys
   # bindsym Left resize shrink width 10px
   # bindsym Down resize grow height 10px
   # bindsym Up resize shrink height 10px
   # bindsym Right resize grow width 10px
-
-  # precise mode
-  bindsym p mode $mode_resize_precise
 
   # return to default mode
   bindsym Return mode "default"
@@ -226,25 +233,8 @@ mode $mode_resize {
 }
 bindsym $mod+r mode $mode_resize
 
-mode $mode_resize_precise {
-  bindsym h resize shrink width 1px
-  bindsym j resize grow height 1px
-  bindsym k resize shrink height 1px
-  bindsym l resize grow width 1px
-
-  # bindsym Left resize shrink width 1 px or 1 ppt
-  # bindsym Down resize grow height 1 px or 1 ppt
-  # bindsym Up resize shrink height 1 px or 1 ppt
-  # bindsym Right resize grow width 1 px or 1 ppt
-
-  # return to default mode
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
-  bindsym $mod+r mode "default"
-}
-
 # application menu
-set $mode_apps "apps:  [w]eb  [v]irt [c]ontrol [s]ystem"
+set $mode_apps "apps:  [w]eb  [v]irt  [c]ontrol  [s]ystem"
 set $mode_apps_web "apps/web:  [f]irefox  [c]hromium"
 set $mode_apps_virt "apps/virt:  virt-[m]anager  [s]ynergy  [w]invm"
 set $mode_apps_control "apps/control: toggle-[s]peaker  pulse-[a]udio"
