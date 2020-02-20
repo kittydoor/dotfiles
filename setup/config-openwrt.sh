@@ -5,7 +5,7 @@ set -e
 DEFAULT_DNS="1.1.1.1 8.8.8.8"
 
 help_message() {
-  echo 'Usage: ssh root@192.168.1.1 "NYAAKEY=foo KITTIESKEY=bar sh -s" < config-openwrt.sh'
+  echo 'Usage: ssh root@192.168.1.1 "NYAAKEY=foo KITTIESKEY=bar NOTKEY=baz sh -s" < config-openwrt.sh'
 }
 
 help_exit() {
@@ -36,6 +36,11 @@ safety_check() {
 
   if [ -z "$KITTIESKEY" ]; then
     echo 'KITTIESKEY (guest network) not defined, exitting...'
+    help_exit
+  fi
+
+  if [ -z "$NOTKEY" ]; then
+    echo 'NOTKEY (not network) not defined, exitting...'
     help_exit
   fi
 }
@@ -142,6 +147,55 @@ guest_config() {
   uci commit firewall
 }
 
+not_config() {
+  # Create not (network of things) interface
+  uci set network.not=interface
+  uci set network.not.type=bridge
+  uci set network.not.ifname=eth0.3
+  uci set network.not.proto=static
+  uci set network.not.ipaddr=192.168.3.1
+  uci set network.not.netmask=255.255.255.0
+  uci set network.not.peerdns=0
+  uci set network.not.dns="${DEFAULT_DNS}"
+  uci commit network
+
+  # Create dhcp server for not network
+  uci set dhcp.not=dhcp
+  uci set dhcp.not.interface=not
+  uci set dhcp.not.start=100
+  uci set dhcp.not.leasetime=12h
+  uci set dhcp.not.limit=150
+  uci commit dhcp
+
+  # Creating firewall rules for not network
+  uci set firewall.not=zone
+  uci set firewall.not.name=not
+  uci set firewall.not.network=not
+  uci set firewall.not.forward=REJECT
+  uci set firewall.not.output=REJECT
+  uci set firewall.not.input=REJECT
+
+  uci set firewall.not_fwd=forwarding
+  uci set firewall.not_fwd.src=not
+  uci set firewall.not_fwd.dest=lan
+
+  uci set firewall.not_dhcp=rule
+  uci set firewall.not_dhcp.name=not_dhcp
+  uci set firewall.not_dhcp.src=not
+  uci set firewall.not_dhcp.target=ACCEPT
+  uci set firewall.not_dhcp.proto=udp
+  uci set firewall.not_dhcp.dest_port=67-68
+
+  uci set firewall.not_dns=rule
+  uci set firewall.not_dns.name=not_dns
+  uci set firewall.not_dns.src=not
+  uci set firewall.not_dns.target=ACCEPT
+  uci set firewall.not_dns.proto=tcpudp
+  uci set firewall.not_dns.dest_port=53
+
+  uci commit firewall
+}
+
 wireless_config() {
   # === Update WiFi info for the access point ===
   # 1) Setup the interfaces
@@ -177,6 +231,7 @@ wireless_config() {
   uci set wireless.nyaa_wifi5="wifi-iface"
   uci set wireless.kitties="wifi-iface"
   uci set wireless.kitties5="wifi-iface"
+  uci set wireless.nyaa_not="wifi-iface"
 
   # === 1c) Assign the options ==================
   echo 'Assigning some options'
@@ -184,11 +239,13 @@ wireless_config() {
   uci set wireless.nyaa_wifi5.mode="ap"
   uci set wireless.kitties.mode="ap"
   uci set wireless.kitties5.mode="ap"
+  uci set wireless.nyaa_not.mode="ap"
 
   uci set wireless.nyaa_wifi.network="lan"
   uci set wireless.nyaa_wifi5.network="lan"
   uci set wireless.kitties.network="guest"
   uci set wireless.kitties5.network="guest"
+  uci set wireless.nyaa_not.network="not"
 
   # === 1d) AP specific options =================
   echo 'Assigning ap specific options'
@@ -196,11 +253,13 @@ wireless_config() {
   uci set wireless.nyaa_wifi5.hidden="1"
   uci set wireless.kitties.hidden="0"
   uci set wireless.kitties5.hidden="0"
+  uci set wireless.nyaa_not.hidden="0"
 
   uci set wireless.nyaa_wifi.device="radio1"
   uci set wireless.nyaa_wifi5.device="radio0"
   uci set wireless.kitties.device="radio1"
   uci set wireless.kitties5.device="radio0"
+  uci set wireless.nyaa_not.device="radio1"
 
   # === 1e) Assign the ssid and encryption ======
 
@@ -208,6 +267,7 @@ wireless_config() {
   uci set wireless.nyaa_wifi5.ssid="nyaa-wifi"
   uci set wireless.kitties.ssid="kitties"
   uci set wireless.kitties5.ssid="kitties5"
+  uci set wireless.nyaa_not.ssid="nyaa-not"
 
   WI_ENC="psk2+ccmp"
 
@@ -215,11 +275,13 @@ wireless_config() {
   uci set wireless.nyaa_wifi5.encryption=$WI_ENC
   uci set wireless.kitties.encryption=$WI_ENC
   uci set wireless.kitties5.encryption=$WI_ENC
+  uci set wireless.nyaa_not.encryption=$WI_ENC
 
   uci set wireless.nyaa_wifi.key=$NYAAKEY
   uci set wireless.nyaa_wifi5.key=$NYAAKEY
   uci set wireless.kitties.key=$KITTIESKEY
   uci set wireless.kitties5.key=$KITTIESKEY
+  uci set wireless.nyaa_not.key=$NOTKEY
 
   # Isolate devices in network from each other
   uci set wireless.kitties.isolate=1
@@ -389,8 +451,11 @@ packages
 lan_config
 # Guest network interface, dhcp, and firewall rules
 guest_config
+# Not network
+not_config
 # Configure wireless radios
 # (requires guest config for kitties to have interface to bind to)
+# (requiest not config for nyaa-not to have interface to bind to)
 wireless_config
 # Remove ssh root or password access
 ssh_config
