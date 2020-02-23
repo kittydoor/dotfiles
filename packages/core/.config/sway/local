@@ -9,32 +9,35 @@ exec swayidle -w \
   before-sleep 'swaylock -f -c 000000'
 
 ### Outputs
-output HDMI-A-1 {
+set $primary_output HDMI-A-1
+set $secondary_output HDMI-A-2
+
+output $primary_output {
   pos 0 0 res 2560x1440
   bg #000000 solid_color
 }
 
-output DVI-D-1 {
+output $secondary_output {
   pos 2560 360 res 1920x1080
   bg #000000 solid_color
 }
 
-output HDMI-A-1 enable
-output DVI-D-1 enable
+output $primary_output enable
+output $secondary_output enable
 
-workspace $ws1 output HDMI-A-1
-workspace $ws2 output DVI-D-1
+workspace $ws1 output $primary_output
+workspace $ws2 output $secondary_output
 
-focus output HDMI-A-1
+focus output $primary_output
 
 # external displays
 set $mode_display "display:  [s]ingle  [d]ouble"
 mode $mode_display {
   # deactivate secondary display
-  bindsym s output DVI-D-1 disable, mode "default"
+  bindsym s output $secondary_output disable, mode "default"
 
   # activate secondary display
-  bindsym d output DVI-D-1 enable, mode "default"
+  bindsym d output $secondary_output enable, mode "default"
 
   # back to normal: Enter or Escape or $mod+r
   bindsym Return mode "default"
