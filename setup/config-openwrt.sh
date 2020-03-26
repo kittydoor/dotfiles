@@ -122,9 +122,9 @@ guest_config() {
   uci set firewall.guest=zone
   uci set firewall.guest.name=guest
   uci set firewall.guest.network=guest
-  uci set firewall.guest.forward=REJECT
-  uci set firewall.guest.output=ACCEPT
   uci set firewall.guest.input=REJECT
+  uci set firewall.guest.output=ACCEPT
+  uci set firewall.guest.forward=REJECT
 
   uci set firewall.guest_fwd=forwarding
   uci set firewall.guest_fwd.src=guest
@@ -171,13 +171,9 @@ not_config() {
   uci set firewall.not=zone
   uci set firewall.not.name=not
   uci set firewall.not.network=not
-  uci set firewall.not.forward=REJECT
-  uci set firewall.not.output=REJECT
   uci set firewall.not.input=REJECT
-
-  uci set firewall.not_fwd=forwarding
-  uci set firewall.not_fwd.src=not
-  uci set firewall.not_fwd.dest=lan
+  uci set firewall.not.output=ACCEPT
+  uci set firewall.not.forward=REJECT
 
   uci set firewall.not_dhcp=rule
   uci set firewall.not_dhcp.name=not_dhcp
@@ -192,6 +188,18 @@ not_config() {
   uci set firewall.not_dns.target=ACCEPT
   uci set firewall.not_dns.proto=tcpudp
   uci set firewall.not_dns.dest_port=53
+
+  uci commit firewall
+}
+
+not_lan_forwardings() {
+  uci set firewall.not_lan_fw=forwarding
+  uci set firewall.not_lan_fw.src=not
+  uci set firewall.not_lan_fw.dest=lan
+
+  uci set firewall.lan_not_fw=forwarding
+  uci set firewall.lan_not_fw.src=lan
+  uci set firewall.lan_not_fw.dest=not
 
   uci commit firewall
 }
@@ -325,74 +333,38 @@ dnsmasq_config() {
   uci commit dhcp
 }
 
+uci_dhcp_lease() {
+  # Args:
+  # 1 -> shortname
+  # 2 -> name
+  # 3 -> mac
+  # 4 -> address
+
+  uci set dhcp."$1"=host
+  uci set dhcp."$1".name="$2"
+  uci set dhcp."$1".mac="$3"
+  uci set dhcp."$1".ip="$4"
+  uci set dhcp."$1".leasetime="12h"
+}
+
 dhcp_config() {
   # === Static leases / Static Hosts ====
   # TODO: Maybe use /etc/ethers instead
 
-  # creating and renaming hosts
-  echo 'Creating static lease hosts'
-  uci set dhcp.core=host
-  uci set dhcp.poco=host
-  uci set dhcp.gate=host
-  uci set dhcp.work=host
-  uci set dhcp.pi4=host
-  uci set dhcp.pi4_wifi=host
-  uci set dhcp.note=host
+  echo 'Setting up the static leases'
 
-  # setting up the hosts
-  # nyaa-core
-  echo 'Setting up the static lease hosts'
+  # WORK_MAC="1C:1B:B5:C9:C0:89"
+  # PI4A_WIFI_MAC="DC:A6:32:51:64:F0"
+  # PI4B_WIFI_MAC=""
+  # NOTE_MAC="4C:66:41:E5:88:21"
 
-  # Note: MAC can be multiple, space separated
-  CORE_MAC="4C:CC:6A:01:F4:B5"
-  POCO_MAC="A4:50:46:6A:8E:31"
-  GATE_MAC="9C:B6:D0:F1:18:2B"
-  WORK_MAC="1C:1B:B5:C9:C0:89"
-  PI4_MAC="DC:A6:32:51:64:ED"
-  PI4_WIFI_MAC="DC:A6:32:51:64:F0"
-  NOTE_MAC="4C:66:41:E5:88:21"
-
-  uci set dhcp.core.name="nyaa-core"
-  uci set dhcp.core.mac="$CORE_MAC"
-  # uci set dhcp.core.mac="BA:A1:E7:A4:6A:82" # bridge
-  uci set dhcp.core.ip="192.168.1.2"
-  uci set dhcp.core.leasetime="12h"
-
-  # nyaa-poco
-  uci set dhcp.poco.name="nyaa-poco"
-  uci set dhcp.poco.mac="$POCO_MAC"
-  uci set dhcp.poco.ip="192.168.1.3"
-  uci set dhcp.poco.leasetime="12h"
-
-  # nyaa-gate
-  uci set dhcp.gate.name="nyaa-gate"
-  uci set dhcp.gate.mac="$GATE_MAC"
-  uci set dhcp.gate.ip="192.168.1.4"
-  uci set dhcp.gate.leasetime="12h"
-
-  # nyaa-work
-  uci set dhcp.work.name="nyaa-work"
-  uci set dhcp.work.mac="$WORK_MAC"
-  uci set dhcp.work.ip="192.168.1.5"
-  uci set dhcp.work.leasetime="12h"
-
-  # nyaa-pi4
-  uci set dhcp.pi4.name="nyaa-pi4"
-  uci set dhcp.pi4.mac="$PI4_MAC"
-  uci set dhcp.pi4.ip="192.168.1.6"
-  uci set dhcp.pi4.leasetime="12h"
-
-  # nyaa-pi4-wifi
-  uci set dhcp.pi4_wifi.name="nyaa-pi4-wifi"
-  uci set dhcp.pi4_wifi.mac="$PI4_WIFI_MAC"
-  uci set dhcp.pi4_wifi.ip="192.168.1.201"
-  uci set dhcp.pi4_wifi.leasetime="12h"
-
-  # nyaa-note
-  uci set dhcp.note.name="nyaa-note"
-  uci set dhcp.note.mac="$NOTE_MAC"
-  uci set dhcp.note.ip="192.168.1.202"
-  uci set dhcp.note.leasetime="12h"
+  # uci_dhcp_leases node nyaa-node '???' '192.168.1.2'
+  uci_dhcp_lease pi4a nyaa-pi4a 'DC:A6:32:51:64:ED' '192.168.1.3'
+  uci_dhcp_lease pi4b nyaa-pi4b 'DC:A6:32:4B:FB:FA' '192.168.1.4'
+  uci_dhcp_lease core nyaa-core '4C:CC:6A:01:F4:B5' '192.168.1.5'
+  uci_dhcp_lease poco nyaa-poco 'A4:50:46:6A:8E:31' '192.168.1.6'
+  uci_dhcp_lease gate nyaa-gate '9C:B6:D0:F1:18:2B' '192.168.1.7'
+  # uci_dhcp_leases work nyaa-work '???' '192.168.1.8'
 
   uci commit dhcp
 }
@@ -453,6 +425,9 @@ lan_config
 guest_config
 # Not network
 not_config
+# Let lan and not talk to each other
+# TODO: Perhaps restrict the rules? Or somehow only allow mqtt to pi4 or other select traffic?
+not_lan_forwardings
 # Configure wireless radios
 # (requires guest config for kitties to have interface to bind to)
 # (requiest not config for nyaa-not to have interface to bind to)

@@ -1,0 +1,22 @@
+# Specific devices
+
+## Teckin RGBW Cold
+{"NAME":"Teckin SB50","GPIO":[0,0,0,0,40,0,0,0,38,39,37,0,0],"FLAG":0,"BASE":18}
+? RGBWWTable 255,255,255,255,0
+
+## LE RGBCCT
+{"NAME":"LE lampUX","GPIO":[0,0,0,0,141,140,0,0,37,142,38,0,0],"FLAG":0,"BASE":18}
+
+## Gosund SP111
+{"NAME":"Gosund SP111","GPIO":[56,0,158,0,132,134,0,0,131,17,0,21,0],"FLAG":0,"BASE":45}
+https://tasmota.github.io/docs/#/Power-Monitoring-Calibration
+
+### Backlog
+Backlog RGBWWTable 255,255,255,255,0; SetOption37 1; SetOption19 1; SaveData 0; PowerOnState 1; Color 00000000ff; Restart 1
+
+### Explanation
+SetOption37 1  # reverse cold/warm
+SetOption19 1  # enable MQTT discovery for Hassio
+
+# To reset all but wifi
+Reset 5
