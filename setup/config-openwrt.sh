@@ -344,7 +344,7 @@ uci_dhcp_lease() {
   uci set dhcp."$1".name="$2"
   uci set dhcp."$1".mac="$3"
   uci set dhcp."$1".ip="$4"
-  uci set dhcp."$1".leasetime="12h"
+  uci set dhcp."$1".leasetime=12h
 }
 
 dhcp_config() {
@@ -358,6 +358,12 @@ dhcp_config() {
   # PI4B_WIFI_MAC=""
   # NOTE_MAC="4C:66:41:E5:88:21"
 
+  # Remove all lease rules
+  for section in $(uci show dhcp | sed -n 's/dhcp.\([a-z0-9_]*\)=host/\1/p'); do
+    uci delete dhcp."$section"
+  done
+
+  # Create new lease rules
   # uci_dhcp_leases node nyaa-node '???' '192.168.1.2'
   uci_dhcp_lease pi4a nyaa-pi4a 'DC:A6:32:51:64:ED' '192.168.1.3'
   uci_dhcp_lease pi4b nyaa-pi4b 'DC:A6:32:4B:FB:FA' '192.168.1.4'
@@ -366,12 +372,40 @@ dhcp_config() {
   uci_dhcp_lease gate nyaa-gate '9C:B6:D0:F1:18:2B' '192.168.1.7'
   # uci_dhcp_leases work nyaa-work '???' '192.168.1.8'
 
+  # Create smart device lease rules
+  uci_dhcp_lease plug_alpha plug_alpha     '24:62:AB:39:A5:CD' '192.168.3.11'
+  uci_dhcp_lease plug_beta plug_beta       'C8:2B:96:53:AD:53' '192.168.3.12'
+  uci_dhcp_lease plug_charlie plug_charlie 'D8:F1:5B:B4:FC:35' '192.168.3.13'
+  uci_dhcp_lease plug_delta plug_delta     '24:62:AB:42:06:4B' '192.168.3.14'
+
+  uci_dhcp_lease light_bedroom light_bedroom '2C:F4:32:B2:D4:CF' '192.168.3.21'
+
   uci commit dhcp
+}
+
+port_forward() {
+  # Args:
+  # 1 -> name
+  # 2 -> protocol
+  # 3 -> src_dport
+  # 4 -> host address
+  # 5 -> dport
+
+  uci set firewall."$1"=redirect
+  uci set firewall."$1".name="$1"
+  uci set firewall."$1".target=DNAT
+  uci set firewall."$1".proto="$2"
+  uci set firewall."$1".src=wan
+  uci set firewall."$1".src_dport="$3"
+  uci set firewall."$1".dest=lan
+  uci set firewall."$1".dest_ip="$4"
+  uci set firewall."$1".dest_port="$5"
 }
 
 firewall_config() {
   # === Firewall
 
+  # Setup rules
   uci set firewall.ssh_link=rule
   uci set firewall.ssh_link.name="ssh-link"
   uci set firewall.ssh_link.target="ACCEPT"
@@ -379,35 +413,17 @@ firewall_config() {
   uci set firewall.ssh_link.src="wan"
   uci set firewall.ssh_link.dest_port="22"
 
-  uci set firewall.ssh_core=redirect
-  uci set firewall.ssh_core.name="ssh-core"
-  uci set firewall.ssh_core.target="DNAT"
-  uci set firewall.ssh_core.proto="tcp"
-  uci set firewall.ssh_core.src="wan"
-  uci set firewall.ssh_core.src_dport="2222"
-  uci set firewall.ssh_core.dest="lan"
-  uci set firewall.ssh_core.dest_ip="192.168.1.2"
-  uci set firewall.ssh_core.dest_port="22"
+  # Setup port forwardings
+  for section in $(uci show firewall | sed -n 's/firewall.\([a-z0-9_]*\)=redirect/\1/p'); do
+    uci delete firewall."$section"
+  done
 
-  uci set firewall.minecraft_core=redirect
-  uci set firewall.minecraft_core.name="minecraft-core"
-  uci set firewall.minecraft_core.target="DNAT"
-  uci set firewall.minecraft_core.proto="tcp"
-  uci set firewall.minecraft_core.src="wan"
-  uci set firewall.minecraft_core.src_dport="25565"
-  uci set firewall.minecraft_core.dest="lan"
-  uci set firewall.minecraft_core.dest_ip="192.168.1.2"
-  uci set firewall.minecraft_core.dest_port="25565"
+  port_forward wireguard_pi4a 51823 51823 192.168.1.3
+  port_forward wireguard_pi4b 51823 51823 192.168.1.4
+  port_forward wireguard_core 51825 51825 192.168.1.5
 
-  uci set firewall.wireguard_core=redirect
-  uci set firewall.wireguard_core.name="wireguard-core"
-  uci set firewall.wireguard_core.target="DNAT"
-  uci set firewall.wireguard_core.proto="tcp"
-  uci set firewall.wireguard_core.src="wan"
-  uci set firewall.wireguard_core.src_dport="51821"
-  uci set firewall.wireguard_core.dest="lan"
-  uci set firewall.wireguard_core.dest_ip="192.168.1.2"
-  uci set firewall.wireguard_core.dest_port="51821"
+  port_forward ssh_core tcp 2222 22 192.168.1.5
+  port_forward minecraft_core 25565 25565 192.168.1.5
 
   uci commit firewall
 }
