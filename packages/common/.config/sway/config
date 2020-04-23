@@ -241,7 +241,7 @@ bindsym $mod+r mode $mode_resize
 
 # application menu
 set $mode_apps "apps:  [w]eb  [v]irt  [c]ontrol  [s]ystem"
-set $mode_apps_web "apps/web:  [f]irefox  [c]hromium"
+set $mode_apps_web "apps/web:  [f]irefox  [c]hromium  clip2[m]pv"
 set $mode_apps_virt "apps/virt:  virt-[m]anager  [s]ynergy  [w]invm"
 set $mode_apps_control "apps/control: toggle-[s]peaker  pulse-[a]udio"
 set $mode_apps_system "apps/system: [l]ogout [s]uspend [r]eboot [S]hutdown"
@@ -260,6 +260,7 @@ bindsym $mod+space mode $mode_apps
 mode $mode_apps_web {
   bindsym f exec firefox, mode "default"
   bindsym c exec chromium-browser, mode "default"
+  bindsym m exec ~/bin/clip2mpv, mode "default"
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
