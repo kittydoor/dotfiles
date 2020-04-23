@@ -29,6 +29,12 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
+### Generic input configuration
+input type:keyboard {
+  # Map capslock to escape
+  xkb_options caps:escape
+}
+
 ### Host specific configuration
 # include host specific configuration (e.g. input, output)
 include ~/.config/sway/local
