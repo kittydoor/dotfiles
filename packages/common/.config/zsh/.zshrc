@@ -69,3 +69,5 @@ fi
 for file in $ZDOTDIR/completion.d/*; do
   source $file || echo "$file failed, ignoring..."
 done
+
+source /home/kitty/.work/zsh
