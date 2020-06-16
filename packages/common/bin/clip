@@ -1,4 +1,5 @@
 #!/bin/sh
+# vim: et sts=2 sw=2
 set -e
 
 x11_copy() {
@@ -35,6 +36,39 @@ wayland_paste() {
   fi
 }
 
+linux_clip() {
+  COMMAND="${XDG_SESSION_TYPE}_${MODE}"
+  if declare -F "${COMMAND}" > /dev/null; then
+    ${COMMAND} "$@"
+  else
+    if [ "${XDG_SESSION_TYPE}" != wayland ] && [ "${XDG_SESSION_TYPE}" != x11 ]; then
+      echo "No supported active session found (XDG_SESSION_TYPE is not wayland or x11)"
+      exit 1
+    else
+      echo "Unknown error occurred (COMMAND=\"${COMMAND}\")"
+      exit 1
+    fi
+  fi
+}
+
+darwin_copy() {
+  pbcopy <&0
+}
+
+darwin_paste() {
+  pbpaste
+}
+
+darwin_clip() {
+  COMMAND="darwin_${MODE}"
+  if declare -F "${COMMAND}" > /dev/null; then
+    ${COMMAND}
+  else
+    echo "Unexpected error occurred (COMMAND=\"${COMMAND}\")"
+    exit 1
+  fi
+}
+
 case "$1" in
   copy)
     shift
@@ -56,15 +90,15 @@ case "$1" in
     ;;
 esac
 
-COMMAND="${XDG_SESSION_TYPE}_${MODE}"
-if declare -F "${COMMAND}" > /dev/null; then
-  ${COMMAND} "$@"
-else
-  if [ "${XDG_SESSION_TYPE}" != wayland ] && [ "${XDG_SESSION_TYPE}" != x11 ]; then
-    echo "No supported active session found (XDG_SESSION_TYPE is not wayland or x11)"
-    exit 2
-  else
-    echo "Unknown error occurred (COMMAND=\"${COMMAND}\")"
-    exit 3
-  fi
-fi
+case "$(uname -s)" in
+  Linux)
+    linux_clip
+    ;;
+  Darwin)
+    darwin_clip
+    ;;
+  *)
+    echo "Unsupported OS"
+    exit 1
+    ;;
+esac
