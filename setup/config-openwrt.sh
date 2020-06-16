@@ -91,10 +91,10 @@ packages() {
   fi
 }
 
-lan_config() {
-  # Configure dns for lan
-  uci set network.lan.peerdns=0
-  uci set network.lan.dns="${DEFAULT_DNS}"
+wan_config() {
+  # Configure dns for wan
+  uci set network.wan.peerdns=0
+  uci set network.wan.dns="${DEFAULT_DNS}"
   uci commit network
 }
 
@@ -435,8 +435,8 @@ safety_check
 system_config
 # Install and update some packages
 packages
-# Lan config (dns)
-lan_config
+# Wan config (dns)
+wan_config
 # Guest network interface, dhcp, and firewall rules
 guest_config
 # Not network
