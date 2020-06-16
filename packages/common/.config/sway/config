@@ -39,6 +39,10 @@ input type:keyboard {
 # include host specific configuration (e.g. input, output)
 include ~/.config/sway/local
 
+### Idle actions
+# start swayidle
+exec_always ~/.config/sway/idle
+
 ### Volume configuration
 # mute volume on boot
 exec ~/bin/volume set 75 && ~/bin/volume mute

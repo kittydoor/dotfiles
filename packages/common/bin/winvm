@@ -14,6 +14,9 @@ if [[ $(sestatus | awk '/Current mode:/ { print $3 }') != "permissive" ]]; then
   sudo setenforce 0
 fi
 
+# Disable suspend
+killall swayidle || true
+
 # Start vm
 virsh -c qemu:///system start winvm || true
 
@@ -21,11 +24,22 @@ virsh -c qemu:///system start winvm || true
 pkill barrier || true
 # Run barrier / synergy
 flatpak run com.github.debauchee.barrier &
+# Show console
+# TODO: Fix pulseaudio integration instead
+virt-manager -c qemu:///system --show-domain-console winvm
+
+cleanup() {
+  pkill barrier || true
+  pkill virt-manager || true
+  nohup ~/.config/sway/idle > /dev/null &
+}
+
+trap cleanup EXIT
+trap cleanup SIGINT
 
 while true; do
   sleep 10
   if [[ $(virsh -c qemu:///system list | awk '/winvm/ { print $3 }') != "running" ]]; then
-    pkill barrier
     exit
   fi
 done

@@ -1,13 +1,6 @@
 # host specific configuration
 # nyaa-core
 
-### Idle configuration
-exec swayidle -w \
-  timeout 1500 'swaylock -f -c 000000' \
-  timeout 1500 'swaymsg "output * dpms off"' \
-        resume 'swaymsg "output * dpms on"' \
-  before-sleep 'swaylock -f -c 000000'
-
 ### Outputs
 set $primary_output HDMI-A-1
 set $secondary_output HDMI-A-2
