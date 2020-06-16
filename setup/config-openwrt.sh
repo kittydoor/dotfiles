@@ -364,7 +364,7 @@ dhcp_config() {
   done
 
   # Create new lease rules
-  # uci_dhcp_leases node nyaa-node '???' '192.168.1.2'
+  uci_dhcp_lease node nyaa-node 'A8:A1:59:0B:CB:EA' '192.168.1.2'
   uci_dhcp_lease pi4a nyaa-pi4a 'DC:A6:32:51:64:ED' '192.168.1.3'
   uci_dhcp_lease pi4b nyaa-pi4b 'DC:A6:32:4B:FB:FA' '192.168.1.4'
   uci_dhcp_lease core nyaa-core '4C:CC:6A:01:F4:B5' '192.168.1.5'
