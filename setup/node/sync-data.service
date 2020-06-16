@@ -1,0 +1,6 @@
+[Unit]
+Description=Sync /data to /mnt
+
+[Service]
+Type=simple
+ExecStart=/bin/bash -c "mountpoint -q /data && mountpoint -q /backup && /usr/bin/rsync -av /data/ --exclude /data/varlib --exclude /data/lost+found /backup"

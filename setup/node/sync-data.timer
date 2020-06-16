@@ -1,0 +1,10 @@
+[Unit]
+Description=Sync /data to /mnt daily
+
+[Timer]
+OnCalendar=daily
+RandomizedDelaySec=30
+Persistent=true
+
+[Install]
+WantedBy=timers.target
