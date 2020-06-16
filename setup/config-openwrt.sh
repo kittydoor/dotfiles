@@ -122,9 +122,9 @@ guest_config() {
   uci set firewall.guest=zone
   uci set firewall.guest.name=guest
   uci set firewall.guest.network=guest
-  uci set firewall.guest.input=REJECT
+  uci set firewall.guest.input=ACCEPT
   uci set firewall.guest.output=ACCEPT
-  uci set firewall.guest.forward=REJECT
+  uci set firewall.guest.forward=ACCEPT
 
   uci set firewall.guest_fwd=forwarding
   uci set firewall.guest_fwd.src=guest
