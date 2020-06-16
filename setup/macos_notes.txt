@@ -1,0 +1,26 @@
+chsh -s /bin/zsh
+
+brew cask install iterm2 gimp 
+brew install tmux ranger coreutils gnu-sed vim
+
+# Add gnubin dir to path
+
+brew install fabianishere/personal/pam_reattach
+# add on top /etc/pam.d/sudo
+auth       optional       pam_reattach.so
+auth       sufficient     pam_tid.so
+
+# System Preferences
+#   -> Touch ID
+#   -> Keyboard -> Modifier Keys... -> Caps Lock: Escape
+#   -> Keyboard (external) -> Modifier Keys... -> Caps Lock: Escape
+# iTerm2 -> Profiles -> Open Profiles -> Default -> Edit Profiles
+#   -> General
+#      -> Theme: Dark
+#      -> Selection: Applications in terminal may access clipboard
+#   -> Profiles -> Default
+#      -> General: Send text at start: tmux
+#      -> Colors: Solarized Dark
+#      -> Terminal: Silence bell
+#   -> Advanced
+#      -> Allow session to survive logging out and back in: No 
