@@ -24,13 +24,16 @@ workspace $ws2 output $secondary_output
 focus output $primary_output
 
 # external displays
-set $mode_display "display:  [s]ingle  [d]ouble"
+set $mode_display "display:  prim[a]ry  [s]econdary  [d]ual"
 mode $mode_display {
-  # deactivate secondary display
-  bindsym s output $secondary_output disable, mode "default"
+  # primary display mode
+  bindsym a output $primary_output enable, output $secondary_output disable, mode "default"
 
-  # activate secondary display
-  bindsym d output $secondary_output enable, mode "default"
+  # secondary display mode
+  bindsym s output $primary_output disable, output $secondary_output enable, mode "default"
+
+  # dual display mode
+  bindsym d output $primary_output enable, output $secondary_output enable, mode "default"
 
   # back to normal: Enter or Escape or $mod+r
   bindsym Return mode "default"
