@@ -1,11 +1,24 @@
 # -U only keeps first of duplicates in arrays
 typeset -U path
 
+# https://stackoverflow.com/questions/11530090/adding-a-new-entry-to-the-path-variable-in-zsh
+# TODO: Does this break on paths with spaces?
+function prefixpath {
+  if [[ -d $1 ]]; then
+    path=($1 $path)
+  fi
+}
+
 function addpath {
   if [[ -d $1 ]]; then
     path+=($1)
   fi
 }
+
+# gnu coreutils on Darwin
+[[ ! -d /usr/local/opt/coreutils/libexec/gnubin ]] && echo "coreutils missing. Please run 'brew install coreutils'"
+prefixpath "/usr/local/opt/coreutils/libexec/gnubin"
+
 
 # zsh scripts
 addpath "$HOME/.config/zsh/bin"

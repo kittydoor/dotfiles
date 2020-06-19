@@ -7,17 +7,7 @@
 #   alias ls="ls --color=auto"
 # fi
 
-LS_FLAGS="--human-readable --color=auto --hyperlink=auto"
-case "$(uname -s)" in
-  Linux)
-    alias ls="ls $LS_FLAGS"
-    ;;
-  Darwin)
-    [[ ! -f /usr/local/bin/gls ]] && echo "coreutils missing. Please run 'brew install coreutils'"
-    alias ls="gls $LS_FLAGS"
-    ;;
-esac
-
+alias ls="ls --human-readable --color=auto --hyperlink=auto"
 alias ll="ls -al"
 alias l.="ls -d .*"
 
