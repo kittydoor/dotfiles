@@ -12,7 +12,10 @@
 # Vim
 **/.vim/bundle
 **/.vim/autoload/plug.vim
-**/.viminfo
+.viminfo
+
+# History files
+.zsh_history
 
 # symlink from ansible setup
 packages/common/.local/share/applications/mimeapps.list

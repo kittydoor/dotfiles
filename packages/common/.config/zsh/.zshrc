@@ -1,5 +1,13 @@
 autoload -Uz compinit
-compinit
+case "$(uname -s)" in
+  Linux)
+    compinit
+    ;;
+  Darwin)
+    # https://stackoverflow.com/questions/55020408/zsh-compinit-insecure-directories-error-message-on-mac-after-installing-homebr
+    compinit -i
+    ;;
+esac
 # Rehash always, so changes to files in PATH are reflected
 zstyle ':completion:*' rehash true
 # Define where to find .zshrc
@@ -50,7 +58,14 @@ if [[ -f $ZDOTDIR/local.zsh ]]; then
 fi
 
 # distro specific files
-DISTRO=$(cat /etc/*-release | grep "^NAME" | cut -d= -f2 | tr -d '"')
+case "$(uname -s)" in
+  Linux)
+    DISTRO=$(cat /etc/*-release | grep "^NAME" | cut -d= -f2 | tr -d '"')
+    ;;
+  Darwin)
+    DISTRO="Darwin"
+    ;;
+esac
 if [[ $DISTRO == 'Arch Linux' ]]; then
   source $ZDOTDIR/arch.zsh
 fi
@@ -70,4 +85,6 @@ for file in $ZDOTDIR/completion.d/*; do
   source $file || echo "$file failed, ignoring..."
 done
 
-source /home/kitty/.work/zsh
+if [[ -f "$HOME/.work/zsh" ]]; then 
+  source "$HOME/.work/zsh"
+fi
