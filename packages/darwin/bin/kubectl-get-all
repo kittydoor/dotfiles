@@ -1,1 +1,1 @@
-../common/bin/kubectl-get-all
+../../common/bin/kubectl-get-all

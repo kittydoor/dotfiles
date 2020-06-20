@@ -1,1 +1,1 @@
-../common/bin/groupman.py
+../../common/bin/groupman.py
