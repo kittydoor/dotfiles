@@ -1,0 +1,6 @@
+F1 # Opens sidebar (useful with Tree Style Tab)
+
+# about:config
+full-screen-api.ignore-widgets = true  # F11 hides toolbar, Super+f makes fullscreen, indepentently
+browser.in-content.dark-mode = true
+? ui.systemUsesDarkTheme = 1

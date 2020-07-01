@@ -1,0 +1,10 @@
+---
+# roles/system/main.yml
+
+# Automatic updates
+
+# Welcome message
+
+# SSH config
+
+# Wireguard (merge with setup/ansible?)

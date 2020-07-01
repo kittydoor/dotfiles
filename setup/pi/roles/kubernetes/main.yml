@@ -1,0 +1,14 @@
+---
+# roles/kubernetes/main.yml
+
+# install k3s
+
+# mkdir .kube chmod 700
+
+# ln -s /etc/rancher/k3s/k3s.yml ~/.kube/config
+
+# fetch k3s.yml to local machine ~/.kube/config_pi4
+
+# sed 127.0.0.1 nyaa-pi4.lan
+
+# sed default pi4

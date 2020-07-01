@@ -1,0 +1,9 @@
+sdcard: /dev/mmncblk1 ??
+# https://ubuntu.com/download/raspberry-pi
+# xzcat ~/Downloads/<image-file.xz> | sudo dd of=<drive address> bs=32M
+image: http://cdimage.ubuntu.com/releases/19.10.1/release/ubuntu-19.10.1-preinstalled-server-arm64+raspi3.img.xz
+
+user-data:
+  # file contents go here
+
+

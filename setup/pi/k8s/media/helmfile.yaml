@@ -1,0 +1,57 @@
+repositories:
+- name: billimek
+  url: https://billimek.com/billimek-charts/
+# - name: stable
+#   url: https://kubernetes-charts.storage.googleapis.com/
+
+releases:
+- name: radarr
+  namespace: media
+  chart: billimek/radarr
+  values:
+  - image:
+      # repository: linuxserver/radarr
+      tag: 0.2.0.1474-ls1
+  - ingress:
+      enabled: true
+      hosts:
+      - nyaa-pi4.lan
+      path: /radarr
+      # # Configure in radarr base url instead
+      # annotations:
+      #   traefik.ingress.kubernetes.io/rewrite-target: /
+  - timezone: "Europe/Amsterdam"
+  - puid: 1000
+  - guid: 1000
+  - persistence:
+      config:
+        enabled: true
+      downloads:
+        enabled: false
+      movies:
+        enabled: false
+- name: sonarr
+  namespace: media
+  chart: billimek/sonarr
+  values:
+  - image:
+      # repository: linuxserver/radarr
+      tag: 2.0.0.5337-ls96
+  - ingress:
+      enabled: true
+      hosts:
+      - nyaa-pi4.lan
+      path: /sonarr
+      # # Configure in sonarr base url instead
+      # annotations:
+      #   traefik.ingress.kubernetes.io/rewrite-target: /
+  - timezone: "Europe/Amsterdam"
+  - puid: 1000
+  - guid: 1000
+  - persistence:
+      config:
+        enabled: true
+      downloads:
+        enabled: false
+      tv:
+        enabled: false

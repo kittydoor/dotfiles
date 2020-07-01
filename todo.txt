@@ -1,4 +1,11 @@
+# vim:ts=2:sw=2:et
+
 Common
+* setup config command for dotfiles, session autologin swap, and other tasks and notes
+* change hostnames from nyaa-<name> to <name>.nyaa.kitty.sh ?
+* setup hosts file (or dns?) for <name>.wg
+* make ansible and openwrt config both run on git commits, and also runnable manually via simple command (make?)
+* investigate https://github.com/billimek/dotfiles
 * hibernate
   * investigate suspend, hibernate, hybrid-sleep, suspend-then-hibernate across systems
 * volume
@@ -100,5 +107,29 @@ Nyaa-Gate
   * Figure out why systemd-resolved or static dns causes issues with uni wifi
 
 Nyaa-Link
+* Wireguard setup
 
-# vim:ts=2:sw=2:et
+Nyaa-Pi4
+* Userland utilities (investigate k3s-gitops-arm)
+* Ansible complete setup
+* cloud-init ensure uid/guid 1000
+* complete k8s media helmfile
+* integrate wireguard vpn
+* investigate using nfs (and how to secure it, perhaps via only wireguard?)
+* investigate how to have specific pods use a vpn for external traffic
+
+Uncategories
+* Document btrfs and remote unlock setup with systemd-tool
+* nyaa-core to Arch Linux
+* traefik-internal traefik-external ingress providers
+* nyaa-wire wireguard vpn setup
+* samba in a container instead of os level
+* nyaa-core network bridge
+* grafana on k8s
+* pihole
+* mosquitto debug restarts (ha restart, mq restart, tasmota restart)
+* get smart switches for lightbulb
+* setup homeassistant google home
+* kitty.sh terraform ansible automation
+* CI/CD containers helm for k8s
+* Kubernetes monitor for outdated container images

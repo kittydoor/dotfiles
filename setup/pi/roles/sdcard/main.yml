@@ -1,0 +1,12 @@
+---
+# roles/sdcard/main.yml
+
+# fetch image
+
+# make sure unmounted
+
+# dd image
+
+# cgroups_enable=memory nobtcmd.txt
+
+# user-data for cloud-init
