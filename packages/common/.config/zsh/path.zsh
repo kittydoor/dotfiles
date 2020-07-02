@@ -16,9 +16,10 @@ function addpath {
 }
 
 # gnu coreutils on Darwin
-[[ ! -d /usr/local/opt/coreutils/libexec/gnubin ]] && echo "coreutils missing. Please run 'brew install coreutils'"
-prefixpath "/usr/local/opt/coreutils/libexec/gnubin"
-
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  [[ ! -d /usr/local/opt/coreutils/libexec/gnubin ]] && echo "coreutils missing. Please run 'brew install coreutils'"
+  prefixpath "/usr/local/opt/coreutils/libexec/gnubin"
+fi
 
 # zsh scripts
 addpath "$HOME/.config/zsh/bin"

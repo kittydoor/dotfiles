@@ -5,7 +5,7 @@ genpass () {
 
 ranger() {
   if [[ -z "${RANGER_LEVEL}" ]]; then
-    /usr/bin/ranger "$@"
+    command ranger "$@"
   else
     exit
   fi

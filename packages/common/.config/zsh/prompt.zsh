@@ -11,5 +11,10 @@ promptinit
 # %U <- start underline
 # %m <- hostname up to the first .
 # %u <- stop underline
+
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  HOST=nyaa-work
+fi
+
 PROMPT="%F{red}%B%(?..[%?] )%b%f%F{yellow}%n%f%F{green}@%f%U%F{blue}%m%f%u%F{green}>%f "
 RPROMPT="%F{green}%~%f"
