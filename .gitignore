@@ -1,7 +1,7 @@
 # Swap and Dump and Cache
 *~
 *.swp
-.zcompdump
+.zcompdump*
 .mypy_cache
 
 # SSH
