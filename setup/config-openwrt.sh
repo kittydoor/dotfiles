@@ -364,13 +364,14 @@ dhcp_config() {
   done
 
   # Create new lease rules
-  uci_dhcp_lease node nyaa-node 'A8:A1:59:0B:CB:EA' '192.168.1.2'
-  uci_dhcp_lease pi4a nyaa-pi4a 'DC:A6:32:51:64:ED' '192.168.1.3'
-  uci_dhcp_lease pi4b nyaa-pi4b 'DC:A6:32:4B:FB:FA' '192.168.1.4'
-  uci_dhcp_lease core nyaa-core '4C:CC:6A:01:F4:B5' '192.168.1.5'
-  uci_dhcp_lease poco nyaa-poco 'A4:50:46:6A:8E:31' '192.168.1.6'
-  uci_dhcp_lease gate nyaa-gate '9C:B6:D0:F1:18:2B' '192.168.1.7'
-  # uci_dhcp_leases work nyaa-work '???' '192.168.1.8'
+  uci_dhcp_lease gear nyaa-gear 'BC:A5:11:BE:C0:A9' '192.168.1.2'
+  uci_dhcp_lease node nyaa-node 'A8:A1:59:0B:CB:EA' '192.168.1.11'
+  uci_dhcp_lease pi4a nyaa-pi4a 'DC:A6:32:51:64:ED' '192.168.1.12'
+  uci_dhcp_lease pi4b nyaa-pi4b 'DC:A6:32:4B:FB:FA' '192.168.1.13'
+  uci_dhcp_lease core nyaa-core '4C:CC:6A:01:F4:B5' '192.168.1.21'
+  uci_dhcp_lease poco nyaa-poco 'A4:50:46:6A:8E:31' '192.168.1.22'
+  uci_dhcp_lease gate nyaa-gate '9C:B6:D0:F1:18:2B' '192.168.1.23'
+  uci_dhcp_lease work nyaa-work 'A4:83:E7:4E:B4:1E' '192.168.1.24'
 
   # Create smart device lease rules
   uci_dhcp_lease plug_alpha plug_alpha     '24:62:AB:39:A5:CD' '192.168.3.11'
