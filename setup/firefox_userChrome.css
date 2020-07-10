@@ -1,10 +1,9 @@
 /* about:config
- * browser.tabs.drawInTitlebar false
+ * browser.tabs.drawInTitlebar true  # false would be easier than the complicated logic below, but it breaks dark theme
  * toolkit.legacyUserProfileCustomizations.stylesheets true
  */
 
-/* Hide main tabs toolbar */
-#TabsToolbar { visibility: collapse; }
+/* https://github.com/MrOtherGuy/firefox-csshacks/blob/master/chrome/hide_tabs_toolbar_osx.css */
 
 /* Hide splitter, when using Tree Style Tab. */
 #sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] + #sidebar-splitter {
@@ -14,4 +13,39 @@
 /* Hide sidebar header, when using Tree Style Tab. */
 #sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] #sidebar-header {
 	visibility: collapse;
+}
+
+:root{ --uc-toolbar-height: 32px; }
+:root:not([uidensity="compact"]){ --uc-toolbar-height: 34px }
+
+#TabsToolbar > *{ visibility: collapse !important }
+
+#TabsToolbar > .titlebar-buttonbox-container{
+  visibility: visible !important;
+  height:var(--uc-toolbar-height) !important;
+}
+
+#nav-bar{
+  margin-top: calc(0px - var(--uc-toolbar-height));
+}
+ :root[inFullscreen] #navigator-toolbox{ margin-top: 11px }
+
+:root[tabsintitlebar]{
+  --uc-window-control-width: 48px; /* Space reserved for window controls */
+  --uc-window-drag-space-width: 24px; /* Extra space reserved on both sides of the nav-bar to be able to drag the window */
+}
+
+#nav-bar{
+  border-inline: var(--uc-window-drag-space-width,0px) solid var(--toolbar-bgcolor);
+  border-inline-style: solid !important;
+  border-right-width: calc(var(--uc-window-control-width,0px) + var(--uc-window-drag-space-width,0px));
+}
+
+/* Use this pref to check Mac OS where window controls are on left */
+/* This pref defaults to true on Mac and doesn't actually do anything on other platforms. So if your system has window controls on LEFT side you can set the pref to true */
+@supports -moz-bool-pref("layout.css.osx-font-smoothing.enabled"){
+  :root{ --uc-window-control-width: 72px; }
+  :root[tabsintitlebar="true"]:not([inFullscreen]) #nav-bar{
+    border-inline-width: calc(var(--uc-window-control-width,0px) + var(--uc-window-drag-space-width,0px)) var(--uc-window-drag-space-width,0px)
+  }
 }
