@@ -1,0 +1,17 @@
+/* about:config
+ * browser.tabs.drawInTitlebar false
+ * toolkit.legacyUserProfileCustomizations.stylesheets true
+ */
+
+/* Hide main tabs toolbar */
+#TabsToolbar { visibility: collapse; }
+
+/* Hide splitter, when using Tree Style Tab. */
+#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] + #sidebar-splitter {
+	display: none !important;
+}
+
+/* Hide sidebar header, when using Tree Style Tab. */
+#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] #sidebar-header {
+	visibility: collapse;
+}
