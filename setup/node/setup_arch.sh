@@ -3,6 +3,10 @@
 set -euo pipefail
 set -x
 
+if (( $# != 3 )); then
+	echo "usage: $0 <host (e.g. core)> <disk (e.g. /dev/sda)>"
+fi
+
 if [[ -z "${PASSWORD:-}" ]]; then
 	read -s -p "Password: " PASSWORD
 	echo
@@ -16,46 +20,38 @@ else
 fi
 
 partition() {
-	if [[ -z ${1:-} ]]; then
-		return 1
-	fi
-
 	umount -qR /mnt || echo "Skipped unmount, as /mnt is not mounted"
-	swapoff /dev/nodelvm/swap || echo "Swap off skipped, as it is not on"
-	vgchange -a n nodelvm || echo "Disable vg skipped, as nodelvm is not on"
-	cryptsetup close /dev/mapper/node-crypt || echo "Crypt close skipped, as node-crypt is not open"
+	swapoff /dev/${NAME}lvm/swap || echo "Swap off skipped, as it is not on"
+	vgchange -a n ${NAME}lvm || echo "Disable vg skipped, as ${NAME}lvm is not on"
+	cryptsetup close /dev/mapper/${NAME}-crypt || echo "Crypt close skipped, as ${NAME}-crypt is not open"
 
-	sgdisk -og $1
-	sgdisk -n 1:0:+1G -c 1:node-boot -t 1:ef00 $1
-	# sgdisk -n 2:0:+1G -c 2:node-boot -t 2:8300 $1
-	sgdisk -n 2:0:0 -c 2:node-crypt -t 2:8308 $1
+	sgdisk -og ${DISK}
+	sgdisk -n 1:0:+1G -c 1:${NAME}-boot -t 1:ef00 ${DISK}
+	# sgdisk -n 2:0:+1G -c 2:${NAME}-boot -t 2:8300 ${DISK}
+	sgdisk -n 2:0:0 -c 2:${NAME}-crypt -t 2:8308 ${DISK}
 
-	mkfs.fat -F32 -n ESP $11
-	# mkfs.ext4 -L node-boot $12
+	mkfs.fat -F32 -n ESP ${DISK}1
+	# mkfs.ext4 -L ${NAME}-boot ${DISK}2
 
-	echo -n "$PASSWORD" | cryptsetup luksFormat --type luks2 $12
-	echo -n "$PASSWORD" | cryptsetup open --key-file - $12 node-crypt
-	pvcreate -y -ff /dev/mapper/node-crypt
-	vgcreate -y nodelvm /dev/mapper/node-crypt
-	lvcreate -L 8G nodelvm -n swap
-	lvcreate -l +100%FREE nodelvm -n root
+	echo -n "$PASSWORD" | cryptsetup luksFormat --type luks2 ${DISK}2
+	echo -n "$PASSWORD" | cryptsetup open --key-file - ${DISK}2 ${NAME}-crypt
+	pvcreate -y -ff /dev/mapper/${NAME}-crypt
+	vgcreate -y ${NAME}lvm /dev/mapper/${NAME}-crypt
+	lvcreate -L 8G ${NAME}lvm -n swap
+	lvcreate -l +100%FREE ${NAME}lvm -n root
 
-	mkswap -L node-swap /dev/nodelvm/swap
-	mkfs.btrfs -L node-root /dev/nodelvm/root
+	mkswap -L ${NAME}-swap /dev/${NAME}lvm/swap
+	mkfs.btrfs -L ${NAME}-root /dev/${NAME}lvm/root
 
-	mount /dev/nodelvm/root /mnt
+	mount /dev/${NAME}lvm/root /mnt
 	mkdir -p /mnt/boot
-	mount $11 /mnt/boot
+	mount ${DISK}1 /mnt/boot
 	# mkdir -p /mnt/boot
-	# mount $12 /mnt/boot
-	swapon /dev/nodelvm/swap
+	# mount ${DISK}2 /mnt/boot
+	swapon /dev/${NAME}lvm/swap
 }
 
 install_arch() {
-	if [[ -z ${1:-} ]]; then
-		return 1
-	fi
-
 	timedatectl set-ntp true
 
 	pacman -S --noconfirm --needed reflector
@@ -64,7 +60,7 @@ install_arch() {
 	pacstrap /mnt base linux linux-firmware btrfs-progs lvm2 vi sudo man-db man-pages texinfo openssh dhcpcd
 
 	cat <<-EOF > /mnt/etc/crypttab
-		node-crypt UUID=$(blkid -s UUID -o value $12)
+		${NAME}-crypt UUID=$(blkid -s UUID -o value ${DISK}2)
 		EOF
 
 	genfstab -U /mnt >> /mnt/etc/fstab
@@ -78,11 +74,11 @@ install_arch() {
 		sed -i 's/#en_US.UTF-8/en_US.UTF-8/' /etc/locale.gen
 		locale-gen
 		echo 'LANG=en_US.UTF-8' > /etc/locale.conf
-		echo 'nyaa-node' > /etc/hostname
+		echo 'nyaa-${NAME}' > /etc/hostname
 		cat <<-EOF2 > /etc/hosts
 			127.0.0.1	localhost
 			::1		localhost
-			127.0.1.1	nyaa-node.lan nyaa-node
+			127.0.1.1	nyaa-${NAME}.lan nyaa-${NAME}
 			EOF2
 		systemctl enable dhcpcd
 		systemctl enable sshd
@@ -111,10 +107,6 @@ setup_user() {
 }
 
 setup_bootloader() {
-	if [[ -z ${1:-} ]]; then
-		return 1
-	fi
-
 	arch-chroot /mnt bash -s <<-EOF
 		set -euo pipefail
 		set -x
@@ -124,12 +116,12 @@ setup_bootloader() {
 		sed -i 's/^HOOKS=.*/HOOKS=(base keyboard autodetect modconf block filesystems fsck systemd sd-lvm2 systemd-tool)/' /etc/mkinitcpio.conf
 
 		cat <<-EOF2 > /etc/mkinitcpio-systemd-tool/config/crypttab
-			node-crypt UUID=$(blkid -s UUID -o value $12) none luks
+			${NAME}-crypt UUID=$(blkid -s UUID -o value ${DISK}2) none luks
 			EOF2
 
 		cat <<-EOF2 > /etc/mkinitcpio-systemd-tool/config/fstab
-			/dev/nodelvm/root	/sysroot	auto	x-systemd.device-timeout=9999h 0 1
-			/dev/nodelvm/swap	none		swap	x-systemd.device-timeout=9999h 0 0
+			/dev/${NAME}lvm/root	/sysroot	auto	x-systemd.device-timeout=9999h 0 1
+			/dev/${NAME}lvm/swap	none		swap	x-systemd.device-timeout=9999h 0 0
 			EOF2
 
 		systemctl enable initrd-cryptsetup.path
@@ -159,7 +151,7 @@ setup_bootloader() {
 			linux	/vmlinuz-linux
 			initrd	/intel-ucode.img
 			initrd	/initramfs-linux.img
-			options	resume=/dev/nodelvm/swap
+			options	root=/dev/${NAME}lvm/root resume=/dev/${NAME}lvm/swap
 		EOF2
 
 		cat <<-EOF2 > /boot/loader/entries/fallback.conf
@@ -167,18 +159,16 @@ setup_bootloader() {
 			linux	/vmlinuz-linux
 			initrd	/intel-ucode.img
 			initrd	/initramfs-linux-fallback.img
-			options	resume=/dev/nodelvm/swap
+			options	root=/dev/${NAME}lvm/root resume=/dev/${NAME}lvm/swap
 		EOF2
 		EOF
-		# options	cryptdevice=LABEL root=/dev/nodelvm/root rw resume=/dev/nodelvm/swap
+		# options	cryptdevice=LABEL root=/dev/${NAME}lvm/root rw resume=/dev/${NAME}lvm/swap
 }
 
-TARGET_DISK=/dev/sdg
-if (( $# < 1 )); then
-	partition $TARGET_DISK
-	install_arch $TARGET_DISK
-	setup_user
-	setup_bootloader $TARGET_DISK
-else
-	$@ $TARGET_DISK
-fi
+NAME="$1"
+DISK="$2"
+
+partition
+install_arch
+setup_user
+setup_bootloader
