@@ -291,7 +291,7 @@ mode $mode_apps_control {
 }
 
 mode $mode_apps_system {
-  bindsym l exec i3-msg exit, mode "default"
+  bindsym l exec swaymsg exit, mode "default"
   bindsym s exec systemctl suspend, mode "default"
   bindsym r exec systemctl reboot, mode "default"
   bindsym Shift+s exec systemctl poweroff, mode "default"
