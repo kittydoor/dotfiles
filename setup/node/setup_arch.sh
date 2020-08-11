@@ -3,23 +3,89 @@
 set -euo pipefail
 set -x
 
-if (( $# != 3 )); then
-	echo "usage: $0 <host (e.g. core)> <disk (e.g. /dev/sda)>"
-fi
+# System setup steps
+# Partition
+# - Whole disk
+# - Percent/Size of disk size
+# - Existing ESP, use biggest empty space
+# - Existing ESP and System
+# Format system (always)
+# Format esp (optional)
+# Mount system, create /boot, and mount esp
+# Bootstrap system
+# Setup bootloader
+# Create user (ensure given shell installed)
+# Setup user ssh auth keys
 
-if [[ -z "${PASSWORD:-}" ]]; then
-	read -s -p "Password: " PASSWORD
-	echo
-fi
 
-if [[ "$EUID" -ne 0 ]]; then
-	echo "$PASSWORD" | sudo -S PASSWORD="$PASSWORD" "$0" "$@"
-	exit $?
-else
-	echo
-fi
+# Get short hostname
+# Get disks (part or nopart)
+# Server / Graphical
+# USB with key (optional)
+
+help_message() {
+	echo <<EOF
+Usage: $0 [MODE] [OPTION]...
+Arch Linux installer for x86 systems and the Raspberry Pi 4
+
+OPTIONs:
+  -t|--type [x86|pi4]		System type (Arch Linux for x86 and ALARM for pi4)
+  -d|--disk <disk>
+  -e|--esp <disk>		ESP Partition if not using whole disk mode
+  -u|--username <name>		Username for wheel user
+  -a|--authorized <file>	Authorized keys file
+
+MODEs:
+  clean		Clean disk and partition whole disk
+  none		Don't partition / use provided partitions
+  percent	NYI Clean diak and partition percentage of space
+  gb		NYI Clean disk and partition xGB of space
+  tb		NYI Clean disk and partition xTB of space
+  free		NYI Use largest continous empty block for system (must manually partition the ESP)
+
+
+EXAMPLEs:
+  $1 -m whole -d /dev/sda -t x86 -u kitty
+EOF
+
+}
+
+POSITIONAL=()
+while [[ $# -gt 0 ]]; do
+	key="$1"
+	case "$key" in
+		-h|--help)
+			help_message
+			exit
+			;;
+		-d|--disk)
+			DISK="$2"
+			shift
+			shift
+			;;
+		-e|--esp)
+			ESP="$2"
+			shift
+			shift
+			;;
+		--default)
+			DEFAULT=YES
+			shift
+			;;
+		*)
+			POSITIONAL+=("$1")
+			shift
+			;;
+	esac
+done
+
+set -- "${POSITIONAL[@]}"
+
+	
 
 partition() {
+	partition_esp /dev/sda1
+	partition_system /dev/sda2 
 	umount -qR /mnt || echo "Skipped unmount, as /mnt is not mounted"
 	swapoff /dev/${NAME}lvm/swap || echo "Swap off skipped, as it is not on"
 	vgchange -a n ${NAME}lvm || echo "Disable vg skipped, as ${NAME}lvm is not on"
@@ -50,6 +116,61 @@ partition() {
 	# mount ${DISK}2 /mnt/boot
 	swapon /dev/${NAME}lvm/swap
 }
+
+partition() {
+
+}
+
+format_system() {
+	DISK="${1:?}"
+	LABEL="${2:?}"
+
+	umount -q "$DISK"
+	umount -qR /mnt
+
+}
+
+format_esp() {
+	DISK="${1:?}"
+	LABEL="${2:?}"
+
+	umount -q "$DISK"
+	umount -qR /mnt/boot
+
+
+
+}
+
+setup_ssh_keys() {
+
+}
+
+setup_graphical_env() {
+	# install and enable display manager
+	# plymouth?
+	;
+}
+
+usb_unlock_key() {
+	# If usb given, add to luks keys and crypttab
+	;
+}
+
+if (( $# != 3 )); then
+	echo "usage: $0 <host (e.g. core)> <disk (e.g. /dev/sda)>"
+fi
+
+if [[ -z "${PASSWORD:-}" ]]; then
+	read -s -p "Password: " PASSWORD
+	echo
+fi
+
+if [[ "$EUID" -ne 0 ]]; then
+	echo "$PASSWORD" | sudo -S PASSWORD="$PASSWORD" "$0" "$@"
+	exit $?
+else
+	echo
+fi
 
 install_arch() {
 	timedatectl set-ntp true
@@ -104,6 +225,7 @@ setup_user() {
 		echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINgiVkcrXrIJk2T6tsQjGvF4YcCNbcef8eaSFPInnPSQ kitty@nyaa-core" > /root/.ssh/authorized_keys
 		chmod 600 /root/.ssh/authorized_keys
 		EOF
+	#TODO: Add keys from dotfiles repo
 }
 
 setup_bootloader() {
@@ -168,7 +290,17 @@ setup_bootloader() {
 NAME="$1"
 DISK="$2"
 
-partition
+# Clear /mnt
+umount -qR /mnt
+
+# Partition or mount system
+
+# Partition or mount esp/boot
+
+# Install arch system
 install_arch
-setup_user
 setup_bootloader
+
+# Setup system
+setup_user kitty
+[[ -z "${GRAPHICAL:-}" ]] || setup_graphical_env
