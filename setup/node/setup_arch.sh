@@ -255,7 +255,7 @@ setup_bootloader() {
 		mkinitcpio -P
 
 		# TODO: Ensure microcode loading works
-		pacman -S --noconfirm --needed intel-ucode
+		pacman -S --noconfirm --needed amd-ucode intel-ucode
 
 		bootctl --path=/boot install
 
@@ -271,6 +271,7 @@ setup_bootloader() {
 		cat <<-EOF2 > /boot/loader/entries/arch.conf
 			title	Arch Linux
 			linux	/vmlinuz-linux
+			initrd	/amd-ucode.img
 			initrd	/intel-ucode.img
 			initrd	/initramfs-linux.img
 			options	root=/dev/${NAME}lvm/root resume=/dev/${NAME}lvm/swap
@@ -279,12 +280,19 @@ setup_bootloader() {
 		cat <<-EOF2 > /boot/loader/entries/fallback.conf
 			title	Arch Linux (Fallback)
 			linux	/vmlinuz-linux
+			initrd	/amd-ucode.img
 			initrd	/intel-ucode.img
 			initrd	/initramfs-linux-fallback.img
 			options	root=/dev/${NAME}lvm/root resume=/dev/${NAME}lvm/swap
 		EOF2
 		EOF
 		# options	cryptdevice=LABEL root=/dev/${NAME}lvm/root rw resume=/dev/${NAME}lvm/swap
+}
+
+system_services() {
+	arch-chroot /mnt bash -s <<-EOF
+		systemctl enable systemd-timesyncd
+		EOF
 }
 
 NAME="$1"
