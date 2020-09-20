@@ -1,55 +1,50 @@
 #!/bin/bash
 # vim: ts=4 sts=4 sw=4 noet
 set -euo pipefail
-set -x
+if [[ ${DEBUG:-} = 1 ]]; then
+	set -x
+fi
 
-# System setup steps
-# Partition
-# - Whole disk
-# - Percent/Size of disk size
-# - Existing ESP, use biggest empty space
-# - Existing ESP and System
-# Format system (always)
-# Format esp (optional)
-# Mount system, create /boot, and mount esp
-# Bootstrap system
-# Setup bootloader
-# Create user (ensure given shell installed)
-# Setup user ssh auth keys
+if [[ -z "${PASSWORD:-}" ]]; then
+	read -s -p "Password: " PASSWORD
+	echo
+fi
 
+if [[ "$EUID" -ne 0 ]]; then
+	echo "$PASSWORD" | sudo -S "$0" "$@"
+	exit $?
+else
+	echo
+fi
 
-# Get short hostname
-# Get disks (part or nopart)
 # Server / Graphical
 # USB with key (optional)
 
 help_message() {
-	echo <<EOF
-Usage: $0 [MODE] [OPTION]...
+	cat <<EOF
+Usage: $(basename "$0") [options] <command>
 Arch Linux installer for x86 systems and the Raspberry Pi 4
 
-OPTIONs:
-  -t|--type [x86|pi4]		System type (Arch Linux for x86 and ALARM for pi4)
-  -d|--disk <disk>
-  -e|--esp <disk>		ESP Partition if not using whole disk mode
-  -u|--username <name>		Username for wheel user
-  -a|--authorized <file>	Authorized keys file
+Commands:
+  full <disk>                 wipe and use entire disk
+  existing <esp> <system>     use provided partitions
+  free <esp> <disk>           use existing esp and largest empty block
+  pi4 <sdcard> [<ssid>]       provision sdcard with ALARM
 
-MODEs:
-  clean		Clean disk and partition whole disk
-  none		Don't partition / use provided partitions
-  percent	NYI Clean diak and partition percentage of space
-  gb		NYI Clean disk and partition xGB of space
-  tb		NYI Clean disk and partition xTB of space
-  free		NYI Use largest continous empty block for system (must manually partition the ESP)
-
-
-EXAMPLEs:
-  $1 -m whole -d /dev/sda -t x86 -u kitty
+Options:
+  -u, --username <name>       name for wheel user (default: archie)
+  -a, --authorized <file>     default '.ssh/authorized_keys' (set empty to skip)
+  -t, --type <type>           type is 'desktop' or 'server' (default)
 EOF
 
 }
 
+# Defaults
+USERNAME='archie'
+TYPE='server'
+AUTHORIZED_KEYS="$HOME/.ssh/authorized_keys"
+
+# Argument parsing
 POSITIONAL=()
 while [[ $# -gt 0 ]]; do
 	key="$1"
@@ -58,18 +53,20 @@ while [[ $# -gt 0 ]]; do
 			help_message
 			exit
 			;;
-		-d|--disk)
-			DISK="$2"
+		-u|--username)
+			USERNAME="${2:?$1 value not provided}"
+			USERPASS="$(ask_pass 'User Password: ')"
 			shift
 			shift
 			;;
-		-e|--esp)
-			ESP="$2"
+		-a|--authorized-keys)
+			AUTHORIZED_KEYS="${2:?$1 value not provided}"
 			shift
 			shift
 			;;
-		--default)
-			DEFAULT=YES
+		-t|--type)
+			TYPE="${2:?$1 value not provided}"
+			shift
 			shift
 			;;
 		*)
@@ -79,47 +76,125 @@ while [[ $# -gt 0 ]]; do
 	esac
 done
 
+# Reset unrecognized arguments as positional
 set -- "${POSITIONAL[@]}"
 
-	
-
-partition() {
-	partition_esp /dev/sda1
-	partition_system /dev/sda2 
-	umount -qR /mnt || echo "Skipped unmount, as /mnt is not mounted"
-	swapoff /dev/${NAME}lvm/swap || echo "Swap off skipped, as it is not on"
-	vgchange -a n ${NAME}lvm || echo "Disable vg skipped, as ${NAME}lvm is not on"
-	cryptsetup close /dev/mapper/${NAME}-crypt || echo "Crypt close skipped, as ${NAME}-crypt is not open"
-
-	sgdisk -og ${DISK}
-	sgdisk -n 1:0:+1G -c 1:${NAME}-boot -t 1:ef00 ${DISK}
-	# sgdisk -n 2:0:+1G -c 2:${NAME}-boot -t 2:8300 ${DISK}
-	sgdisk -n 2:0:0 -c 2:${NAME}-crypt -t 2:8308 ${DISK}
-
-	mkfs.fat -F32 -n ESP ${DISK}1
-	# mkfs.ext4 -L ${NAME}-boot ${DISK}2
-
-	echo -n "$PASSWORD" | cryptsetup luksFormat --type luks2 ${DISK}2
-	echo -n "$PASSWORD" | cryptsetup open --key-file - ${DISK}2 ${NAME}-crypt
-	pvcreate -y -ff /dev/mapper/${NAME}-crypt
-	vgcreate -y ${NAME}lvm /dev/mapper/${NAME}-crypt
-	lvcreate -L 8G ${NAME}lvm -n swap
-	lvcreate -l +100%FREE ${NAME}lvm -n root
-
-	mkswap -L ${NAME}-swap /dev/${NAME}lvm/swap
-	mkfs.btrfs -L ${NAME}-root /dev/${NAME}lvm/root
-
-	mount /dev/${NAME}lvm/root /mnt
-	mkdir -p /mnt/boot
-	mount ${DISK}1 /mnt/boot
-	# mkdir -p /mnt/boot
-	# mount ${DISK}2 /mnt/boot
-	swapon /dev/${NAME}lvm/swap
+# ask password
+ask_pass() {
+	local PASSPROMPT="${1-Password: }"
+	read -r -s -p "$PASSPROMPT" PASSWORD && echo
+	echo "$PASSWORD"
 }
 
-partition() {
+# setup wifi configuration for systemd-networkd
+# Requires: WIFI_SSID and WIFI_PASS
+setup_wifi() {
+	# Setup networkd dhcp for wifi
+	cat <<EOF > root/etc/systemd/network/25-wireless.network
+[Match]
+Name=wlp*
 
+[Network]
+DHCP=yes
+EOF
+	# Setup wpa_supplicant conf
+	cat <<EOF > root/etc/wpa_supplicant/wpa_supplicant-default.conf
+ap_scan=1
+country=NL
+network={
+    ssid="$1"
+	psk="$2"
 }
+EOF
+	# Enable wpa_supplicant for default
+	ln -s /usr/lib/systemd/system/wpa_supplicant@.service root/etc/systemd/system/multi-user.target.wants/dhcpcd@default.service
+}
+
+# make sure disk provided is correct
+confirm_disk() {
+	if [[ -z ${1:-} ]]; then
+		# make sure disk was given as an argument
+		echo "No device path given..."
+		exit 1
+	elif [[ ! -b $1 ]]; then
+		# check if provided path is a block device file
+		echo "$1 is not a block device..."
+		exit 1
+	else
+		# confirm with user
+		echo "Using device $1"
+		lsblk "$1"
+		read -r -p "Are you sure? [y\N] " response
+		if [[ ! $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
+			exit
+		fi
+	fi
+}
+
+pi4_install() {
+	local DISK="${1:?no device given}"
+
+	# create 100M boot part, and remaining space as root part
+	sfdisk "${DISK}" <<EOF
+,100M,c
+;
+EOF
+	# format boot
+	mkfs.vfat "${DISK}p1"
+	# format root, rewrite even if existing
+	echo y | mkfs.ext4 "${DISK}p2"
+
+	# mount all
+	mkdir boot root
+	mount "${DISK}p1" boot
+	mount "${DISK}p2" root
+
+	# download alarm
+	curl -O -L -C - http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-4-latest.tar.gz
+	# TODO: Maybe use aarch64 instead
+	# using upstream recommended bsdtar
+	bsdtar -xpf ArchLinuxARM-rpi-4-latest.tar.gz -C root
+	sync
+
+	# move boot to correct partition
+	mv root/boot/* boot
+
+	# add ssh reminder message for pacman-key init and populate
+}
+
+# partition() {
+# 	partition_esp /dev/sda1
+# 	partition_system /dev/sda2
+# 	umount -qR /mnt || echo "Skipped unmount, as /mnt is not mounted"
+# 	swapoff /dev/${NAME}lvm/swap || echo "Swap off skipped, as it is not on"
+# 	vgchange -a n ${NAME}lvm || echo "Disable vg skipped, as ${NAME}lvm is not on"
+# 	cryptsetup close /dev/mapper/${NAME}-crypt || echo "Crypt close skipped, as ${NAME}-crypt is not open"
+#
+# 	sgdisk -og ${DISK}
+# 	sgdisk -n 1:0:+1G -c 1:${NAME}-boot -t 1:ef00 ${DISK}
+# 	# sgdisk -n 2:0:+1G -c 2:${NAME}-boot -t 2:8300 ${DISK}
+# 	sgdisk -n 2:0:0 -c 2:${NAME}-crypt -t 2:8308 ${DISK}
+#
+# 	mkfs.fat -F32 -n ESP ${DISK}1
+# 	# mkfs.ext4 -L ${NAME}-boot ${DISK}2
+#
+# 	echo -n "$PASSWORD" | cryptsetup luksFormat --type luks2 ${DISK}2
+# 	echo -n "$PASSWORD" | cryptsetup open --key-file - ${DISK}2 ${NAME}-crypt
+# 	pvcreate -y -ff /dev/mapper/${NAME}-crypt
+# 	vgcreate -y ${NAME}lvm /dev/mapper/${NAME}-crypt
+# 	lvcreate -L 8G ${NAME}lvm -n swap
+# 	lvcreate -l +100%FREE ${NAME}lvm -n root
+#
+# 	mkswap -L ${NAME}-swap /dev/${NAME}lvm/swap
+# 	mkfs.btrfs -L ${NAME}-root /dev/${NAME}lvm/root
+#
+# 	mount /dev/${NAME}lvm/root /mnt
+# 	mkdir -p /mnt/boot
+# 	mount ${DISK}1 /mnt/boot
+# 	# mkdir -p /mnt/boot
+# 	# mount ${DISK}2 /mnt/boot
+# 	swapon /dev/${NAME}lvm/swap
+# }
 
 format_system() {
 	DISK="${1:?}"
@@ -142,35 +217,19 @@ format_esp() {
 }
 
 setup_ssh_keys() {
-
+	:
 }
 
 setup_graphical_env() {
 	# install and enable display manager
 	# plymouth?
-	;
+	:
 }
 
 usb_unlock_key() {
 	# If usb given, add to luks keys and crypttab
-	;
+	:
 }
-
-if (( $# != 3 )); then
-	echo "usage: $0 <host (e.g. core)> <disk (e.g. /dev/sda)>"
-fi
-
-if [[ -z "${PASSWORD:-}" ]]; then
-	read -s -p "Password: " PASSWORD
-	echo
-fi
-
-if [[ "$EUID" -ne 0 ]]; then
-	echo "$PASSWORD" | sudo -S PASSWORD="$PASSWORD" "$0" "$@"
-	exit $?
-else
-	echo
-fi
 
 install_arch() {
 	timedatectl set-ntp true
@@ -211,7 +270,7 @@ setup_user() {
 		set -euo pipefail
 		set -x
 
-		echo "root:${PASSWORD}" | chpasswd
+		echo "root:${USERPASS}" | chpasswd
 		mkdir -p /root/.ssh
 		chmod 700 /root/.ssh
 		echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINgiVkcrXrIJk2T6tsQjGvF4YcCNbcef8eaSFPInnPSQ kitty@nyaa-core" > /root/.ssh/authorized_keys
@@ -219,7 +278,7 @@ setup_user() {
 
 		pacman -S --noconfirm --needed zsh
 		useradd -m -G wheel -s /bin/zsh kitty
-		echo "kitty:${PASSWORD}" | chpasswd
+		echo "kitty:${USERPASS}" | chpasswd
 		mkdir -p /root/.ssh
 		chmod 700 /root/.ssh
 		echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINgiVkcrXrIJk2T6tsQjGvF4YcCNbcef8eaSFPInnPSQ kitty@nyaa-core" > /root/.ssh/authorized_keys
@@ -295,20 +354,48 @@ system_services() {
 		EOF
 }
 
-NAME="$1"
-DISK="$2"
-
-# Clear /mnt
-umount -qR /mnt
-
-# Partition or mount system
-
-# Partition or mount esp/boot
-
-# Install arch system
-install_arch
-setup_bootloader
-
-# Setup system
-setup_user kitty
-[[ -z "${GRAPHICAL:-}" ]] || setup_graphical_env
+# Command switching
+case "${1:?no command provided}" in
+	full)
+		DISK="${2:?disk not provided}"
+		# clear disk
+		# create esp
+		# create system remaining
+		echo NYI
+		exit 1
+		;;
+	existing)
+		ESP="${2:?esp not provided}"
+		SYSTEM="${3:?system not provided}"
+		# set esp
+		# set system (and fix part type)
+		echo NYI
+		exit 1
+		;;
+	free)
+		ESP="${2:?esp not provided}"
+		DISK="${3:?Disk not provided}"
+		# set esp
+		# use largest empty space as system
+		echo NYI
+		exit 1
+		;;
+	pi4)
+		MODE=pi4
+		SDCARD="${2:?sdcard not provided}"
+		WIFI_SSID="${3:-}"
+		if [[ -n $WIFI_SSID ]]; then
+			WIFI_PASS="$(ask_pass 'WiFi Passphrase: ')"
+		fi
+		confirm_disk "$SDCARD"
+		WORKDIR="$(mktemp -d)"
+		pushd $WORKDIR
+		pi4_install "$SDCARD"
+		if [[ -n "WIFI_SSID" ]]; then
+			setup_wifi "$WIFI_SSID" "$WIFI_PASS"
+		fi
+		umount -R "$SDCARD"
+		rm -rf "$WORKDIR"
+		exit
+		;;
+esac
