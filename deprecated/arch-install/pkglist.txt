@@ -4,13 +4,38 @@
 
 # General
 base
+linux
+linux-firmware
+btrfs-progs
+cryptsetup
+lvm2
+vi
 sudo
+man-db
+man-pages
+texinfo
+openssh
+dhcpcd
 zsh
+
+# systemd-tool
+mkinitcpio-systemd-tool
+busybox
+tinyssh
+tinyssh-convert
+mc
+
+# Mirrors
+reflector
+
+# CPU Microcode
+amd-ucode
+intel-ucode
+
+# Extra
 dialog
 stow
 wpa_supplicant
-openssh
-intel-ucode
 
 # Arch Linux Utils
 pkgfile
