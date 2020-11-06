@@ -13,6 +13,8 @@ Plug 'junegunn/vim-plug'  " self register
 Plug 'mattn/emmet-vim'  " HTML generation
 Plug 'tpope/vim-surround'  " Surrounding elements (, {, <, '...
 
+Plug 'tpope/vim-abolish'  " case preserving utilities
+
 " Language Server Protocol
 Plug 'w0rp/ale'  " Async linting and LSP
 
