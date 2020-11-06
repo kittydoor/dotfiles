@@ -8,7 +8,7 @@ endif
 call plug#begin('~/.vim/bundle')
 Plug 'junegunn/vim-plug'  " self register
 
-Plug 'altercation/vim-colors-solarized'  " Color Scheme
+" Plug 'altercation/vim-colors-solarized'  " Color Scheme
 
 Plug 'mattn/emmet-vim'  " HTML generation
 Plug 'tpope/vim-surround'  " Surrounding elements (, {, <, '...

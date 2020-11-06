@@ -1,3 +1,4 @@
 " === COLORS ===
-set background=dark
-colorscheme solarized  " Installed in plugins.vim
+" set background=dark
+" colorscheme solarized  " Installed in plugins.vim
+colorscheme elflord
