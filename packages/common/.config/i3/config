@@ -178,13 +178,16 @@ mode $mode_resize_precise {
 }
 
 # external displays
-set $mode_display "display:  [s]ingle  [d]ouble"
+set $mode_display "display:  [s]ingle  [d]ouble [a]lternate"
 mode $mode_display {
   # activate secondary display
   bindsym d exec --no-startup-id ~/.config/i3/multihead.sh dual, mode "default"
 
   # deactivate secondary display
   bindsym s exec --no-startup-id ~/.config/i3/multihead.sh single, mode "default"
+
+  # use only secondary display
+  bindsym a exec --no-startup-id ~/.config/i3/multihead.sh alternate, mode "default"
 
   # back to normal: Enter or Escape or $mod+r
   bindsym Return mode "default"
