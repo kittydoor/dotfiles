@@ -1,6 +1,10 @@
 #!/bin/bash
 set -euo pipefail
 
+if [[ ${DEBUG:-} == "1" ]]; then
+  set -x
+fi
+
 help_message() {
   echo 'Volume control helper script'
   echo
@@ -87,7 +91,7 @@ mute_vol() {
 current_volume() {
   # Note: If this stops working, such as perhaps with multiple sinks, check:
   # https://unix.stackexchange.com/questions/132230/read-out-pulseaudio-volume-from-commandline-i-want-pactl-get-sink-volume
-  VOLUME_STR=$(pactl list sinks | awk '/Volume: / { print $5 }' | head -n 1)
+  VOLUME_STR=$(pactl list sinks | grep -A15 RUNNING | awk '/\t+Volume:/ { print $5 }')
   echo "${VOLUME_STR%\%}"
 }
 
