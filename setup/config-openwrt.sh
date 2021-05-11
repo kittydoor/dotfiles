@@ -420,11 +420,11 @@ firewall_config() {
   done
 
   port_forward wireguard_pi4a 51823 51823 192.168.1.3
-  port_forward wireguard_pi4b 51823 51823 192.168.1.4
+  port_forward wireguard_pi4b 51824 51824 192.168.1.4
   port_forward wireguard_core 51825 51825 192.168.1.5
 
   port_forward ssh_core tcp 2222 22 192.168.1.5
-  port_forward minecraft_core 25565 25565 192.168.1.5
+  # port_forward minecraft_core 25565 25565 192.168.1.5
 
   uci commit firewall
 }
