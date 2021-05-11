@@ -1,6 +1,7 @@
 # vim:ts=2:sw=2:et
 
 Common
+* Add caps esc swap to some config: dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:swapescape']" 
 * setup config command for dotfiles, session autologin swap, and other tasks and notes
 * change hostnames from nyaa-<name> to <name>.nyaa.kitty.sh ?
 * setup hosts file (or dns?) for <name>.wg
