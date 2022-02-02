@@ -1,3 +1,5 @@
+[[ "$(uname -s)" == Darwin ]] && export LC_ALL=en_US.UTF-8
+
 autoload -Uz compinit
 case "$(uname -s)" in
   Linux)

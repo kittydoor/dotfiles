@@ -3,6 +3,9 @@ chsh -s /bin/zsh
 brew cask install iterm2 gimp 
 brew install tmux ranger coreutils gnu-sed vim
 
+# volume mixer
+brew cask install background-music
+
 # Add gnubin dir to path
 
 # xrandr

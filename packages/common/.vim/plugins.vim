@@ -25,6 +25,8 @@ Plug 'scrooloose/nerdtree'  " File Navigation
 Plug 'pearofducks/ansible-vim'  " Ansible yaml, hosts, and .j2 files
 " Javascript
 Plug 'pangloss/vim-javascript'  " React and Javascript
+" HCL - Hashicorp Configuration Language
+Plug 'jvirtanen/vim-hcl'  " Syntax for .hcl .nomad .tf .tfvars files
 
 " === Unused ===
 " Plug 'Vimjas/vim-python-pep8-indent'  " TODO: is this important?

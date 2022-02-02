@@ -95,7 +95,7 @@ endif
 
 set number relativenumber  " show relative numbers, except for current line
 
-set spell  " TODO: Inspect this more
+set nospell  " TODO: Inspect this more
 
 " set ffs=unix,dos,mac  " TODO: Is this useful?
 

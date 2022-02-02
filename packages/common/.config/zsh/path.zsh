@@ -15,10 +15,25 @@ function addpath {
   fi
 }
 
-# gnu coreutils on Darwin
+# Darwin/MacOS Specific Paths
 if [[ "$(uname -s)" == "Darwin" ]]; then
+  # gnu coreutils on Darwin
   [[ ! -d /usr/local/opt/coreutils/libexec/gnubin ]] && echo "coreutils missing. Please run 'brew install coreutils'"
   prefixpath "/usr/local/opt/coreutils/libexec/gnubin"
+
+  # python on Darwin
+  for dir in "$HOME"/Library/Python/*/bin; do
+    addpath "$dir"
+  done
+
+  # brew casks
+  if ! type brew > /dev/null; then
+    echo "brew missing. Please install brew from brew.sh"
+  else
+    # gcloud sdk
+    source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+    source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+  fi
 fi
 
 # zsh scripts
