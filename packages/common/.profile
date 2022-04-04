@@ -20,7 +20,7 @@ export PATH="$PATH:/home/$USER/bin"
 export LESS='-R'
 
 # Browser Configuration
-if [[ "$(uname -s)" != "Darwin" ]]; then
+if [ "$(uname -s)" != "Darwin" ]; then
   # Hardware video acceleration in Xorg
   export MOZ_X11_EGL=1
   # Wayland native Firefox (also required for hardware video acceleration)
@@ -34,5 +34,9 @@ if [[ "$(uname -s)" != "Darwin" ]]; then
   # h264ify extension -> block VP9 & AV1
   # Set browser for MacOS
 else
-  export BROWSER="/Applications/Firefox.app/Contents/MacOS/firefox"
+  # Python throws a hissyfit if BROWSER is set
+  # https://bugs.python.org/issue24955
+  # https://github.com/python/cpython/pull/27751
+  #export BROWSER="/Applications/Firefox.app/Contents/MacOS/firefox"
+  unset BROWSER
 fi
