@@ -31,8 +31,8 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
     echo "brew missing. Please install brew from brew.sh"
   else
     # gcloud sdk
-    source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-    source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+    # source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+    # source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
   fi
 fi
 
