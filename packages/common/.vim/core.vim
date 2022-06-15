@@ -5,6 +5,7 @@ filetype plugin indent on
 
 " Sensible Configuration (modified)
 """""""""""""""""""""""""""""""""""
+" TODO: Look into this more, nvim compatibility, defaults.vim etc.
 " https://github.com/tpope/vim-sensible
 set autoindent  " keep indent on newline
 set backspace=indent,eol,start  " sensible backspace
@@ -88,7 +89,7 @@ vnoremap <Down> <nop>
 map Q gq
 " TODO: Maybe also get last known cursor position and :DiffOrig
 
-" https://stackoverflow.com/questions/33380451/is-there-a-difference-between-syntax-on-and-syntax-enable-in-vimscript
+" https://stackoverflow.com/a/33380495
 if !exists("g:syntax_on")
     syntax enable
 endif
