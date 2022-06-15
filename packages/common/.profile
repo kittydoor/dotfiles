@@ -3,17 +3,24 @@
 # Java fix windows not resizing on window managers
 export _JAVA_AWT_WM_NONREPARENTING=1
 
+# https://unix.stackexchange.com/a/213369
+# TODO: Consider a function to prefer, in order, multiple options
+# by checking which commands are found on system
+# TODO: Consider an easy way to "redo" one time checks like this in
+# .profile or .zshenv and so on
 export TERMINAL='urxvt'
 export EDITOR='vim'
 export BROWSER='firefox'
+export PAGER='less'
 export FILE='ranger'
 export READER='zathura'
 
+# https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 
-# path (so that sway can find things in user bin)
+# Include user bin folder in path, only after other commands
 export PATH="$PATH:/home/$USER/bin"
 
 # less always intepret control chars
