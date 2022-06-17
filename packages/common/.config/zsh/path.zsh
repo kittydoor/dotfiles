@@ -4,14 +4,14 @@ typeset -U path
 # https://stackoverflow.com/questions/11530090/adding-a-new-entry-to-the-path-variable-in-zsh
 # TODO: Does this break on paths with spaces?
 function prefixpath {
-  if [[ -d $1 ]]; then
-    path=($1 $path)
+  if [[ -d "$1" ]] && ! [[ ":$PATH:" == *":$1:"* ]]; then
+    path=("$1" $path)
   fi
 }
 
 function addpath {
-  if [[ -d $1 ]]; then
-    path+=($1)
+  if [[ -d "$1" ]] && ! [[ ":$PATH:" == *":$1:"* ]]; then
+    path+=("$1")
   fi
 }
 
@@ -22,9 +22,10 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   prefixpath "/usr/local/opt/coreutils/libexec/gnubin"
 
   # python on Darwin
-  for dir in "$HOME"/Library/Python/*/bin; do
-    addpath "$dir"
-  done
+  # TODO: Fix issue when none exists 'zsh no match'
+  # for dir in "$HOME"/Library/Python/*/bin; do
+  #   addpath "$dir"
+  # done
 
   # brew casks
   if ! type brew > /dev/null; then
@@ -45,6 +46,11 @@ addpath "$HOME/bin"
 # local user package binaries
 addpath "$HOME/.local/bin"
 
+# golang binaries
+if which go 1>/dev/null 2>&1; then
+  addpath "$(go env GOPATH)/bin"
+fi
+
 # node_modules binaries
 addpath "$HOME/.local/share/node_modules/bin"
 export npm_config_prefix=~/.local/share/node_modules
@@ -56,9 +62,6 @@ addpath "$HOME/.local/share/cargo/bin"
 addpath "$HOME/.krew/bin"
 
 # gem ruby binaries
-if (which ruby 1>/dev/null 2>&1); then
-  GEM_USER_DIR="$(ruby -e 'print Gem.user_dir')/bin"
-  if [[ -z "$GEM_USER_DIR" ]]; then
-    addpath "$GEM_USER_DIR"
-  fi
+if which ruby 1>/dev/null 2>&1 && which gem >/dev/null 2>&1; then
+  addpath "$(ruby -r rubygems -e 'puts Gem.user_dir')/bin"
 fi
