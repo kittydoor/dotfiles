@@ -14,10 +14,9 @@ SCRIPT_DIR="$(readlink -m "$(dirname "$(readlink -f "$0")")/../../..")"
 STOW_ARGS=("--dir=${SCRIPT_DIR}/packages/" "--target=${HOME}")
 
 help_message() {
-  echoerr "No package names given."
-  echo 'Use "all" to install all packages.'
+  echo 'Usage: dotman [package ...]'
   echo
-  echo 'Available packages:' > /dev/stderr
+  echo 'Available packages:'
   for dir in "${SCRIPT_DIR}"/packages/*; do
     if [[ -d "$dir" ]]; then
       echo "  $(basename "${dir}")"
@@ -26,6 +25,7 @@ help_message() {
 }
 
 if [[ -z "${1:-}" ]]; then
+  echoerr "No package names given."
   help_message
   exit 1
 fi
