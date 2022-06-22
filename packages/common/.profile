@@ -35,8 +35,8 @@ export PATH="${PATH}:/home/${USER}/bin"
 export LESS='-R'
 
 # Browser Configuration
-OSTYPE="$(uname -s)"
-case "${OSTYPE}" in
+UNAME_OSTYPE="$(uname -s)"
+case "${UNAME_OSTYPE}" in
 [lL]inux*)
   # Hardware video acceleration in Xorg
   export MOZ_X11_EGL=1
@@ -59,6 +59,6 @@ case "${OSTYPE}" in
   unset BROWSER
   ;;
 *)
-  echo ".profile: Unknown 'uname -s'=${OSTYPE}"
+  echo ".profile: Unknown 'uname -s'=${UNAME_OSTYPE}"
   ;;
 esac
