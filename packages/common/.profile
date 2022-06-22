@@ -3,31 +3,41 @@
 # Java fix windows not resizing on window managers
 export _JAVA_AWT_WM_NONREPARENTING=1
 
-# https://unix.stackexchange.com/a/213369
-# TODO: Consider a function to prefer, in order, multiple options
-# by checking which commands are found on system
 # TODO: Consider an easy way to "redo" one time checks like this in
 # .profile or .zshenv and so on
-export TERMINAL='urxvt'
-export EDITOR='vim'
-export BROWSER='firefox'
+prefer_command() {
+  for cmd in "$@"; do
+    if command -v "${cmd}" > /dev/null 2>&1; then
+      echo "${cmd}"
+      break
+    fi
+  done
+}
+
+# https://unix.stackexchange.com/a/213369
+TERMINAL="$(prefer_command alacritty urxvt kitty gnome-terminal konsole)" && export TERMINAL
+EDITOR="$(prefer_command nvim vim vi)" && export EDITOR
+BROWSER="$(prefer_command firefox chromium google-chrome)" && export BROWSER
 export PAGER='less'
 export FILE='ranger'
 export READER='zathura'
+export IMAGE_VIEWER='sxiv'
 
 # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_DATA_HOME="${HOME}/.local/share"
 
 # Include user bin folder in path, only after other commands
-export PATH="$PATH:/home/$USER/bin"
+export PATH="${PATH}:/home/${USER}/bin"
 
 # less always intepret control chars
 export LESS='-R'
 
 # Browser Configuration
-if [ "$(uname -s)" != "Darwin" ]; then
+OSTYPE="$(uname -s)"
+case "${OSTYPE}" in
+[lL]inux*)
   # Hardware video acceleration in Xorg
   export MOZ_X11_EGL=1
   # Wayland native Firefox (also required for hardware video acceleration)
@@ -40,10 +50,15 @@ if [ "$(uname -s)" != "Darwin" ]; then
   # about:config -> media.av1.enabled = false
   # h264ify extension -> block VP9 & AV1
   # Set browser for MacOS
-else
+  ;;
+[dD]arwin*)
   # Python throws a hissyfit if BROWSER is set
   # https://bugs.python.org/issue24955
   # https://github.com/python/cpython/pull/27751
   #export BROWSER="/Applications/Firefox.app/Contents/MacOS/firefox"
   unset BROWSER
-fi
+  ;;
+*)
+  echo ".profile: Unknown 'uname -s'=${OSTYPE}"
+  ;;
+esac
