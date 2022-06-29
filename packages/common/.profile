@@ -31,8 +31,9 @@ export XDG_DATA_HOME="${HOME}/.local/share"
 # Include user bin folder in path, only after other commands
 export PATH="${PATH}:/home/${USER}/bin"
 
-# less always intepret control chars
-export LESS='-R'
+# less sane defaults as per git
+# https://git-scm.com/docs/git-config#git-config-corepager
+export LESS='FRX'
 
 # Browser Configuration
 UNAME_OSTYPE="$(uname -s)"
