@@ -14,6 +14,9 @@
 **/.vim/autoload/plug.vim
 .viminfo
 
+# VSCode
+.vscode
+
 # History files
 .zsh_history
 
