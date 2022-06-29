@@ -1,13 +1,12 @@
 ### Generic Aliases
 # ZSH expands ls in following aliases
-# if command -v exa > /dev/null; then
-#   alias ls="exa --color=auto"
-#   alias tree="ls --tree"
-# else
-#   alias ls="ls --color=auto"
-# fi
+if command -v exa > /dev/null; then
+  alias ls="exa --color=auto"
+  alias tree="ls --tree"
+else
+  alias ls="ls --human-readable --color=auto --hyperlink-auto"
+fi
 
-alias ls="ls --human-readable --color=auto --hyperlink=auto"
 alias ll="ls -al"
 alias l.="ls -d .*"
 
