@@ -28,7 +28,7 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   # done
 
   # brew casks
-  if ! type brew > /dev/null; then
+  if ! command -v brew > /dev/null; then
     echo "brew missing. Please install brew from brew.sh"
   else
     # gcloud sdk
@@ -47,7 +47,7 @@ addpath "$HOME/bin"
 addpath "$HOME/.local/bin"
 
 # golang binaries
-if which go 1>/dev/null 2>&1; then
+if command -v go > /dev/null; then
   addpath "$(go env GOPATH)/bin"
 fi
 
@@ -62,6 +62,6 @@ addpath "$HOME/.local/share/cargo/bin"
 addpath "$HOME/.krew/bin"
 
 # gem ruby binaries
-if which ruby 1>/dev/null 2>&1 && which gem >/dev/null 2>&1; then
+if command -v ruby > /dev/null && command -v gem > /dev/null; then
   addpath "$(ruby -r rubygems -e 'puts Gem.user_dir')/bin"
 fi

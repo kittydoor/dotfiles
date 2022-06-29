@@ -1,6 +1,6 @@
 ### Generic Aliases
 # ZSH expands ls in following aliases
-# if (which exa 1>/dev/null 2>&1); then
+# if command -v exa > /dev/null; then
 #   alias ls="exa --color=auto"
 #   alias tree="ls --tree"
 # else
@@ -19,7 +19,7 @@ alias pubip="wget https://duckduckgo.com/ip -qO - | grep -oE '[0-9]{1,3}(\.[0-9]
 alias download="curl -O -L -C -"
 
 ### Fix VIM on fedora
-if type vimx > /dev/null; then
+if command -v vimx > /dev/null; then
   alias vim="vimx"
 fi
 
