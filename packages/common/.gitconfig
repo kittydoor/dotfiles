@@ -1,0 +1,16 @@
+# This is Git's per-user configuration file.
+[user]
+	name = kittydoor
+	email = me@kitty.sh
+
+[alias]
+	st = status -sb
+	co = checkout
+	cm = commit
+	p = push
+	d = diff
+	dc = diff --cached
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+	tags = tag -l
+	branches = branch -a
+	remotes = remote -v
