@@ -3,6 +3,9 @@
 	name = kittydoor
 	email = me@kitty.sh
 
+#[init]
+#	defaultBranch = main
+
 [alias]
 	st = status -sb
 	co = checkout
@@ -14,3 +17,7 @@
 	tags = tag -l
 	branches = branch -a
 	remotes = remote -v
+
+# Override configuration with work-specific
+[includeIf "gitdir:~/work/"]
+	path = .gitconfig-work
