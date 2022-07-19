@@ -38,3 +38,10 @@ auth       sufficient     pam_tid.so
 #      -> Terminal: Silence bell
 #   -> Advanced
 #      -> Allow session to survive logging out and back in: No 
+
+# Disable bluetooth during sleep (to prevent stealing headphones when unwanted)
+brew install sleepwatcher blueutil
+echo "$(which blueutil) -p 0" > ~/.sleep
+echo "$(which blueutil) -p 1" > ~/.wakeup
+chmod 755 ~/.sleep ~/.wakeup
+brew services restart sleepwatcher
