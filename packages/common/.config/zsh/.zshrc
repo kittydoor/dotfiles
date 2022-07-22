@@ -90,3 +90,7 @@ done
 if [[ -f "$HOME/.work/zsh" ]]; then 
   source "$HOME/.work/zsh"
 fi
+
+# nix / home-manager
+export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}
+

@@ -63,3 +63,6 @@ case "${UNAME_OSTYPE}" in
   echo ".profile: Unknown 'uname -s'=${UNAME_OSTYPE}"
   ;;
 esac
+
+# home-manager
+. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
