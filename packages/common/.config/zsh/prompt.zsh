@@ -16,5 +16,13 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   HOST=nyaa-work
 fi
 
-PROMPT="%F{red}%B%(?..[%?] )%b%f%F{yellow}%n%f%F{green}@%f%U%F{blue}%m%f%u%F{green}>%f "
-RPROMPT="%F{green}%~%f"
+prompt_present_setup() {
+  PROMPT="$ "
+  RPROMPT=""
+}
+prompt_kitty_setup() {
+  PROMPT="%F{red}%B%(?..[%?] )%b%f%F{yellow}%n%f%F{green}@%f%U%F{blue}%m%f%u%F{green}>%f "
+  RPROMPT="%F{green}%~%f"
+}
+prompt_themes+=( kitty present )
+prompt kitty
