@@ -17,6 +17,9 @@
 	tags = tag -l
 	branches = branch -a
 	remotes = remote -v
+	bd = "!f() { git branch -d $(git branch --list \"${1}\"); }; f"
+	bdd = "!f() { git branch -D $(git branch --list \"${1}\"); }; f"
+	lgdo = "!f() { git log --graph --decorate --oneline \"${@---all}\"; }; f"
 
 # Override configuration with work-specific
 [includeIf "gitdir:~/work/"]
