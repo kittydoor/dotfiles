@@ -41,9 +41,30 @@ packer.init {
 -- Install your plugins here
 return packer.startup(function(use)
   -- My plugins here
-  use { "wbthomason/packer.nvim" } -- Have packer manage itself
-  use { "nvim-lua/plenary.nvim" } -- Useful lua functions used by lots of plugins
-  use { "kyazdani42/nvim-tree.lua" }
+  use "wbthomason/packer.nvim" -- Have packer manage itself
+  use "nvim-lua/plenary.nvim" -- Useful lua functions used by lots of plugins
+
+  use "williamboman/mason.nvim"
+  use "williamboman/mason-lspconfig.nvim"
+  use "WhoIsSethDaniel/mason-tool-installer.nvim"
+  use "neovim/nvim-lspconfig"
+
+  use "hrsh7th/cmp-nvim-lsp"
+  use "hrsh7th/cmp-nvim-lua"
+  use "hrsh7th/cmp-buffer"
+  use "hrsh7th/cmp-path"
+  use "hrsh7th/cmp-cmdline"
+  use "hrsh7th/cmp-git"
+  use "hrsh7th/nvim-cmp"
+
+  use "hrsh7th/cmp-vsnip"
+  use "hrsh7th/vim-vsnip"
+
+  use "jose-elias-alvarez/null-ls.nvim"
+
+  use { "folke/trouble.nvim", config = function() require("trouble").setup { icons = false, } end }
+  use "kyazdani42/nvim-tree.lua"
+  use "godlygeek/tabular"
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
