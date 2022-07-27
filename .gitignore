@@ -20,5 +20,5 @@
 # History files
 .zsh_history
 
-# symlink from ansible setup
-packages/common/.local/share/applications/mimeapps.list
+# Neovim installed plugins
+**/.config/nvim/plugin/
