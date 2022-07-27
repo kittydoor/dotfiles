@@ -13,6 +13,13 @@ local servers = {
   "jsonls",
   "pyright",
   "sumneko_lua",
+  "dockerls",
+  "ansiblels",
+  "rust_analyzer",
+  "salt_ls",
+  "terraform-ls",
+  "tflint",
+  "vimls",
 }
 
 require("mason").setup()

@@ -14,7 +14,7 @@ null_ls.setup {
     diagnostics.pylint,
     diagnostics.golangci_lint,
     -- diagnostics.ansiblelint,
-    -- diagnostics.checkmake,
+    diagnostics.checkmake,
     -- diagnostics.chktex,
     -- diagnostics.codespell,
     -- diagnostics.luacheck,
@@ -26,8 +26,11 @@ null_ls.setup {
     diagnostics.zsh,
     -- formatting.black,
     -- formatting.gofmt,
-    -- formatting.gofumpt,
+    formatting.terraform_fmt,
+    formatting.gofumpt,
+    formatting.shellharden,
     -- formatting.jq,
     -- formatting.lua_format
+    -- formatting.shfmt
   },
 }

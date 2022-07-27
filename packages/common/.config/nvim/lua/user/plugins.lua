@@ -60,6 +60,8 @@ return packer.startup(function(use)
   use "hrsh7th/cmp-vsnip"
   use "hrsh7th/vim-vsnip"
 
+  -- use "sheerun/vim-polyglot"
+
   use "jose-elias-alvarez/null-ls.nvim"
 
   use { "folke/trouble.nvim", config = function() require("trouble").setup { icons = false, } end }
