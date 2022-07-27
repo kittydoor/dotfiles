@@ -21,11 +21,10 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   [[ ! -d /usr/local/opt/coreutils/libexec/gnubin ]] && echo "coreutils missing. Please run 'brew install coreutils'"
   prefixpath "/usr/local/opt/coreutils/libexec/gnubin"
 
-  # python on Darwin
-  # TODO: Fix issue when none exists 'zsh no match'
-  # for dir in "$HOME"/Library/Python/*/bin; do
-  #   addpath "$dir"
-  # done
+  # python3 on Darwin
+  if command -v python3 > /dev/null; then
+    addpath "$HOME/Library/Python/$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')/bin"
+  fi
 
   # brew casks
   if ! command -v brew > /dev/null; then
