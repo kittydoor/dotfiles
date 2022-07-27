@@ -1,5 +1,9 @@
 # vim:ts=2:sw=2:et
 
+Darwin
+* Figure out how to deal with Darwin old bash and non-gnu utils
+  * Sourceable bash script: https://gist.github.com/md5/f153ac48286aa790edce
+
 Common
 * Add caps esc swap to some config: dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:swapescape']" 
 * setup config command for dotfiles, session autologin swap, and other tasks and notes
