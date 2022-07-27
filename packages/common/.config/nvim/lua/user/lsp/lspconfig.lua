@@ -17,10 +17,7 @@ local servers = {
 
 require("mason").setup()
 mason_lspconfig.setup {
-  -- TODO: Automatic doesn't seem to work
   automatic_installation = true,
-  -- ensure_installed = servers,
-  -- ensure_installed = { "sumneko_lua", "pyright" }
 }
 
 for _, server in pairs(servers) do
