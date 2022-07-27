@@ -92,10 +92,10 @@ esac
 
 case "$(uname -s)" in
   Linux)
-    linux_clip
+    linux_clip "$@"
     ;;
   Darwin)
-    darwin_clip
+    darwin_clip "$@"
     ;;
   *)
     echo "Unsupported OS"
