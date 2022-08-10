@@ -7,8 +7,10 @@ M.setup = function()
   vim.diagnostic.config(config)
 end
 
+local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
 local function lsp_keymaps(bufnr)
-  local opts = { noremap = true, silent = true, buffer=bufnr }
+  local bufopts = { noremap = true, silent = true, buffer=bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
@@ -23,11 +25,25 @@ local function lsp_keymaps(bufnr)
   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+  vim.keymap.set('n', '<space>f', vim.lsp.buf.format, bufopts)
+end
+
+local function lsp_format(client, bufnr)
+  if client.supports_method("textDocument/formatting") then
+    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      group = augroup,
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.buf.format({ bufnr = bufnr })
+      end,
+    })
+  end
 end
 
 M.on_attach = function(client, bufnr)
   lsp_keymaps(bufnr)
+  lsp_format(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
