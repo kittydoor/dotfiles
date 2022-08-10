@@ -9,7 +9,7 @@ local diagnostics = null_ls.builtins.diagnostics
 null_ls.setup {
   debug = true,
   sources = {
-    formatting.stylua,
+    -- formatting.stylua,
     -- diagnostics.actionlint,
     diagnostics.pylint,
     diagnostics.golangci_lint,
@@ -26,7 +26,7 @@ null_ls.setup {
     diagnostics.zsh,
     -- formatting.black,
     -- formatting.gofmt,
-    formatting.terraform_fmt,
+    -- formatting.terraform_fmt,
     formatting.gofumpt,
     formatting.shellharden,
     -- formatting.jq,

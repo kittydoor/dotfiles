@@ -4,7 +4,8 @@ if not lspconfig_status_ok then
 end
 
 local mason_lspconfig_status_ok, mason_lspconfig = pcall(require, "mason-lspconfig")
-if not mason_lspconfig_status_ok then return
+if not mason_lspconfig_status_ok then
+  return
 end
 
 local servers = {
@@ -43,8 +44,8 @@ for _, server in pairs(servers) do
             },
             workspace = {
               library = {
-                [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-                [vim.fn.stdpath "config" .. "/lua"] = true,
+                [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                [vim.fn.stdpath("config") .. "/lua"] = true,
               },
             },
             telemetry = {
