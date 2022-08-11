@@ -14,7 +14,7 @@
 	p = push
 	d = diff
 	dc = diff --cached
-	l = "!f() { git log --color --graph --oneline --decorate --pretty=format:'%C(yellow)%h%Creset%C(auto)%d%Creset %s %C(dim green)(%cr) %C(dim blue)<%an>%Creset' \"${@---all}\"; }; f"
+	l = "!f() { git log --color --graph --oneline --decorate --pretty=format:'%C(yellow)%h%Creset%C(auto)%d%Creset %s %C(dim green)(%cr) %C(dim blue)<%an>%Creset' \"${@:---all}\"; }; f"
 	#l = log --color --graph --oneline --decorate --pretty=format:'%C(yellow)%h%Creset%C(auto)%d%Creset %s %C(dim green)(%cr) %C(dim blue)<%an>%Creset'
 	tags = tag -l
 	branches = branch -a
