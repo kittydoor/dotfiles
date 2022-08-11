@@ -9,18 +9,19 @@ if not mason_lspconfig_status_ok then
 end
 
 local servers = {
+  "ansiblels",
   "bashls",
-  "yamlls",
+  "dockerls",
+  "gopls",
   "jsonls",
   "pylsp",
-  "sumneko_lua",
-  "dockerls",
-  "ansiblels",
   "rust_analyzer",
   "salt_ls",
+  "sumneko_lua",
   "terraformls",
   "tflint",
   "vimls",
+  "yamlls",
 }
 
 require("mason").setup()
