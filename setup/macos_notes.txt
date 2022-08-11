@@ -17,7 +17,7 @@ displayplacer "id:9B4FE25D-F623-6220-BEA9-E7BB662ACA5D+BCCA9461-8232-A59A-8229-9
 # Dual displays
 displayplacer "id:9B4FE25D-F623-6220-BEA9-E7BB662ACA5D res:1680x1050 color_depth:8 scaling:on origin:(0,0) degree:0" "id:BCCA9461-8232-A59A-8229-98D4405D1E6C res:2560x1440 hz:60 color_depth:8 scaling:off origin:(1680,0) degree:0"
 
-brew install fabianishere/personal/pam_reattach
+brew install pam-reattach
 # add on top /etc/pam.d/sudo
 auth       optional       pam_reattach.so
 auth       sufficient     pam_tid.so
