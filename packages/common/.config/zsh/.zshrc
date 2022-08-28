@@ -38,10 +38,19 @@ autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
-bindkey '^[[A' up-line-or-beginning-search
-bindkey '^[[B' down-line-or-beginning-search
+# Some useful reading
+# https://superuser.com/questions/585003/searching-through-history-with-up-and-down-arrow-in-zsh
+# https://invisible-island.net/ncurses/ncurses.faq.html#modified_keys
+# https://unix.stackexchange.com/questions/551337/zsh-get-terminfo-keys-with-modifiers
+# https://unix.stackexchange.com/questions/502175/difference-between-zsh-history-substring-search-and-up-line-or-beginning-search
+# cat -v can show these codes
+# e.g. up arrow = ^[[A = terminfo[kcuu1]
+bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search
+bindkey "${terminfo[kcud1]}" down-line-or-beginning-search
 # Alternative: up-line-or-search, which uses only the first word,
 # and doesn't require autoload and zle
+
+bindkey '^R' history-incremental-search-backward
 
 # source various files
 source $ZDOTDIR/path.zsh
