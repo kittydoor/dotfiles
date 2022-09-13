@@ -91,3 +91,7 @@ alias please='sudo $(fc -ln -1)'
 
 alias copy="clip copy"
 alias paste="clip paste"
+
+# alias vim="nvim"
+
+alias tf="terraform"
