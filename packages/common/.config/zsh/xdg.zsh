@@ -1,5 +1,5 @@
-export GOPATH="$HOME"/Documents/Go
-mkdir -p "$GOPATH"
+# export GOPATH="$HOME"/Documents/Go
+# mkdir -p "$GOPATH"
 
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 
