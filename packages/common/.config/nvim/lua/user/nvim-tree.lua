@@ -13,6 +13,7 @@ nvim_tree.setup {
   },
   renderer = {
     add_trailing = true,
+    group_empty = true,
     indent_markers = {
       enable = true,
     },
