@@ -12,5 +12,5 @@ alias g="git"
 
 ### Static Named Directories
 
-hash -d git=~/Documents/Git
-mkdir -p ~/Documents/Git
+# hash -d git=~/Documents/Git
+# mkdir -p ~/Documents/Git
