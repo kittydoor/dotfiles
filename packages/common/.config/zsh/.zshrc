@@ -43,6 +43,7 @@ zle -N down-line-or-beginning-search
 # https://invisible-island.net/ncurses/ncurses.faq.html#modified_keys
 # https://unix.stackexchange.com/questions/551337/zsh-get-terminfo-keys-with-modifiers
 # https://unix.stackexchange.com/questions/502175/difference-between-zsh-history-substring-search-and-up-line-or-beginning-search
+# https://unix.stackexchange.com/questions/57827/tmux-terminfo-problem-with-zsh-key-bindings
 # cat -v can show these codes
 # e.g. up arrow = ^[[A = terminfo[kcuu1]
 bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search
