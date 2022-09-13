@@ -104,3 +104,10 @@ fi
 # nix / home-manager
 export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}
 
+# asdf
+ASDF_SH="$HOME/.asdf/asdf.sh"
+if [[ -f $ASDF_SH ]]; then
+  . "${ASDF_SH}"
+  fpath=(${ASDF_DIR}/completions $fpath)
+  autoload -Uz compinit && compinit
+fi
