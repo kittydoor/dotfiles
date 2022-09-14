@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+Sync GitLab groups to your local fs with ease
+"""
 import os
 import logging
 import argparse
