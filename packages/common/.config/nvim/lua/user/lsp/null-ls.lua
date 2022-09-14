@@ -18,7 +18,6 @@ null_ls.setup {
     formatting.shellharden,
     -- diagnostics.actionlint,
     -- diagnostics.ansiblelint,
-    -- diagnostics.checkmake,
     -- diagnostics.chktex,
     -- diagnostics.codespell,
     -- diagnostics.luacheck,

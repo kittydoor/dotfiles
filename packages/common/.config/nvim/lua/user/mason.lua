@@ -25,7 +25,6 @@ mason_tool_intaller.setup {
     'shellharden',
     'shfmt',
     'staticcheck',
-    -- 'checkmake', -- not in mason as of writing
     -- 'golines',
     -- 'gomodifytags',
     -- 'gotests',

@@ -44,31 +44,38 @@ return packer.startup(function(use)
   use "wbthomason/packer.nvim" -- Have packer manage itself
   use "nvim-lua/plenary.nvim" -- Useful lua functions used by lots of plugins
 
-  use "williamboman/mason.nvim"
-  use "williamboman/mason-lspconfig.nvim"
-  use "WhoIsSethDaniel/mason-tool-installer.nvim"
-  use "neovim/nvim-lspconfig"
+  -- TODO: Consider vim-sleuth instead
+  use "editorconfig/editorconfig-vim" -- Official editorconfig plugin
 
-  use "hrsh7th/cmp-nvim-lsp"
-  use "hrsh7th/cmp-nvim-lua"
-  use "hrsh7th/cmp-buffer"
-  use "hrsh7th/cmp-path"
-  use "hrsh7th/cmp-cmdline"
-  use "hrsh7th/cmp-git"
-  use "hrsh7th/nvim-cmp"
+  use "williamboman/mason.nvim" -- Package Manager (for LSP and linters and etc.)
+  use "williamboman/mason-lspconfig.nvim" -- Hook mason into lspconfig automatically
+  use "WhoIsSethDaniel/mason-tool-installer.nvim" -- Install missing tools from a base list
+  use "neovim/nvim-lspconfig" -- Add default (prebuilt) defaults for easily configuring LSPs
+
+  use "hrsh7th/cmp-nvim-lsp" -- Hook cmp into lsp
+  use "hrsh7th/cmp-nvim-lua" -- Hook cmp into Lua??
+  use "hrsh7th/cmp-buffer" -- Hook cmp into buffer contents
+  use "hrsh7th/cmp-path" -- Hook cmp into file path??
+  use "hrsh7th/cmp-cmdline" -- Hook cmp into ??
+  use "hrsh7th/cmp-git" -- Hook cmp into git??
+  use "hrsh7th/nvim-cmp" -- Completion plugin with diverse ecosystem
 
   use "hrsh7th/cmp-vsnip"
   use "hrsh7th/vim-vsnip"
 
-  use "nvim-treesitter/nvim-treesitter"
+  -- TODO: Figure out more about text objects
+  use "nvim-treesitter/nvim-treesitter" -- Add treesitter syntax highlighting and folds into neovim
 
-  -- use "sheerun/vim-polyglot"
+  use "sheerun/vim-polyglot" -- Add support for many languages
 
-  use "jose-elias-alvarez/null-ls.nvim"
+  use "jose-elias-alvarez/null-ls.nvim" -- Bridge LSP protocol and common linters and other tooling
 
+  -- View all issues (trouble :P) with your code
   use { "folke/trouble.nvim", config = function() require("trouble").setup { icons = false, } end }
-  use "kyazdani42/nvim-tree.lua"
-  use "godlygeek/tabular"
+
+  use "kyazdani42/nvim-tree.lua" -- Tree style file manager
+
+  use "godlygeek/tabular" -- Manage tables / tabular text
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
