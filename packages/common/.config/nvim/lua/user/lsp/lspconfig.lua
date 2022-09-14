@@ -57,5 +57,17 @@ for _, server in pairs(servers) do
       }, opts)
   end
 
+  if server == "terraformls" then
+    opts = vim.tbl_deep_extend("force",
+      {
+        -- For some reason settings = { ['terraform-ls'] = { is not respected
+        init_options = {
+          experimentalFeatures = {
+            validateOnSave = true,
+          },
+        },
+      }, opts)
+  end
+
   lspconfig[server].setup(opts)
 end
