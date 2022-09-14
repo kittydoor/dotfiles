@@ -64,3 +64,5 @@ addpath "$HOME/.krew/bin"
 if command -v ruby > /dev/null && command -v gem > /dev/null; then
   addpath "$(ruby -r rubygems -e 'puts Gem.user_dir')/bin"
 fi
+
+export path
