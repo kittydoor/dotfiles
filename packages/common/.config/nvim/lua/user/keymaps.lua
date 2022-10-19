@@ -36,5 +36,5 @@ keymap("v", ">", ">gv", opts)
 
 -- Plugins --
 
--- NvimTree
-keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
+-- NeoTree
+keymap("n", "<leader>e", ":Neotree toggle<CR>", opts)

@@ -73,7 +73,8 @@ return packer.startup(function(use)
   -- View all issues (trouble :P) with your code
   use { "folke/trouble.nvim", config = function() require("trouble").setup { icons = false, } end }
 
-  use "kyazdani42/nvim-tree.lua" -- Tree style file manager
+  -- use "kyazdani42/nvim-tree.lua" -- Tree style file manager
+  use { "nvim-neo-tree/neo-tree.nvim", branch = "v2.x", requires = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim" } }
 
   use "godlygeek/tabular" -- Manage tables / tabular text
 
