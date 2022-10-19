@@ -1,5 +1,10 @@
 [[ "$(uname -s)" == Darwin ]] && export LC_ALL=en_US.UTF-8
 
+DOT_ZFUNC="$HOME/.zfunc"
+if [[ -d $DOT_ZFUNC ]]; then
+  export fpath=( "$HOME/.zfunc" "${fpath[@]}" )
+fi
+
 autoload -Uz compinit
 case "$(uname -s)" in
   Linux)
@@ -53,16 +58,18 @@ bindkey "${terminfo[kcud1]}" down-line-or-beginning-search
 
 bindkey '^R' history-incremental-search-backward
 
+# Config Dir
+ZSH_CONFIG_DIR="${XDG_CONFIG_HOME:-${HOME}/.config}/zsh"
 # source various files
-source $ZDOTDIR/path.zsh
-source $ZDOTDIR/prompt.zsh
-source $ZDOTDIR/history.zsh
-source $ZDOTDIR/aliases.zsh
-source $ZDOTDIR/functions.zsh
-source $ZDOTDIR/git.zsh
-source $ZDOTDIR/ssh_hosts.zsh
-source $ZDOTDIR/ssh.zsh
-source $ZDOTDIR/xdg.zsh
+source "${ZSH_CONFIG_DIR}/path.zsh"
+source "${ZSH_CONFIG_DIR}/prompt.zsh"
+source "${ZSH_CONFIG_DIR}/history.zsh"
+source "${ZSH_CONFIG_DIR}/aliases.zsh"
+source "${ZSH_CONFIG_DIR}/functions.zsh"
+source "${ZSH_CONFIG_DIR}/git.zsh"
+source "${ZSH_CONFIG_DIR}/ssh_hosts.zsh"
+source "${ZSH_CONFIG_DIR}/ssh.zsh"
+source "${ZSH_CONFIG_DIR}/xdg.zsh"
 
 # host specific configuration
 if [[ -f $ZDOTDIR/local.zsh ]]; then
@@ -93,8 +100,8 @@ fi
 # sudo du --exclude /run/media/kitty --exclude /proc -h -d 2 /var | sort -h | less
 
 # Source completion.d
-for file in $ZDOTDIR/completion.d/*; do
-  source $file || echo "$file failed, ignoring..."
+for comp_file in "$ZSH_CONFIG_DIR/completion.d"/*; do
+  source "${comp_file}" || echo "$file failed, ignoring..."
 done
 
 if [[ -f "$HOME/.work/zsh" ]]; then 
