@@ -19,6 +19,7 @@
 
 # History files
 .zsh_history
+.zcompcache
 
 # Neovim installed plugins
 **/.config/nvim/plugin/
