@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # Java fix windows not resizing on window managers
+# https://wiki.archlinux.org/title/Java#Gray_window,_applications_not_resizing_with_WM,_menus_immediately_closing
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 # TODO: Consider an easy way to "redo" one time checks like this in
@@ -39,18 +40,13 @@ export LESS='FRX'
 UNAME_OSTYPE="$(uname -s)"
 case "${UNAME_OSTYPE}" in
 [lL]inux*)
-  # Hardware video acceleration in Xorg
-  export MOZ_X11_EGL=1
-  # Wayland native Firefox (also required for hardware video acceleration)
-  export MOZ_ENABLE_WAYLAND=1
-  # Enable Servo compositor
-  export MOZ_WEBRENDER=1
-  # about:config -> gfx.webrender.all = true
+  # Wayland native Firefox
+  # (required for hardware video acceleration among other things)
+  if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+    export MOZ_ENABLE_WAYLAND=1
+  fi
   # about:config -> media.ffmpeg.vaapi.enabled = true
-  # about:config -> media.ffvpx.enabled = false
-  # about:config -> media.av1.enabled = false
-  # h264ify extension -> block VP9 & AV1
-  # Set browser for MacOS
+  # enhanced-h264ify extension -> block VP9 & AV1
   ;;
 [dD]arwin*)
   # Python throws a hissyfit if BROWSER is set
