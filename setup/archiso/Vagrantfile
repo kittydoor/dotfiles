@@ -1,0 +1,18 @@
+$script = <<-SCRIPT
+pacman -Syu --noconfirm base-devel
+SCRIPT
+
+Vagrant.configure("2") do |config|
+  config.vm.define :main do |main|
+    main.vm.box = "archlinux/archlinux"
+
+    main.vm.provider :libvirt do |libvirt|
+      libvirt.cpus = 2
+      libvirt.memory = 4096
+    end
+
+    main.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
+
+    main.vm.provision :shell, inline: $script
+  end
+end
