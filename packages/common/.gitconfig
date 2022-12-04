@@ -22,6 +22,15 @@
 	bd = "!f() { git branch -d $(git branch --list \"${1}\"); }; f"
 	bdd = "!f() { git branch -D $(git branch --list \"${1}\"); }; f"
 
+[diff]
+	algorithm = histogram
+
+[push]
+	# Requires Git >= 2.37 released Q3 2022 (Ubuntu 22.04 LTS has 2.34.1)
+	autoSetupRemote = true
+
 # Override configuration with work-specific
 [includeIf "gitdir:~/work/"]
 	path = .gitconfig-work
+[init]
+	defaultBranch = main
