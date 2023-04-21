@@ -18,7 +18,7 @@ esac
 # Rehash always, so changes to files in PATH are reflected
 zstyle ':completion:*' rehash true
 # Define where to find .zshrc
-zstyle :compinstall filename "$ZDOTDIR/.zshrc"
+# zstyle :compinstall filename "$ZDOTDIR/.zshrc"
 # Define completion menu style
 zstyle ':completion:*' menu select
 # Treat alises as distinct commands rather than internally substituting them before completion is attempted. Seems to fix dotfiles alias.
@@ -72,8 +72,8 @@ source "${ZSH_CONFIG_DIR}/ssh.zsh"
 source "${ZSH_CONFIG_DIR}/xdg.zsh"
 
 # host specific configuration
-if [[ -f $ZDOTDIR/local.zsh ]]; then
-  source $ZDOTDIR/local.zsh
+if [[ -f "${ZSH_CONFIG_DIR}/local.zsh" ]]; then
+  source "${ZSH_CONFIG_DIR}/local.zsh"
 fi
 
 # distro specific files
@@ -86,7 +86,7 @@ case "$(uname -s)" in
     ;;
 esac
 if [[ $DISTRO == 'Arch Linux' ]]; then
-  source $ZDOTDIR/arch.zsh
+  source "${ZSH_CONFIG_DIR}/arch.zsh"
 fi
 
 # setopt autocd extendedglob nomatch
