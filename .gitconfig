@@ -1,0 +1,5 @@
+[user]
+	email = me@kitty.sh
+	name = kittydoor
+[init]
+	defaultBranch = main
